@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
+  --color-brand-blue: #002868;
+  --color-brand-red: #bf0a30;
+  --color-brand-silver: #d9d9d9;
+  --color-brand-gold: #ffbd59;
+  --color-brand-white: #ffffff;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto);
+  --font-display: var(--font-oswald);
+  --font-accent: var(--font-yellowtail);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #ffffff;
+  --foreground: #1a1a2e;
+  --surface-matte: #f8f9fa;
+  --surface-elevated: #ffffff;
+  --gleam-angle: 135deg;
+  --gleam-opacity: 0.06;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Matte surface system */
+.surface-matte {
+  background: var(--surface-matte);
+}
+
+.surface-elevated {
+  background: var(--surface-elevated);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* Gleam effect */
+.gleam {
+  position: relative;
+  overflow: hidden;
+}
+
+.gleam::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    var(--gleam-angle),
+    transparent 0%,
+    rgba(255, 255, 255, var(--gleam-opacity)) 45%,
+    rgba(255, 255, 255, calc(var(--gleam-opacity) * 2)) 50%,
+    rgba(255, 255, 255, var(--gleam-opacity)) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Gloss CTA */
+.gloss-button {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+}
+
+/* Subtle section divider gleam */
+.divider-gleam {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 40, 104, 0.08) 20%,
+    rgba(255, 189, 89, 0.2) 50%,
+    rgba(0, 40, 104, 0.08) 80%,
+    transparent
+  );
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
