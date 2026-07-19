@@ -1,9 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase: SupabaseClient = supabaseUrl
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : (null as unknown as SupabaseClient);
 
 export type BlogPost = {
   id: string;
@@ -59,15 +61,17 @@ export type ReviewSubmission = {
 };
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')
     .order('published_at', { ascending: false });
-  if (error) throw error;
+  if (error) return [];
   return data ?? [];
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  if (!supabase) return null;
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')
@@ -78,23 +82,25 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 }
 
 export async function getActiveCoupons(): Promise<Coupon[]> {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('coupons')
     .select('*')
     .eq('active', true)
     .gte('expires_at', new Date().toISOString());
-  if (error) throw error;
+  if (error) return [];
   return data ?? [];
 }
 
 export async function getActivePromotions(): Promise<Promotion[]> {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('promotions')
     .select('*')
     .eq('active', true)
     .lte('starts_at', new Date().toISOString())
     .gte('ends_at', new Date().toISOString());
-  if (error) throw error;
+  if (error) return [];
   return data ?? [];
 }
 
@@ -104,6 +110,7 @@ export async function getApprovedReviews(options?: {
   city?: string;
   featuredOnly?: boolean;
 }): Promise<Review[]> {
+  if (!supabase) return [];
   let query = supabase
     .from('reviews')
     .select('*')
@@ -125,11 +132,12 @@ export async function getApprovedReviews(options?: {
   }
 
   const { data, error } = await query;
-  if (error) throw error;
+  if (error) return [];
   return data ?? [];
 }
 
 export async function submitReview(review: ReviewSubmission): Promise<{ success: boolean; error?: string }> {
+  if (!supabase) return { success: false, error: 'Service unavailable' };
   const { error } = await supabase
     .from('reviews_pending')
     .insert({
