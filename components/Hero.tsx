@@ -88,7 +88,7 @@ export default function Hero({
           {showLocation && (
             <p className="flex items-center justify-center gap-2 text-sm text-white/60">
               <MapPin className="w-4 h-4" />
-              Serving the Piedmont Triad — Statesville to Mebane
+              Serving the Piedmont Triad
             </p>
           )}
         </motion.div>

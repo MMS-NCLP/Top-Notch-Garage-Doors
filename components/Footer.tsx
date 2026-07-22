@@ -81,11 +81,11 @@ export default function Footer() {
             </address>
 
             <div className="mt-6 flex items-center gap-3">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Facebook</a>
+              <a href="https://www.facebook.com/topnotchdoorsnc" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Facebook</a>
               <span className="text-white/20">|</span>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Instagram</a>
+              <a href="https://www.instagram.com/topnotchdoorsnc" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Instagram</a>
               <span className="text-white/20">|</span>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">LinkedIn</a>
+              <a href="https://www.linkedin.com/company/topnotchdoorsnc" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">LinkedIn</a>
             </div>
           </div>
         </div>

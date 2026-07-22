@@ -8,7 +8,7 @@ import FeaturedPortfolio from '@/components/FeaturedPortfolio';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Wrench, Home, Zap, Droplets, AlertTriangle, BookOpen, Handshake, Shield, Star } from 'lucide-react';
+import { Wrench, Home, Zap, AlertTriangle, BookOpen, Handshake, Shield, Star } from 'lucide-react';
 
 export const metadata = genMeta({
   title: 'Garage Door Troubleshooting, Repair & Installation',
@@ -48,7 +48,7 @@ export default function HomePage() {
               { title: 'How Long Do Springs Last?', desc: 'Standard torsion springs are rated for ~10,000 cycles (about 7 years). If your door feels heavy or you hear a loud bang from the garage, your spring has likely failed.', icon: <Shield className="w-5 h-5" /> },
               { title: 'Smart Opener Benefits', desc: 'Modern openers offer smartphone control, camera feeds, activity alerts, and automatic closing. Most premium models include battery backup for power outages.', icon: <Zap className="w-5 h-5" /> },
               { title: 'When to Replace vs. Repair', desc: 'Doors older than 15–20 years, those with multiple panel damage, or doors with R-0 insulation are candidates for replacement. Single-component repairs are usually the smarter investment.', icon: <Home className="w-5 h-5" /> },
-              { title: 'Maintenance Saves Money', desc: 'A $100 annual tune-up prevents $500+ emergency repairs. Lubrication, balance testing, and hardware tightening keep your system running smoothly for years.', icon: <Droplets className="w-5 h-5" /> },
+              { title: 'Maintenance Saves Money', desc: 'A $100 annual tune-up prevents $500+ emergency repairs. Lubrication, balance testing, and hardware tightening keep your system running smoothly for years.', icon: <Handshake className="w-5 h-5" /> },
             ].map((item, i) => (
               <div key={i} className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
                 <div className="w-10 h-10 rounded-lg bg-brand-blue/5 flex items-center justify-center text-brand-blue mb-3">
@@ -98,10 +98,10 @@ export default function HomePage() {
               icon={<Zap className="w-6 h-6" />}
             />
             <ServiceCard
-              title="Pressure Washing"
-              description="Restore driveways, sidewalks, and exterior surfaces to like-new condition. Fast and thorough."
-              href="/services/pressure-washing"
-              icon={<Droplets className="w-6 h-6" />}
+              title="Door Installation"
+              description="New residential and commercial garage door installation. Custom sizes, styles, and insulation options."
+              href="/services/installation"
+              icon={<Home className="w-6 h-6" />}
             />
           </div>
           <div className="text-center mt-10">
@@ -190,7 +190,7 @@ export default function HomePage() {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="surface-elevated border border-brand-gold/30 rounded-lg p-8 gleam">
-            <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Current Offer</h2>
+            <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Lube &amp; Tune Special</h2>
             <p className="font-accent text-xl text-brand-gold mb-3">Garage Door Tune-Up — $79 <span className="text-foreground/40 text-base line-through">$129</span></p>
             <p className="text-sm text-foreground/60 mb-6">
               Complete 21-point inspection, lubrication, balance check, and hardware tightening.
@@ -209,13 +209,6 @@ export default function HomePage() {
       {/* 8. FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Image
-            src="/images/logos/tngd-logo-text.png"
-            alt="Top-Notch Garage Doors"
-            width={200}
-            height={100}
-            className="w-44 h-auto object-contain mx-auto mb-6 brightness-0 invert opacity-90"
-          />
           <h2 className="font-hero text-3xl tracking-wider mb-4">
             TRUSTED ACROSS THE PIEDMONT TRIAD
           </h2>

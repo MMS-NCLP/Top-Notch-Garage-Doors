@@ -23,7 +23,7 @@ function BrandItem({ name, logo }: { name: string; logo: string }) {
         alt={`${name} logo`}
         width={120}
         height={60}
-        className="object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+        className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
       />
     </div>
   );

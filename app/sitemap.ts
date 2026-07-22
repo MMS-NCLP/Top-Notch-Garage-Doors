@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const BASE_URL = 'https://topnotchgaragedoors.com';
+const BASE_URL = 'https://www.trytopnotchdoors.com';
 
 const cities = ['statesville', 'mooresville', 'salisbury', 'lexington', 'thomasville', 'high-point', 'greensboro', 'mcleansville', 'gibsonville', 'whitsett', 'burlington', 'elon', 'mebane'];
 

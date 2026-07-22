@@ -136,14 +136,13 @@ export default function GarageScreensPage() {
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Screen Options</h2>
           <div className="grid gap-6 md:grid-cols-3 mb-12">
             {[
-              { title: 'Manual Roll-Up', price: 'From $800', desc: 'Simple, durable spring-assisted screens. Pull down to use, roll up to store.' },
-              { title: 'Motorized Retractable', price: 'From $1,500', desc: 'One-touch operation with remote control. Disappears completely when not in use.' },
-              { title: 'Fixed Panel', price: 'From $600', desc: 'Permanent screen panels with walk-through zippered entry. Most affordable option.' },
+              { title: 'Manual Roll-Up', desc: 'Simple, durable spring-assisted screens. Pull down to use, roll up to store.' },
+              { title: 'Motorized Retractable', desc: 'One-touch operation with remote control. Disappears completely when not in use.' },
+              { title: 'Fixed Panel', desc: 'Permanent screen panels with walk-through zippered entry. Most affordable option.' },
             ].map((opt) => (
               <div key={opt.title} className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam text-center">
                 <h3 className="font-display text-lg text-brand-blue mb-2">{opt.title}</h3>
-                <p className="text-sm text-foreground/60 mb-3">{opt.desc}</p>
-                <span className="font-display text-brand-red">{opt.price}</span>
+                <p className="text-sm text-foreground/60">{opt.desc}</p>
               </div>
             ))}
           </div>
