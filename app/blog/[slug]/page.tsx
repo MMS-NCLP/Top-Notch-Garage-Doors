@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${article.title} | Top-Notch Garage Doors`,
     description: article.excerpt,
-    alternates: { canonical: `https://topnotchgaragedoors.com/blog/${slug}` },
+    alternates: { canonical: `https://www.trytopnotchdoors.com/blog/${slug}` },
   };
 }
 
@@ -32,7 +32,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           __html: JSON.stringify(articleSchema({
             title: article.title,
             description: article.excerpt,
-            url: `https://topnotchgaragedoors.com/blog/${slug}`,
+            url: `https://www.trytopnotchdoors.com/blog/${slug}`,
             publishedAt: article.publishedAt,
           })),
         }}

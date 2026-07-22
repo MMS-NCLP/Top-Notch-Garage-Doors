@@ -75,7 +75,7 @@ export default function HomePage() {
               Need Immediate Help?
             </h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
-              Broken spring? Door off track? Opener not responding? We offer same-day emergency repair from Statesville to Mebane.
+              Broken spring? Door off track? Opener not responding? We offer same-day emergency repair across the Piedmont Triad.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -213,7 +213,7 @@ export default function HomePage() {
             TRUSTED ACROSS THE PIEDMONT TRIAD
           </h2>
           <p className="text-white/70 max-w-2xl mx-auto mb-8">
-            From Statesville to Mebane, your neighbors trust us with their homes. We bring the same care and quality to every job, big or small.
+            Your neighbors across the Piedmont Triad trust us with their homes. We bring the same care and quality to every job, big or small.
           </p>
           <CTAButton text="Schedule Your Service" variant="secondary" />
         </div>

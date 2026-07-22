@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-const SITE_URL = 'https://topnotchgaragedoors.com';
+const SITE_URL = 'https://www.trytopnotchdoors.com';
 const SITE_NAME = 'Top-Notch Garage Doors';
 const DEFAULT_DESCRIPTION = 'Expert garage door troubleshooting, repair, and installation serving the Piedmont Triad from Statesville to Mebane, NC. Same-day emergency service, authorized Clopay & LiftMaster dealer.';
 

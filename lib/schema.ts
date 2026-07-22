@@ -1,4 +1,4 @@
-const BUSINESS_ID = 'https://topnotchgaragedoors.com';
+const BUSINESS_ID = 'https://www.trytopnotchdoors.com';
 
 export const BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',

@@ -26,7 +26,7 @@ export default function OpenersPage() {
           __html: JSON.stringify(serviceSchema({
             name: 'Garage Door Opener Installation & Repair',
             description: 'Professional garage door opener services in Whitsett, NC and surrounding areas.',
-            url: 'https://topnotchgaragedoors.com/services/openers',
+            url: 'https://www.trytopnotchdoors.com/services/openers',
           })),
         }}
       />

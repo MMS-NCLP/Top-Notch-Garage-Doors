@@ -35,7 +35,7 @@ export default function RepairPage() {
           __html: JSON.stringify(serviceSchema({
             name: 'Garage Door Repair',
             description: 'Expert garage door repair services including emergency same-day service in Whitsett, NC and surrounding areas.',
-            url: 'https://topnotchgaragedoors.com/services/repair',
+            url: 'https://www.trytopnotchdoors.com/services/repair',
           })),
         }}
       />

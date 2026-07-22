@@ -25,7 +25,7 @@ export default function PressureWashingPage() {
           __html: JSON.stringify(serviceSchema({
             name: 'Pressure Washing',
             description: 'Professional pressure washing and soft washing services in Whitsett, NC.',
-            url: 'https://topnotchgaragedoors.com/services/pressure-washing',
+            url: 'https://www.trytopnotchdoors.com/services/pressure-washing',
           })),
         }}
       />

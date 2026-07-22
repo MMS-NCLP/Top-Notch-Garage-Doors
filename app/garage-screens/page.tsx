@@ -33,7 +33,7 @@ export default function GarageScreensPage() {
           __html: JSON.stringify(serviceSchema({
             name: 'Garage Screen Door Installation',
             description: 'Professional garage screen door installation in Whitsett, NC.',
-            url: 'https://topnotchgaragedoors.com/garage-screens',
+            url: 'https://www.trytopnotchdoors.com/garage-screens',
           })),
         }}
       />

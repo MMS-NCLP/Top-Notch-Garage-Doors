@@ -19,7 +19,7 @@ export default function InstallationPage() {
           __html: JSON.stringify(serviceSchema({
             name: 'Garage Door Installation',
             description: 'Professional garage door installation in Whitsett, NC and surrounding areas.',
-            url: 'https://topnotchgaragedoors.com/services/installation',
+            url: 'https://www.trytopnotchdoors.com/services/installation',
           })),
         }}
       />

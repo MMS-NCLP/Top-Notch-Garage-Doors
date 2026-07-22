@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   return {
     title: `Garage Door Services in ${area.name}, NC — ${area.county} | Top-Notch Garage Doors`,
     description: `Professional garage door repair, installation, and maintenance in ${area.name}, NC. Serving ${area.neighborhoods.length}+ neighborhoods in ${area.county}. Factory-trained technicians, same-day emergency service, no service call fee.`,
-    alternates: { canonical: `https://topnotchgaragedoors.com/service-areas/${city}` },
+    alternates: { canonical: `https://www.trytopnotchdoors.com/service-areas/${city}` },
     keywords: area.keywords.join(', '),
   };
 }
@@ -86,7 +86,7 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
           __html: JSON.stringify(serviceSchema({
             name: `Garage Door Services in ${area.name}, NC`,
             description: `Professional garage door services in ${area.name}, ${area.county}, NC. Serving ${area.neighborhoods.length}+ neighborhoods.`,
-            url: `https://topnotchgaragedoors.com/service-areas/${city}`,
+            url: `https://www.trytopnotchdoors.com/service-areas/${city}`,
           })),
         }}
       />
