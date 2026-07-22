@@ -46,9 +46,12 @@ export default function Hero({
       ) : null}
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/40 to-transparent" />
       <div className="absolute inset-0 z-[1] opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-      {/* Logo watermark */}
+      {/* Logo watermarks */}
       <div className="absolute top-6 right-6 z-[2] opacity-15 hidden lg:block">
         <Image src="/images/logos/tngd-logo-small-1.png" alt="" width={100} height={100} className="object-contain" />
+      </div>
+      <div className="absolute bottom-6 left-6 z-[2] opacity-10 hidden lg:block">
+        <Image src="/images/logos/tngd-logo-text.png" alt="" width={160} height={80} className="object-contain" />
       </div>
 
       <div className="relative z-[5] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

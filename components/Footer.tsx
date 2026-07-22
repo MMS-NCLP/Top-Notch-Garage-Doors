@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Phone, Clock, Printer } from 'lucide-react';
 import CTAButton from './CTAButton';
+import LogoText from './LogoText';
 
 export default function Footer() {
   return (
@@ -112,8 +113,8 @@ export default function Footer() {
               className="w-9 h-9 object-contain opacity-60"
             />
             <div>
-              <p>&copy; {new Date().getFullYear()} Top-Notch Garage Doors. All rights reserved.</p>
-              <p className="mt-1">Site Powered by Momentum Marketing Solutions LLC.</p>
+              <p>&copy; {new Date().getFullYear()} <span className="font-hero tracking-wider text-white/60">Top-Notch Garage Doors</span>. All rights reserved.</p>
+              <p className="mt-1">Site Powered by <span className="text-white/60">Momentum Marketing Solutions LLC</span>.</p>
             </div>
           </div>
           <div className="flex items-center gap-4">

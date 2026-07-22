@@ -7,6 +7,7 @@ import LocalTownsGrid from '@/components/LocalTownsGrid';
 import FeaturedPortfolio from '@/components/FeaturedPortfolio';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Wrench, Home, Zap, Droplets, AlertTriangle, BookOpen, Handshake, Shield, Star } from 'lucide-react';
 
 export const metadata = genMeta({
@@ -208,6 +209,13 @@ export default function HomePage() {
       {/* 8. FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Image
+            src="/images/logos/tngd-logo-text.png"
+            alt="Top-Notch Garage Doors"
+            width={200}
+            height={100}
+            className="w-44 h-auto object-contain mx-auto mb-6 brightness-0 invert opacity-90"
+          />
           <h2 className="font-hero text-3xl tracking-wider mb-4">
             TRUSTED ACROSS THE PIEDMONT TRIAD
           </h2>

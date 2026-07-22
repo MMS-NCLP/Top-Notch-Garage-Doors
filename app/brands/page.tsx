@@ -128,6 +128,9 @@ export default function BrandsPage() {
         <div className="absolute top-6 right-6 opacity-15 hidden lg:block">
           <Image src="/images/logos/tngd-logo-small-1.png" alt="" width={100} height={100} className="object-contain" />
         </div>
+        <div className="absolute bottom-6 left-6 opacity-10 hidden lg:block">
+          <Image src="/images/logos/tngd-logo-text.png" alt="" width={160} height={80} className="object-contain brightness-0 invert" />
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-flex items-center gap-2 text-xs font-display uppercase tracking-widest text-brand-gold mb-4">
             <BadgeCheck className="w-4 h-4" /> Authorized Dealer & Certified Installer

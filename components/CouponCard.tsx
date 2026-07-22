@@ -68,8 +68,8 @@ export default function CouponCard({
               </div>
               <p className="text-[10px] text-foreground/40">EXP. {expDate}</p>
             </div>
-            <div className="hidden sm:block w-10 h-10 relative opacity-30">
-              <Image src="/images/logos/tngd-logo-small-1.png" alt="" fill className="object-contain" sizes="40px" />
+            <div className="hidden sm:block w-24 h-12 relative opacity-25">
+              <Image src="/images/logos/tngd-logo-text.png" alt="" fill className="object-contain" sizes="96px" />
             </div>
           </div>
         </div>

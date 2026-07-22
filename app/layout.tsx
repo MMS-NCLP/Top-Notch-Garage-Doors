@@ -33,7 +33,7 @@ const yellowtail = Yellowtail({
 export const metadata: Metadata = {
   title: 'Top-Notch Garage Doors | Piedmont Triad, NC',
   description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Mebane. Fast service by real pros — certified & insured.',
-  metadataBase: new URL('https://topnotchgaragedoors.com'),
+  metadataBase: new URL('https://www.trytopnotchdoors.com'),
 };
 
 export default function RootLayout({
