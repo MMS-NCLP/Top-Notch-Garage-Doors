@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { MapPin, Phone, Clock } from 'lucide-react';
+import Image from 'next/image';
+import { MapPin, Phone, Clock, Printer } from 'lucide-react';
 import CTAButton from './CTAButton';
 
 export default function Footer() {
@@ -9,61 +10,111 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <h3 className="font-display text-lg uppercase tracking-tight mb-4">Top-Notch Garage Doors</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <Image
+                src="/images/logos/tngd-logo-small-1.png"
+                alt="Top-Notch Garage Doors logo"
+                width={56}
+                height={56}
+                className="w-14 h-14 object-contain"
+              />
+              <h3 className="font-hero text-lg tracking-wider">TOP-NOTCH GARAGE DOORS</h3>
+            </div>
             <p className="text-white/70 text-sm leading-relaxed mb-6">
-              Professional garage door services serving Whitsett &amp; surrounding areas. Quality craftsmanship you can trust.
+              Professional garage door services serving the Piedmont Triad corridor from Statesville to Mebane. Quality craftsmanship you can trust.
             </p>
-            <CTAButton text="Schedule Service" variant="secondary" />
+            <CTAButton text="Request a Quote" variant="secondary" />
           </div>
 
           <div>
-            <h4 className="font-display text-sm uppercase tracking-wider mb-4 text-brand-gold">Services</h4>
+            <h4 className="font-display text-sm uppercase tracking-wider mb-4 text-brand-gold">Our Services</h4>
             <ul className="space-y-2.5 text-sm text-white/70">
-              <li><Link href="/services/repair" className="hover:text-white transition-colors">Garage Door Repair</Link></li>
-              <li><Link href="/services/installation" className="hover:text-white transition-colors">Installation</Link></li>
-              <li><Link href="/services/openers" className="hover:text-white transition-colors">Openers</Link></li>
-              <li><Link href="/services/pressure-washing" className="hover:text-white transition-colors">Pressure Washing</Link></li>
-              <li><Link href="/garage-screens" className="hover:text-white transition-colors">Garage Screen Doors</Link></li>
+              <li><Link href="/services/repair" className="hover:text-white transition-colors">Garage Door Emergency Repair</Link></li>
+              <li><Link href="/services/installation" className="hover:text-white transition-colors">Garage Door Installation</Link></li>
+              <li><Link href="/services/repair" className="hover:text-white transition-colors">Garage Door Maintenance</Link></li>
+              <li><Link href="/services/openers" className="hover:text-white transition-colors">Garage Door Opener Service</Link></li>
+              <li><Link href="/design-tool" className="hover:text-white transition-colors">Door Designer Tool</Link></li>
+              <li><Link href="/services/pressure-washing" className="hover:text-white transition-colors">Pressure Washing Service</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-display text-sm uppercase tracking-wider mb-4 text-brand-gold">Company</h4>
+            <h4 className="font-display text-sm uppercase tracking-wider mb-4 text-brand-gold">About Us</h4>
             <ul className="space-y-2.5 text-sm text-white/70">
-              <li><Link href="/brands" className="hover:text-white transition-colors">Brands We Carry</Link></li>
-              <li><Link href="/reviews" className="hover:text-white transition-colors">Reviews</Link></li>
-              <li><Link href="/warranty" className="hover:text-white transition-colors">Warranty</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">Our Story</Link></li>
+              <li><Link href="/reviews" className="hover:text-white transition-colors">Local Inspirations</Link></li>
+              <li><Link href="/blog" className="hover:text-white transition-colors">TNGD Blog</Link></li>
+              <li><Link href="/resources" className="hover:text-white transition-colors">FAQ</Link></li>
+              <li><Link href="/warranty" className="hover:text-white transition-colors">Product Warranty Disclosures</Link></li>
               <li><Link href="/partnership" className="hover:text-white transition-colors">Partnerships</Link></li>
-              <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-              <li><Link href="/resources" className="hover:text-white transition-colors">Resources</Link></li>
               <li><Link href="/coupons" className="hover:text-white transition-colors">Coupons</Link></li>
             </ul>
+
+            <h4 className="font-display text-sm uppercase tracking-wider mt-6 mb-3 text-brand-gold">Other Services</h4>
+            <ul className="space-y-2.5 text-sm text-white/70">
+              <li><Link href="/services/pressure-washing" className="hover:text-white transition-colors">Pressure Washing</Link></li>
+              <li><Link href="/garage-screens" className="hover:text-white transition-colors">Screen Doors</Link></li>
+              <li><Link href="/partnership" className="hover:text-white transition-colors">Partnerships</Link></li>
+            </ul>
           </div>
 
           <div>
-            <h4 className="font-display text-sm uppercase tracking-wider mb-4 text-brand-gold">Contact</h4>
+            <h4 className="font-display text-sm uppercase tracking-wider mb-4 text-brand-gold">Contact Us</h4>
             <address className="not-italic text-sm text-white/70 space-y-3">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-gold" />
-                <span>705 NC Hwy 61<br />Whitsett, NC 27377</span>
+                <span>1183 University Drive Ste 105, #2115<br />Burlington, NC 27215</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0 text-brand-gold" />
-                <a href="tel:+13360000000" className="hover:text-white transition-colors">(336) 000-0000</a>
+                <a href="tel:+13366046494" className="hover:text-white transition-colors">(336) 604-6494</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Printer className="w-4 h-4 shrink-0 text-brand-gold" />
+                <span>Fax: (336) 604-0809</span>
               </div>
               <div className="flex items-start gap-2">
                 <Clock className="w-4 h-4 mt-0.5 shrink-0 text-brand-gold" />
-                <span>Mon–Fri: 7AM–6PM<br />Sat: 8AM–4PM</span>
+                <span>Mon–Fri: 8AM–5:30PM<br />Sat: 9AM–4PM</span>
               </div>
             </address>
+
+            <div className="mt-6 flex items-center gap-3">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Facebook</a>
+              <span className="text-white/20">|</span>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Instagram</a>
+              <span className="text-white/20">|</span>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">LinkedIn</a>
+            </div>
           </div>
         </div>
 
         <div className="divider-gleam mt-12 mb-8" />
+
+        {/* Trust badges */}
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 text-xs text-white/50 uppercase tracking-wider">
+          <span>Fast Service by Real Pros</span>
+          <span className="text-white/20 hidden sm:inline">|</span>
+          <span>No Service Call Fee</span>
+          <span className="text-white/20 hidden sm:inline">|</span>
+          <span>Certified &amp; Insured</span>
+          <span className="text-white/20 hidden sm:inline">|</span>
+          <span>Local &amp; Trusted Experts</span>
+        </div>
+
         <div className="flex flex-col sm:flex-row items-center justify-between text-sm text-white/50 gap-4">
-          <div>
-            <p>&copy; {new Date().getFullYear()} Top-Notch Garage Doors. All rights reserved.</p>
-            <p className="mt-1">Serving Whitsett &amp; Surrounding Areas</p>
+          <div className="flex items-center gap-3 text-center sm:text-left">
+            <Image
+              src="/images/logos/tngd-logo-small-2.png"
+              alt=""
+              width={36}
+              height={36}
+              className="w-9 h-9 object-contain opacity-60"
+            />
+            <div>
+              <p>&copy; {new Date().getFullYear()} Top-Notch Garage Doors. All rights reserved.</p>
+              <p className="mt-1">Site Powered by Momentum Marketing Solutions LLC.</p>
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>

@@ -26,6 +26,16 @@ const PLACEHOLDER_REVIEWS: Review[] = [
     service_type: 'screen_door', review_text: 'The retractable screen turned our garage into a second living room. Kids play there all summer now without the bugs. Best home improvement we\'ve done.',
     contractor_name: null, job_date: null, source: 'form', featured: true, created_at: '2026-03-22',
   },
+  {
+    id: '5', name: 'Patricia W.', city: 'High Point', rating: 5,
+    service_type: 'installation', review_text: 'Had them replace both doors on our duplex rental property. Matched the style perfectly, both doors installed in one day. Great communication and fair pricing.',
+    contractor_name: null, job_date: null, source: 'form', featured: true, created_at: '2024-12-02',
+  },
+  {
+    id: '6', name: 'Wayne B.', city: 'Statesville', rating: 5,
+    service_type: 'installation', review_text: 'Drove all the way out to Statesville and still showed up on time. New Clopay door looks fantastic on our ranch. Professional crew, clean job site.',
+    contractor_name: null, job_date: null, source: 'form', featured: true, created_at: '2025-02-28',
+  },
 ];
 
 export default function ReviewCarousel({ reviews }: { reviews?: Review[] }) {

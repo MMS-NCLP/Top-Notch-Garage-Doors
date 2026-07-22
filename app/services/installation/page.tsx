@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema } from '@/lib/schema';
@@ -23,13 +24,30 @@ export default function InstallationPage() {
         }}
       />
 
+      {/* HERO BANNER */}
+      <section className="relative h-64 sm:h-80 overflow-hidden">
+        <Image
+          src="/images/hero/modern-black-garage-door-installation-nc.jpg"
+          alt="Professional garage door installation in the Piedmont Triad NC"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+          <div className="max-w-4xl mx-auto">
+            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-2">
+              <BookOpen className="w-4 h-4" /> Buyer&apos;s Guide
+            </span>
+            <h1 className="font-hero text-3xl sm:text-4xl text-white tracking-wider">GARAGE DOOR INSTALLATION</h1>
+          </div>
+        </div>
+      </section>
+
       {/* EDUCATION */}
-      <section className="py-20 surface-matte">
+      <section className="py-16 surface-matte">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-4">
-            <BookOpen className="w-4 h-4" /> Buyer&apos;s Guide
-          </span>
-          <h1 className="font-display text-4xl text-brand-blue uppercase mb-4">Garage Door Installation</h1>
           <p className="text-lg text-foreground/70 mb-8 leading-relaxed">
             A new garage door is one of the highest-ROI home improvements — returning over 90% of its cost at resale. But with dozens of styles, materials, and insulation levels, choosing the right door matters. Here&apos;s what you need to know.
           </p>
@@ -92,6 +110,22 @@ export default function InstallationPage() {
               </li>
             ))}
           </ol>
+
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Installations</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+            {[
+              { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Day Ave duplex new construction completed with TNGD truck Burlington NC' },
+              { src: '/images/portfolio/installations/craftsman-raised-panel-7-windows-exterior-nc.jpg', alt: 'Craftsman raised-panel garage door installation NC' },
+              { src: '/images/portfolio/installations/residential-door-installation-piedmont-after.jpg', alt: 'Residential garage door installation Piedmont Triad' },
+              { src: '/images/portfolio/installations/new-garage-door-burlington-nc-exterior.jpg', alt: 'New garage door installation Burlington NC' },
+              { src: '/images/portfolio/construction/day-ave-black-door-completed-exterior-burlington-nc.jpg', alt: 'Day Ave new construction black door installation Burlington NC' },
+              { src: '/images/portfolio/installations/garage-door-install-alamance-county-1.jpg', alt: 'Garage door installation Alamance County NC' },
+            ].map((img) => (
+              <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
+                <Image src={img.src} alt={img.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
+            ))}
+          </div>
 
           <div className="text-center">
             <CTAButton text="Get a Free Quote" variant="primary" />

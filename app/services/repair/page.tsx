@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema, faqSchema } from '@/lib/schema';
@@ -43,13 +44,30 @@ export default function RepairPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
       />
 
+      {/* HERO BANNER */}
+      <section className="relative h-64 sm:h-80 overflow-hidden">
+        <Image
+          src="/images/hero/emergency-crashed-garage-door-nc.jpg"
+          alt="Emergency garage door repair in the Piedmont Triad NC"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+          <div className="max-w-4xl mx-auto">
+            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-2">
+              <BookOpen className="w-4 h-4" /> Diagnostic Guide
+            </span>
+            <h1 className="font-hero text-3xl sm:text-4xl text-white tracking-wider">GARAGE DOOR REPAIR</h1>
+          </div>
+        </div>
+      </section>
+
       {/* EDUCATION */}
-      <section className="py-20 surface-matte">
+      <section className="py-16 surface-matte">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-4">
-            <BookOpen className="w-4 h-4" /> Diagnostic Guide
-          </span>
-          <h1 className="font-display text-4xl text-brand-blue uppercase mb-4">Garage Door Repair</h1>
           <p className="text-lg text-foreground/70 mb-8 leading-relaxed">
             Before you call, understanding what&apos;s happening with your door helps us arrive prepared with the right parts. Here&apos;s what different symptoms typically mean — and whether it&apos;s safe to wait or you need immediate service.
           </p>
@@ -129,6 +147,22 @@ export default function RepairPage() {
               <div key={faq.question}>
                 <h3 className="font-display text-lg text-brand-blue mb-1">{faq.question}</h3>
                 <p className="text-sm text-foreground/70 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Repair Work</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+            {[
+              { src: '/images/portfolio/springs/broken-spring-replacement-nc.jpg', alt: 'Broken garage door spring replacement in NC' },
+              { src: '/images/portfolio/springs/broken-torsion-spring-piedmont-triad.jpg', alt: 'Broken torsion spring repair in Piedmont Triad' },
+              { src: '/images/portfolio/springs/spring-failure-repair-greensboro-1.jpg', alt: 'Spring failure emergency repair in Greensboro NC' },
+              { src: '/images/portfolio/before-after/old-roller-replacement-nc-before.jpg', alt: 'Worn roller replacement before service in NC' },
+              { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-before.jpg', alt: 'Damaged garage door before repair in Piedmont Triad' },
+              { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-after.jpg', alt: 'Repaired garage door after service in Piedmont Triad' },
+            ].map((img) => (
+              <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
+                <Image src={img.src} alt={img.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
           </div>

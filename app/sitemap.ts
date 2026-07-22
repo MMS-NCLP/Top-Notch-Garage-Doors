@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://topnotchgaragedoors.com';
 
-const cities = ['whitsett', 'burlington', 'greensboro', 'gibsonville', 'mcleansville', 'elon'];
+const cities = ['statesville', 'mooresville', 'salisbury', 'lexington', 'thomasville', 'high-point', 'greensboro', 'mcleansville', 'gibsonville', 'whitsett', 'burlington', 'elon', 'mebane'];
 
 const blogSlugs = [
   'garage-door-springs-replacement-guide',
@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/design-tool`, changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${BASE_URL}/coupons`, changeFrequency: 'weekly' as const, priority: 0.7 },
     { url: `${BASE_URL}/promotions`, changeFrequency: 'weekly' as const, priority: 0.7 },
+    { url: `${BASE_URL}/portfolio`, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${BASE_URL}/blog`, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${BASE_URL}/reviews`, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${BASE_URL}/warranty`, changeFrequency: 'monthly' as const, priority: 0.6 },

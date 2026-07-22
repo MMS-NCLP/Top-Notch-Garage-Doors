@@ -1,34 +1,67 @@
 'use client';
 
-import { StaggerContainer, StaggerItem } from './motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BadgeCheck } from 'lucide-react';
 
 const BRANDS = [
-  { name: 'Clopay', slug: 'clopay' },
-  { name: 'LiftMaster', slug: 'liftmaster' },
-  { name: 'Amarr', slug: 'amarr' },
-  { name: 'CHI Overhead Doors', slug: 'chi' },
-  { name: 'Wayne Dalton', slug: 'wayne-dalton' },
-  { name: 'Chamberlain', slug: 'chamberlain' },
+  { name: 'Clopay', logo: '/images/logos/brand-clopay.png' },
+  { name: 'LiftMaster', logo: '/images/logos/brand-liftmaster.png' },
+  { name: 'Amarr', logo: '/images/logos/brand-amarr.png' },
+  { name: 'Chamberlain', logo: '/images/logos/brand-chamberlain.png' },
+  { name: 'Genie', logo: '/images/logos/brand-genie.png' },
+  { name: 'Haas Door', logo: '/images/logos/brand-haas.png' },
+  { name: 'Overhead Door', logo: '/images/logos/brand-overhead-door.png' },
+  { name: 'Garaga', logo: '/images/logos/brand-garaga.png' },
 ];
+
+function BrandItem({ name, logo }: { name: string; logo: string }) {
+  return (
+    <div className="flex-shrink-0 w-36 h-20 flex items-center justify-center px-4">
+      <Image
+        src={logo}
+        alt={`${name} logo`}
+        width={120}
+        height={60}
+        className="object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+      />
+    </div>
+  );
+}
 
 export default function BrandGrid() {
   return (
-    <section className="py-16 surface-matte">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="font-display text-2xl text-center text-brand-blue uppercase mb-10">
-          Brands We Trust
+    <section className="py-16 surface-matte overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
+        <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+          <BadgeCheck className="w-4 h-4" /> Authorized Dealer & Certified Installer
+        </span>
+        <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">
+          Brands We Carry & Service
         </h2>
-        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-          {BRANDS.map((brand) => (
-            <StaggerItem key={brand.slug}>
-              <div className="surface-elevated rounded-lg border border-brand-silver/20 p-6 flex items-center justify-center aspect-[3/2] hover:shadow-md transition-shadow gleam">
-                <span className="font-display text-sm text-brand-blue/70 uppercase text-center">
-                  {brand.name}
-                </span>
-              </div>
-            </StaggerItem>
+        <p className="text-foreground/60 text-sm max-w-xl mx-auto">
+          Factory-trained technicians. Genuine OEM parts. Manufacturer-backed warranties.
+        </p>
+      </div>
+
+      <div className="relative">
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--surface-matte)] to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--surface-matte)] to-transparent z-10" />
+
+        <div className="flex animate-marquee">
+          {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, i) => (
+            <BrandItem key={`${brand.name}-${i}`} name={brand.name} logo={brand.logo} />
           ))}
-        </StaggerContainer>
+        </div>
+      </div>
+
+      <div className="text-center mt-8">
+        <Link
+          href="/brands"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg font-display text-xs uppercase tracking-wider font-semibold text-brand-blue border border-brand-blue/30 hover:bg-brand-blue hover:text-white transition-all duration-200"
+        >
+          View All Brands & Partnerships
+        </Link>
       </div>
     </section>
   );

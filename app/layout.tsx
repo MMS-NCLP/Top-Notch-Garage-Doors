@@ -1,9 +1,16 @@
 import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import { Oswald, Roboto, Yellowtail } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BUSINESS_SCHEMA } from '@/lib/schema';
 import './globals.css';
+
+const norwester = localFont({
+  src: '../public/fonts/norwester-400.woff2',
+  variable: '--font-norwester',
+  display: 'swap',
+});
 
 const oswald = Oswald({
   variable: '--font-oswald',
@@ -24,8 +31,8 @@ const yellowtail = Yellowtail({
 });
 
 export const metadata: Metadata = {
-  title: 'Top-Notch Garage Doors | Whitsett, NC',
-  description: 'Professional garage door repair, installation, and maintenance serving Whitsett, NC & surrounding areas. Quality craftsmanship, trusted local experts.',
+  title: 'Top-Notch Garage Doors | Piedmont Triad, NC',
+  description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Mebane. Fast service by real pros — certified & insured.',
   metadataBase: new URL('https://topnotchgaragedoors.com'),
 };
 
@@ -35,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${oswald.variable} ${roboto.variable} ${yellowtail.variable} h-full antialiased`}>
+    <html lang="en" className={`${norwester.variable} ${oswald.variable} ${roboto.variable} ${yellowtail.variable} h-full antialiased`}>
       <head>
         <script
           type="application/ld+json"

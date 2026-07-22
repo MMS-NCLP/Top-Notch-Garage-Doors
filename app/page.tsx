@@ -4,12 +4,14 @@ import BrandGrid from '@/components/BrandGrid';
 import CTAButton from '@/components/CTAButton';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import LocalTownsGrid from '@/components/LocalTownsGrid';
+import FeaturedPortfolio from '@/components/FeaturedPortfolio';
 import { generateMetadata as genMeta } from '@/lib/seo';
+import Link from 'next/link';
 import { Wrench, Home, Zap, Droplets, AlertTriangle, BookOpen, Handshake, Shield, Star } from 'lucide-react';
 
 export const metadata = genMeta({
   title: 'Garage Door Troubleshooting, Repair & Installation',
-  description: 'Expert garage door troubleshooting and repair in Whitsett, NC. Learn why your garage door won\'t open, makes noise, or has broken springs. Same-day emergency service available.',
+  description: 'Expert garage door troubleshooting and repair serving the Piedmont Triad from Statesville to Mebane, NC. Same-day emergency service. Certified & insured — no service call fee.',
   path: '/',
 });
 
@@ -17,10 +19,11 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        title="Top-Notch Garage Doors"
+        title="TOP-NOTCH GARAGE DOORS"
         subtitle="Quality You Can Trust"
         showPhone
         showLocation
+        slideshow
       />
 
       {/* 1. EDUCATION FIRST */}
@@ -71,7 +74,7 @@ export default function HomePage() {
               Need Immediate Help?
             </h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
-              Broken spring? Door off track? Opener not responding? We offer same-day emergency repair across the Triad.
+              Broken spring? Door off track? Opener not responding? We offer same-day emergency repair from Statesville to Mebane.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -123,6 +126,11 @@ export default function HomePage() {
           <ReviewCarousel />
         </div>
       </section>
+
+      <div className="divider-gleam" />
+
+      {/* FEATURED PORTFOLIO */}
+      <FeaturedPortfolio />
 
       <div className="divider-gleam" />
 
@@ -182,9 +190,17 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="surface-elevated border border-brand-gold/30 rounded-lg p-8 gleam">
             <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Current Offer</h2>
-            <p className="font-accent text-xl text-brand-gold mb-3">Summer Tune-Up Special — $89</p>
-            <p className="text-sm text-foreground/60 mb-6">Complete 21-point inspection, lubrication, balance check, and hardware tightening. Regular price $149.</p>
-            <CTAButton text="Claim Offer" variant="secondary" />
+            <p className="font-accent text-xl text-brand-gold mb-3">Garage Door Tune-Up — $69</p>
+            <p className="text-sm text-foreground/60 mb-6">
+              Complete 21-point inspection, lubrication, balance check, and hardware tightening.
+              Use code <span className="font-mono font-bold text-brand-blue">TNGD-TUNE69</span> at booking. Expires July 19, 2027.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <CTAButton text="Book Tune-Up" variant="secondary" />
+              <Link href="/coupons" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-display text-sm uppercase tracking-wider font-semibold transition-all duration-200 border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white">
+                View All Coupons
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -192,11 +208,11 @@ export default function HomePage() {
       {/* 8. FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl uppercase mb-4">
-            Trusted in Whitsett &amp; Beyond
+          <h2 className="font-hero text-3xl tracking-wider mb-4">
+            TRUSTED ACROSS THE PIEDMONT TRIAD
           </h2>
           <p className="text-white/70 max-w-2xl mx-auto mb-8">
-            Your neighbors trust us with their homes. We bring the same care and quality to every job, big or small.
+            From Statesville to Mebane, your neighbors trust us with their homes. We bring the same care and quality to every job, big or small.
           </p>
           <CTAButton text="Schedule Your Service" variant="secondary" />
         </div>

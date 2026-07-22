@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema } from '@/lib/schema';
@@ -30,13 +31,30 @@ export default function OpenersPage() {
         }}
       />
 
+      {/* HERO BANNER */}
+      <section className="relative h-64 sm:h-80 overflow-hidden">
+        <Image
+          src="/images/portfolio/openers/liftmaster-opener-install-nc.jpg"
+          alt="LiftMaster garage door opener installation in NC"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+          <div className="max-w-4xl mx-auto">
+            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-2">
+              <BookOpen className="w-4 h-4" /> Opener Guide
+            </span>
+            <h1 className="font-hero text-3xl sm:text-4xl text-white tracking-wider">GARAGE DOOR OPENERS</h1>
+          </div>
+        </div>
+      </section>
+
       {/* EDUCATION */}
-      <section className="py-20 surface-matte">
+      <section className="py-16 surface-matte">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-4">
-            <BookOpen className="w-4 h-4" /> Opener Guide
-          </span>
-          <h1 className="font-display text-4xl text-brand-blue uppercase mb-4">Garage Door Openers</h1>
           <p className="text-lg text-foreground/70 mb-8 leading-relaxed">
             Your opener is the brain of the system — controlling access, safety, and convenience. Understanding how it works helps you troubleshoot issues and choose the right upgrade when it&apos;s time.
           </p>
@@ -94,6 +112,22 @@ export default function OpenersPage() {
               <span key={brand} className="px-4 py-2 surface-elevated border border-brand-silver/20 rounded-full text-sm font-medium text-brand-blue gleam">
                 {brand}
               </span>
+            ))}
+          </div>
+
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Opener Work</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+            {[
+              { src: '/images/portfolio/openers/chamberlain-opener-closeup-product-nc.jpg', alt: 'Chamberlain Smart ceiling-mount garage door opener close-up' },
+              { src: '/images/portfolio/openers/liftmaster-jackshaft-opener-detail-nc.jpg', alt: 'LiftMaster jackshaft wall-mount opener motor and cable drum detail' },
+              { src: '/images/portfolio/openers/chamberlain-ceiling-mount-opener-install-nc.jpg', alt: 'Chamberlain ceiling-mount opener installed in residential garage' },
+              { src: '/images/portfolio/openers/opener-installation-piedmont-triad-1.jpg', alt: 'Garage door opener installation Piedmont Triad' },
+              { src: '/images/portfolio/openers/opener-replacement-greensboro-nc-after.jpg', alt: 'New opener replacement in Greensboro NC' },
+              { src: '/images/portfolio/openers/garage-door-opener-burlington-nc.jpg', alt: 'Garage door opener installation Burlington NC' },
+            ].map((img) => (
+              <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
+                <Image src={img.src} alt={img.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
             ))}
           </div>
 

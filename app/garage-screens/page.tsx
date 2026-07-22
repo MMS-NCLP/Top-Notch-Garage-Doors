@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema, faqSchema } from '@/lib/schema';
@@ -52,6 +53,28 @@ export default function GarageScreensPage() {
           <p className="text-lg text-foreground/70 mb-8 leading-relaxed">
             A garage screen door transforms underused space into a versatile extension of your home. Whether you want a bug-free workshop, an open-air gym, or a shaded place to relax on warm evenings — screens make it possible without sacrificing your garage door functionality.
           </p>
+
+          {/* Hero gallery */}
+          <div className="grid gap-4 sm:grid-cols-2 mb-12">
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image
+                src="/images/portfolio/screens/screen-door-brick-american-flag-hero-nc.jpg"
+                alt="Premium garage screen door on brick home with American flag in Piedmont Triad NC"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+            </div>
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image
+                src="/images/portfolio/screens/garage-screen-door-green-house-nc.jpg"
+                alt="Retractable garage screen door installed on green house in High Point NC"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+            </div>
+          </div>
 
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Key Benefits</h2>
           <div className="grid gap-4 sm:grid-cols-2 mb-12">
@@ -113,6 +136,30 @@ export default function GarageScreensPage() {
           </div>
         </div>
       </section>
+
+      {/* REAL INSTALLATIONS GALLERY */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Real Installations</h2>
+          <p className="text-foreground/60 mb-6">From frame assembly to finished product — see our screen door installations across the Piedmont Triad.</p>
+          <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 mb-12">
+            {[
+              { src: '/images/portfolio/screens/tngd-tech-screen-panel-assembly-nc.jpg', alt: 'TNGD technician assembling garage screen panel' },
+              { src: '/images/portfolio/screens/screen-door-frame-assembly-tngd-truck-nc.jpg', alt: 'Screen door frame assembly with TNGD truck' },
+              { src: '/images/portfolio/screens/screen-door-install-progress-man-cave-nc.jpg', alt: 'Screen door installation in progress' },
+              { src: '/images/portfolio/screens/screen-door-interior-view-completed-nc.jpg', alt: 'Interior view of completed screen door' },
+              { src: '/images/portfolio/screens/retractable-screen-door-completed-beige-house-nc.jpg', alt: 'Completed retractable screen on beige house' },
+              { src: '/images/portfolio/screens/retractable-screen-piedmont-triad-1.jpg', alt: 'Retractable mesh garage screen door' },
+            ].map((img) => (
+              <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
+                <Image src={img.src} alt={img.alt} fill className="object-cover hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, 33vw" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="divider-gleam" />
 
       {/* INSTALLATION PROCESS */}
       <section className="py-16">

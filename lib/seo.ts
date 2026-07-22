@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 const SITE_URL = 'https://topnotchgaragedoors.com';
 const SITE_NAME = 'Top-Notch Garage Doors';
-const DEFAULT_DESCRIPTION = 'Expert garage door troubleshooting, repair, and installation in Whitsett, NC. Learn why your door won\'t open, find emergency same-day service, and explore premium installation options.';
+const DEFAULT_DESCRIPTION = 'Expert garage door troubleshooting, repair, and installation serving the Piedmont Triad from Statesville to Mebane, NC. Same-day emergency service, authorized Clopay & LiftMaster dealer.';
 
 export function generateMetadata({
   title,
@@ -21,13 +21,17 @@ export function generateMetadata({
   const fullTitle = `${title} | ${SITE_NAME}`;
 
   const defaultKeywords = [
-    'garage door troubleshooting',
-    'garage door repair Whitsett NC',
-    'garage door won\'t open',
-    'broken garage door spring',
-    'same-day garage door repair',
-    'garage door installation',
-    'garage door maintenance',
+    'garage door repair Piedmont Triad NC',
+    'garage door installation Burlington NC',
+    'garage door repair Greensboro NC',
+    'garage door service Whitsett NC',
+    'garage door repair High Point NC',
+    'garage door Statesville to Mebane',
+    'same-day garage door repair NC',
+    'broken garage door spring repair',
+    'garage door opener installation NC',
+    'authorized Clopay dealer NC',
+    'LiftMaster certified installer',
   ];
 
   return {

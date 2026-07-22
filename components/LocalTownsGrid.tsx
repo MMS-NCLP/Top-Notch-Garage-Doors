@@ -3,15 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
-
-const TOWNS = [
-  { name: 'Whitsett', slug: 'whitsett', tagline: 'Our Home Base' },
-  { name: 'Burlington', slug: 'burlington', tagline: 'Alamance County' },
-  { name: 'Greensboro', slug: 'greensboro', tagline: 'Guilford County' },
-  { name: 'Gibsonville', slug: 'gibsonville', tagline: 'Minutes Away' },
-  { name: 'McLeansville', slug: 'mcleansville', tagline: 'Eastern Guilford' },
-  { name: 'Elon', slug: 'elon', tagline: 'University Town' },
-];
+import { SERVICE_AREAS } from '@/lib/service-areas';
 
 export default function LocalTownsGrid() {
   return (
@@ -25,26 +17,26 @@ export default function LocalTownsGrid() {
             Serving Your Neighborhood
           </h2>
           <p className="text-foreground/60 max-w-xl mx-auto text-sm">
-            We&apos;re not a national chain — we&apos;re your neighbors. Based in Whitsett, serving the Piedmont Triad with priority local service.
+            We&apos;re not a national chain — we&apos;re your neighbors. Serving the entire Piedmont Triad corridor from Statesville to Mebane with priority local service.
           </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {TOWNS.map((town, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {SERVICE_AREAS.map((area, i) => (
             <motion.div
-              key={town.slug}
+              key={area.slug}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: i * 0.06 }}
+              transition={{ duration: 0.3, delay: i * 0.04 }}
               whileHover={{ y: -3 }}
             >
               <Link
-                href={`/service-areas/${town.slug}`}
+                href={`/service-areas/${area.slug}`}
                 className="block surface-elevated border border-brand-silver/20 rounded-lg p-4 text-center hover:border-brand-blue/30 transition-all gleam"
               >
                 <MapPin className="w-5 h-5 text-brand-blue mx-auto mb-2" />
-                <p className="font-display text-sm text-brand-blue">{town.name}</p>
-                <p className="text-xs text-foreground/40 mt-0.5">{town.tagline}</p>
+                <p className="font-display text-sm text-brand-blue">{area.name}</p>
+                <p className="text-xs text-foreground/40 mt-0.5">{area.tagline}</p>
               </Link>
             </motion.div>
           ))}
