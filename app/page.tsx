@@ -191,10 +191,10 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="surface-elevated border border-brand-gold/30 rounded-lg p-8 gleam">
             <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Current Offer</h2>
-            <p className="font-accent text-xl text-brand-gold mb-3">Garage Door Tune-Up — $69</p>
+            <p className="font-accent text-xl text-brand-gold mb-3">Garage Door Tune-Up — $79 <span className="text-foreground/40 text-base line-through">$129</span></p>
             <p className="text-sm text-foreground/60 mb-6">
               Complete 21-point inspection, lubrication, balance check, and hardware tightening.
-              Use code <span className="font-mono font-bold text-brand-blue">TNGD-TUNE69</span> at booking. Expires July 19, 2027.
+              Use code <span className="font-mono font-bold text-brand-blue">TNGD-TUNE79</span> at booking. Expires July 22, 2027.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <CTAButton text="Book Tune-Up" variant="secondary" />

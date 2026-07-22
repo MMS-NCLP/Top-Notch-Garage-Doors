@@ -27,25 +27,11 @@ const promotions = [
     terms: 'Valid on any double-width garage door purchase. Installation labor not included unless bundled.',
   },
   {
-    title: 'Door + Motor Bundle',
-    value: '$399 VALUE',
-    description: 'Buy any fully insulated door and get a 1/2 HP belt-drive motor with 2 remotes for just $199.',
-    code: 'TNGD-BUNDLE399',
-    terms: 'Motor upgrade is a 1/2 HP belt-drive with 2 remotes. Must purchase fully insulated door to qualify. Cannot be combined with other motor promotions.',
-  },
-  {
-    title: 'Motor + Roller Bundle',
-    value: '$249 VALUE',
-    description: 'All Elite Series motors include a free set of long-stem 10-point ball bearing nylon rollers for ultra-quiet performance.',
-    code: 'TNGD-ELITE249',
-    terms: 'Applies to Elite Series motor purchases only. Nylon roller set included at no additional charge with qualifying motor installation.',
-  },
-  {
     title: 'Lube & Tune — Standard',
-    value: '$69',
-    description: 'Complete 21-point garage door tune-up: lubrication, balance check, safety inspection, and hardware tightening.',
-    code: 'TNGD-TUNE69',
-    terms: 'Physical mailer or printed coupon must be presented at time of service. Digital screenshots not accepted for this offer.',
+    value: '$79',
+    description: 'Complete 21-point garage door tune-up: lubrication, balance check, safety inspection, and hardware tightening. Normally $129.',
+    code: 'TNGD-TUNE79',
+    terms: 'Regular price $129. Coupon price $79. Physical mailer or printed coupon must be presented at time of service. Digital screenshots not accepted for this offer.',
   },
   {
     title: 'Keypad + Tune-Up Special',
@@ -56,28 +42,49 @@ const promotions = [
   },
   {
     title: 'Weatherseal Bundle — Single',
-    value: '$199',
+    value: 'SAVE $29',
     description: 'Complete weatherseal package for single doors: vinyl trim on all sides plus bottom rubber seal replacement.',
-    code: 'TNGD-SEAL199',
+    code: 'TNGD-SEAL29',
     terms: 'Includes vinyl trim and bottom rubber for one single-width door. Additional doors quoted separately.',
   },
   {
     title: 'Weatherseal Bundle — Double',
-    value: '$299',
+    value: 'SAVE $69',
     description: 'Complete weatherseal package for double doors: full perimeter vinyl trim plus heavy-duty bottom rubber seal.',
-    code: 'TNGD-SEAL299',
+    code: 'TNGD-SEAL69',
     terms: 'Includes vinyl trim and bottom rubber for one double-width door. Additional doors quoted separately.',
   },
   {
-    title: 'Elite Motor + Surge Protector',
-    value: '$69 FREE',
-    description: 'Buy any Elite Series motor and receive a surge protector free — protect your investment from power spikes.',
-    code: 'TNGD-SURGE69',
-    terms: 'Surge protector included free with any Elite Series motor purchase. One per motor. Installation included.',
+    title: 'Veteran Discount',
+    value: '10% OFF',
+    description: 'Thank you for your service. All active-duty military and veterans receive 10% off any service.',
+    code: 'TNGD-VET10',
+    terms: 'Must present valid military ID, DD-214, or VA card at time of service. Applies to labor and parts on any service call. One discount per household per visit.',
+  },
+  {
+    title: 'Healthcare Workers Discount',
+    value: '10% OFF',
+    description: 'We appreciate those who care for our community. All hospital and healthcare workers receive 10% off any service.',
+    code: 'TNGD-HEALTH10',
+    terms: 'Must present valid hospital or healthcare employer ID badge at time of service. Applies to labor and parts on any service call. One discount per household per visit.',
+  },
+  {
+    title: 'Block Party — Neighbor Discount',
+    value: '15% OFF',
+    description: '2 or more households on the same street booking together each receive 15% off service. Rally your neighbors and save.',
+    code: 'TNGD-BLOCK15',
+    terms: 'Valid for service calls only — does not apply to new door or motor installations. Each participating household must present their own coupon. Limit one (1) coupon per household. All participating households must be located on the same street and schedule service within the same 7-day window. Discount applied to labor only, not parts. Cannot be combined with any other offer.',
+  },
+  {
+    title: 'Winter Insulation Upgrade',
+    value: '$200 OFF',
+    description: 'Save $200 on any R-16 or higher insulated garage door. Cut energy costs and keep your garage comfortable year-round.',
+    code: 'TNGD-INSUL200',
+    terms: 'Valid on purchase of any garage door rated R-16 or above. Applies to door purchase only — installation labor quoted separately unless bundled. One coupon per door. Must present coupon before order is placed. Cannot be combined with other door sale coupons.',
   },
 ];
 
-const expiresAt = '2027-07-19';
+const expiresAt = '2027-07-22';
 
 export default function CouponsPage() {
   return (
@@ -93,7 +100,7 @@ export default function CouponsPage() {
           </div>
           <div className="flex items-center justify-center gap-2 text-xs text-foreground/40 print:hidden">
             <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span>All coupons active — Expires July 19, 2027</span>
+            <span>All coupons active — Expires July 22, 2027</span>
           </div>
         </div>
       </section>
@@ -139,10 +146,10 @@ export default function CouponsPage() {
             <h2 className="font-display text-sm text-brand-blue uppercase mb-3">General Terms & Conditions</h2>
             <ul className="text-[11px] text-foreground/50 space-y-1.5 leading-relaxed">
               <li>• Limit one (1) coupon honored per household per service visit.</li>
-              <li>• Coupons cannot be combined with any other offer, promotion, or discount unless explicitly stated.</li>
+              <li>• Coupons cannot be combined with any other offer, promotion, or discount unless explicitly stated. No coupon stacking — only one (1) coupon may be applied per service or transaction.</li>
               <li>• Must present coupon (printed or digital screenshot) at time of service before work begins.</li>
               <li>• Valid only within the Top-Notch Garage Doors service area: Guilford, Alamance, Rockingham, Caswell, Randolph, and surrounding NC counties.</li>
-              <li>• All coupons expire July 19, 2027. No extensions will be granted past expiration date.</li>
+              <li>• All coupons expire July 22, 2027. No extensions will be granted past expiration date.</li>
               <li>• Top-Notch Garage Doors reserves the right to modify or discontinue any promotion without prior notice.</li>
               <li>• Coupons have no cash value and are non-transferable.</li>
               <li>• Void where prohibited by law.</li>

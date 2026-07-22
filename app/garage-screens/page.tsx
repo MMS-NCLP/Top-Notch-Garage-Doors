@@ -76,6 +76,19 @@ export default function GarageScreensPage() {
             </div>
           </div>
 
+          {/* Promo Video */}
+          <div className="relative rounded-lg overflow-hidden shadow-lg mb-12">
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full h-auto rounded-lg"
+              poster="/images/portfolio/screens/screen-door-brick-american-flag-hero-nc.jpg"
+            >
+              <source src="/videos/tngd-screen-door-promo.mp4" type="video/mp4" />
+            </video>
+          </div>
+
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Key Benefits</h2>
           <div className="grid gap-4 sm:grid-cols-2 mb-12">
             {[
