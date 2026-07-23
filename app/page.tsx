@@ -5,6 +5,7 @@ import CTAButton from '@/components/CTAButton';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import LocalTownsGrid from '@/components/LocalTownsGrid';
 import FeaturedPortfolio from '@/components/FeaturedPortfolio';
+import CallbackForm from '@/components/CallbackForm';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -288,7 +289,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. FINAL CTA */}
+      {/* 8. CALLBACK FORM */}
+      <CallbackForm />
+
+      {/* 9. FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-hero text-3xl tracking-wider mb-4">

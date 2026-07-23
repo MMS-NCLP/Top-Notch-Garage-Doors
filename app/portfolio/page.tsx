@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import PortfolioGallery from '@/components/PortfolioGallery';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
+import { projects } from '@/lib/portfolio-data';
 
 export const metadata: Metadata = genMeta({
   title: 'Local Inspirations — Portfolio',
@@ -9,9 +10,47 @@ export const metadata: Metadata = genMeta({
   path: '/portfolio',
 });
 
+function portfolioSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Top-Notch Garage Doors — Project Portfolio',
+    description: 'Garage door installations, repairs, spring work, opener service, and emergency work across the Piedmont Triad corridor from Statesville to Durham, NC.',
+    numberOfItems: projects.length,
+    itemListElement: projects.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Service',
+        name: project.title,
+        description: project.caption,
+        areaServed: {
+          '@type': 'City',
+          name: project.location,
+        },
+        provider: {
+          '@type': 'LocalBusiness',
+          '@id': 'https://www.trytopnotchdoors.com/#business',
+          name: 'Top-Notch Garage Doors',
+        },
+        image: project.images.map((img) => ({
+          '@type': 'ImageObject',
+          url: `https://www.trytopnotchdoors.com${img.src}`,
+          name: img.alt,
+          description: img.alt,
+        })),
+      },
+    })),
+  };
+}
+
 export default function PortfolioPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioSchema()) }}
+      />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">

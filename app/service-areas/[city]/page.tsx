@@ -2,9 +2,10 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import CTAButton from '@/components/CTAButton';
 import ReviewCard from '@/components/ReviewCard';
+import PortfolioPreview from '@/components/PortfolioPreview';
 import { serviceSchema } from '@/lib/schema';
 import { SERVICE_AREAS, getAreaBySlug, getAllSlugs } from '@/lib/service-areas';
-import { projects } from '@/lib/portfolio-data';
+import { getProjectsByCity } from '@/lib/portfolio-data';
 import { MapPin, ChevronRight, ShieldCheck, Wrench, Home, Zap, Droplets, PanelTop, BookOpen, Star } from 'lucide-react';
 import type { Review } from '@/lib/supabaseClient';
 
@@ -42,9 +43,7 @@ function getReviewsForCity(cityName: string): Review[] {
 }
 
 function getPortfolioForCity(cityName: string) {
-  return projects.filter(
-    (p) => p.location.toLowerCase().includes(cityName.toLowerCase())
-  ).slice(0, 3);
+  return getProjectsByCity(cityName, 3);
 }
 
 const SERVICES = [
@@ -299,42 +298,11 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
       {cityPortfolio.length > 0 && (
         <>
           <div className="divider-gleam" />
-          <section className="py-16 surface-matte">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">
-                Recent Work in {area.name}
-              </h2>
-              <p className="text-foreground/60 text-sm mb-8">
-                Real projects completed by our team right here in {area.name}.
-              </p>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {cityPortfolio.map((project) => (
-                  <Link
-                    key={project.id}
-                    href={`/portfolio#${project.id}`}
-                    className="group surface-elevated border border-brand-silver/20 rounded-lg p-5 hover:shadow-md hover:border-brand-blue/20 transition-all gleam"
-                  >
-                    <h3 className="font-display text-base text-brand-blue group-hover:text-brand-red transition-colors mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-foreground/60 leading-relaxed mb-3">{project.outcome}</p>
-                    <div className="flex items-center gap-2 text-xs text-foreground/40">
-                      <MapPin className="w-3 h-3 text-brand-gold" />
-                      <span>{project.location}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              <div className="text-center mt-8">
-                <Link
-                  href="/portfolio"
-                  className="text-sm font-display uppercase tracking-wider text-brand-red hover:text-red-700 transition-colors"
-                >
-                  View Full Portfolio &rarr;
-                </Link>
-              </div>
-            </div>
-          </section>
+          <PortfolioPreview
+            projects={cityPortfolio}
+            heading={`Recent Work in ${area.name}`}
+            subheading={`Real projects completed by our team right here in ${area.name}.`}
+          />
         </>
       )}
 

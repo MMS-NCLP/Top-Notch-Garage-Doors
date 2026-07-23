@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
+import PortfolioPreview from '@/components/PortfolioPreview';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema } from '@/lib/schema';
+import { getProjectsByService } from '@/lib/portfolio-data';
 import { BookOpen, Wifi, Battery, Volume2, Smartphone, AlertTriangle } from 'lucide-react';
+
+const openerProjects = getProjectsByService('opener-work', 3);
 
 export const metadata = genMeta({
   title: 'Garage Door Openers — Smart Openers, Repair & Installation',
@@ -123,27 +127,19 @@ export default function OpenersPage() {
             </p>
           </div>
 
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Opener Work</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
-            {[
-              { src: '/images/portfolio/openers/chamberlain-opener-closeup-product-nc.jpg', alt: 'Chamberlain Smart ceiling-mount garage door opener close-up' },
-              { src: '/images/portfolio/openers/liftmaster-jackshaft-opener-detail-nc.jpg', alt: 'LiftMaster jackshaft wall-mount opener motor and cable drum detail' },
-              { src: '/images/portfolio/openers/chamberlain-ceiling-mount-opener-install-nc.jpg', alt: 'Chamberlain ceiling-mount opener installed in residential garage' },
-              { src: '/images/portfolio/openers/opener-installation-piedmont-triad-1.jpg', alt: 'Garage door opener installation Piedmont Triad' },
-              { src: '/images/portfolio/openers/opener-replacement-greensboro-nc-after.jpg', alt: 'New opener replacement in Greensboro NC' },
-              { src: '/images/portfolio/openers/garage-door-opener-burlington-nc.jpg', alt: 'Garage door opener installation Burlington NC' },
-            ].map((img) => (
-              <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
-                <Image src={img.src} alt={img.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-            ))}
-          </div>
-
           <div className="text-center">
             <CTAButton text="Book Opener Service" variant="primary" />
           </div>
         </div>
       </section>
+
+      <div className="divider-gleam" />
+
+      <PortfolioPreview
+        projects={openerProjects}
+        heading="Recent Opener Work"
+        subheading="Smart opener installs, repairs, and upgrades across the corridor."
+      />
     </>
   );
 }

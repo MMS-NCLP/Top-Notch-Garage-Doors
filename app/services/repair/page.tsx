@@ -1,8 +1,14 @@
 import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
+import PortfolioPreview from '@/components/PortfolioPreview';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema, faqSchema } from '@/lib/schema';
+import { getProjectsByService } from '@/lib/portfolio-data';
 import { AlertTriangle, CheckCircle, BookOpen, Phone } from 'lucide-react';
+
+const repairProjects = getProjectsByService('repairs', 3);
+const springProjects = getProjectsByService('spring-work', 3);
+const portfolioProjects = [...repairProjects, ...springProjects].slice(0, 3);
 
 export const metadata = genMeta({
   title: 'Garage Door Repair — Troubleshooting & Same-Day Service',
@@ -159,27 +165,19 @@ export default function RepairPage() {
             ))}
           </div>
 
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Repair Work</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
-            {[
-              { src: '/images/portfolio/springs/broken-spring-replacement-nc.jpg', alt: 'Broken garage door spring replacement in NC' },
-              { src: '/images/portfolio/springs/broken-torsion-spring-piedmont-triad.jpg', alt: 'Broken torsion spring repair in Piedmont Triad' },
-              { src: '/images/portfolio/springs/spring-failure-repair-greensboro-1.jpg', alt: 'Spring failure emergency repair in Greensboro NC' },
-              { src: '/images/portfolio/before-after/old-roller-replacement-nc-before.jpg', alt: 'Worn roller replacement before service in NC' },
-              { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-before.jpg', alt: 'Damaged garage door before repair in Piedmont Triad' },
-              { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-after.jpg', alt: 'Repaired garage door after service in Piedmont Triad' },
-            ].map((img) => (
-              <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
-                <Image src={img.src} alt={img.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-            ))}
-          </div>
-
           <div className="text-center">
             <CTAButton text="Schedule Repair" variant="primary" />
           </div>
         </div>
       </section>
+
+      <div className="divider-gleam" />
+
+      <PortfolioPreview
+        projects={portfolioProjects}
+        heading="Recent Repair & Spring Work"
+        subheading="Real repairs across the Piedmont Triad — before, during, and after."
+      />
     </>
   );
 }

@@ -79,6 +79,11 @@ const registrationLinks = [
     url: 'https://www.geniecompany.com/support',
     description: 'Register your Genie opener or access support and troubleshooting.',
   },
+  {
+    brand: 'Lifestyle Screens',
+    url: 'https://www.lifestylescreens.com/warranty-registration.html',
+    description: 'Register your Lifestyle garage screen for lifetime limited warranty coverage on parts and materials.',
+  },
 ];
 
 export default function WarrantyPage() {

@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
+import PortfolioPreview from '@/components/PortfolioPreview';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { serviceSchema } from '@/lib/schema';
+import { getProjectsByService } from '@/lib/portfolio-data';
 import { BookOpen, Home, Thermometer, Palette, Shield } from 'lucide-react';
+
+const installProjects = getProjectsByService('installations', 3);
 
 export const metadata = genMeta({
   title: 'Garage Door Installation — Modern Doors & Professional Installation',
@@ -132,6 +136,14 @@ export default function InstallationPage() {
           </div>
         </div>
       </section>
+
+      <div className="divider-gleam" />
+
+      <PortfolioPreview
+        projects={installProjects}
+        heading="Recent Installations"
+        subheading="New doors, full system upgrades, and new construction across the corridor."
+      />
     </>
   );
 }
