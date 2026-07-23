@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 const SITE_URL = 'https://www.trytopnotchdoors.com';
 const SITE_NAME = 'Top-Notch Garage Doors';
-const DEFAULT_DESCRIPTION = 'Expert garage door troubleshooting, repair, and installation serving the Piedmont Triad from Statesville to Mebane, NC. Same-day emergency service, authorized Clopay & LiftMaster dealer.';
+const DEFAULT_DESCRIPTION = 'Expert garage door troubleshooting, repair, and installation serving the Piedmont Triad from Statesville to Durham, NC. Same-day emergency service, authorized Clopay & LiftMaster dealer.';
 
 export function generateMetadata({
   title,
@@ -26,7 +26,7 @@ export function generateMetadata({
     'garage door repair Greensboro NC',
     'garage door service Whitsett NC',
     'garage door repair High Point NC',
-    'garage door Statesville to Mebane',
+    'garage door Statesville to Durham',
     'same-day garage door repair NC',
     'broken garage door spring repair',
     'garage door opener installation NC',

@@ -20,7 +20,7 @@ export default function TermsPage() {
           <p>By accessing and using the Top-Notch Garage Doors website (www.trytopnotchdoors.com), you agree to be bound by these Terms of Service. If you do not agree, please do not use our website.</p>
 
           <h2 className="font-display text-xl text-brand-blue mt-8">2. Services</h2>
-          <p>Top-Notch Garage Doors LLC provides garage door repair, installation, maintenance, garage screen doors, pressure washing, and related services serving the Piedmont Triad corridor from Statesville to Mebane, NC. Service availability, pricing, and scheduling are subject to change without notice.</p>
+          <p>Top-Notch Garage Doors LLC provides garage door repair, installation, maintenance, garage screen doors, pressure washing, and related services serving the Piedmont Triad corridor from Statesville to Durham, NC. Service availability, pricing, and scheduling are subject to change without notice.</p>
 
           <h2 className="font-display text-xl text-brand-blue mt-8">3. Appointments and Scheduling</h2>
           <p>Appointments booked through our website or Square scheduling system are subject to availability. We reserve the right to reschedule appointments due to weather, emergencies, or other circumstances beyond our control. We will make reasonable efforts to notify you of any changes.</p>

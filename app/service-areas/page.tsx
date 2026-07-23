@@ -6,13 +6,13 @@ import { SERVICE_AREAS, getAreasByPosition, getNeighborhoodCount } from '@/lib/s
 import { MapPin, ShieldCheck, Truck, Clock, ChevronRight, Users, Star } from 'lucide-react';
 
 export const metadata = genMeta({
-  title: 'Service Areas — Statesville to Mebane, NC',
-  description: 'Top-Notch Garage Doors covers 5 counties and 50+ neighborhoods across the Piedmont Triad corridor from Statesville to Mebane, NC. Factory-trained technicians, same-day emergency service, and authorized dealer coverage throughout the region.',
+  title: 'Service Areas — Statesville to Durham, NC',
+  description: 'Top-Notch Garage Doors covers 6 counties and 50+ neighborhoods across the Piedmont Triad corridor from Statesville to Durham, NC. Factory-trained technicians, same-day emergency service, and authorized dealer coverage throughout the region.',
   path: '/service-areas',
   keywords: [
     'garage door service Piedmont Triad',
     'garage door repair near me NC',
-    'Statesville to Mebane garage door',
+    'Statesville to Durham garage door',
     ...SERVICE_AREAS.flatMap((a) => a.keywords.slice(0, 1)),
   ],
 });
@@ -20,7 +20,7 @@ export const metadata = genMeta({
 const CORRIDOR_SECTIONS = [
   { position: 'west' as const, label: 'Extended Western Coverage', description: 'Thomasville, Lexington, Salisbury, Mooresville, and Statesville — we cast our net wide into Iredell, Rowan, and Davidson counties so homeowners at the far edge of the Triad get the same quality.' },
   { position: 'central' as const, label: 'Core Service Area', description: 'High Point, Greensboro, and McLeansville form the heart of our dispatch zone. Our busiest service area — factory-trained technicians who know every neighborhood.' },
-  { position: 'east' as const, label: 'Home Base & Eastern Corridor', description: 'Burlington, Whitsett, Gibsonville, Elon, and Mebane. This is where Top-Notch was built — our dispatch center, our strongest relationships, and the communities that gave us our start.' },
+  { position: 'east' as const, label: 'Home Base & Eastern Corridor', description: 'Burlington, Whitsett, Gibsonville, Elon, Mebane, and Durham. This is where Top-Notch was built — our dispatch center, our strongest relationships, and now extending into the Triangle with Durham as our Eastern Metro Anchor.' },
 ];
 
 export default function ServiceAreasPage() {
@@ -42,13 +42,13 @@ export default function ServiceAreasPage() {
             <MapPin className="w-4 h-4" /> Piedmont Triad Coverage
           </span>
           <h1 className="font-hero text-4xl sm:text-5xl lg:text-6xl tracking-wider mb-4">
-            STATESVILLE TO MEBANE
+            STATESVILLE TO DURHAM
           </h1>
           <p className="font-display text-lg sm:text-xl uppercase tracking-wide text-white/80 mb-3">
             We Built Our Reputation One Town at a Time
           </p>
           <p className="text-white/60 max-w-2xl mx-auto mb-8">
-            The Piedmont Triad corridor is the operational backbone of Top-Notch Garage Doors. 5 counties, {totalNeighborhoods}+ neighborhoods, and the same factory-trained service at every stop.
+            The Piedmont Triad corridor is the operational backbone of Top-Notch Garage Doors. 6 counties, {totalNeighborhoods}+ neighborhoods, and the same factory-trained service at every stop.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-white/50 uppercase tracking-wider">
             <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5 text-brand-gold" /> Same-Day Emergency Service</span>

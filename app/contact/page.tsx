@@ -149,7 +149,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-display text-sm uppercase tracking-wider text-brand-gold mb-1">Coverage Area</h3>
-                <p className="text-foreground/70 text-sm">Serving the Piedmont Triad corridor from Statesville to Mebane — Guilford, Alamance, Rockingham, Caswell, Randolph, and surrounding NC counties.</p>
+                <p className="text-foreground/70 text-sm">Serving the Piedmont Triad corridor from Statesville to Durham — Guilford, Alamance, Durham, Iredell, Rowan, Davidson, and surrounding NC counties.</p>
               </div>
             </div>
 

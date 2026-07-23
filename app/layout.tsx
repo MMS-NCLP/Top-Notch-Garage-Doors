@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Oswald, Roboto, Yellowtail } from 'next/font/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BUSINESS_SCHEMA } from '@/lib/schema';
 import './globals.css';
+
+const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const norwester = localFont({
   src: '../public/fonts/norwester-400.woff2',
@@ -32,7 +35,7 @@ const yellowtail = Yellowtail({
 
 export const metadata: Metadata = {
   title: 'Top-Notch Garage Doors | Piedmont Triad, NC',
-  description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Mebane. Fast service by real pros — certified & insured.',
+  description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Durham. Fast service by real pros — certified & insured.',
   metadataBase: new URL('https://www.trytopnotchdoors.com'),
 };
 
@@ -54,6 +57,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
+      {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }

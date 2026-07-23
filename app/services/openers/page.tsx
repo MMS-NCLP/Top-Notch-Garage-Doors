@@ -115,6 +115,14 @@ export default function OpenersPage() {
             ))}
           </div>
 
+          {/* Durham Knowledge Block */}
+          <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-lg p-6 mb-12">
+            <h3 className="font-display text-lg text-brand-blue mb-2">Durham Smart Opener Behavior</h3>
+            <p className="text-sm text-foreground/60 leading-relaxed">
+              Smart openers in Durham often experience sensor drift due to humidity changes in the Triangle. This causes intermittent failure and false obstruction alerts — symptoms homeowners frequently mistake for a broken opener. Proper calibration of the safety sensors and opener load settings prevents these issues and extends the life of the system.
+            </p>
+          </div>
+
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Opener Work</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
             {[

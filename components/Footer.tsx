@@ -22,7 +22,7 @@ export default function Footer() {
               <h3 className="font-hero text-lg tracking-wider">TOP-NOTCH GARAGE DOORS</h3>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-6">
-              Professional garage door services serving the Piedmont Triad corridor from Statesville to Mebane. Quality craftsmanship you can trust.
+              Professional garage door services serving the Piedmont Triad corridor from Statesville to Durham. Quality craftsmanship you can trust.
             </p>
             <CTAButton text="Request a Quote" variant="secondary" />
           </div>

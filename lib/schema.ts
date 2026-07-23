@@ -5,7 +5,7 @@ export const BUSINESS_SCHEMA = {
   '@type': 'LocalBusiness',
   '@id': BUSINESS_ID,
   name: 'Top-Notch Garage Doors',
-  description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Mebane, NC. Authorized Clopay, LiftMaster, and Amarr dealer with factory-trained technicians.',
+  description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Durham, NC. Authorized Clopay, LiftMaster, and Amarr dealer with factory-trained technicians.',
   url: BUSINESS_ID,
   telephone: '+1-336-604-6494',
   faxNumber: '+1-336-604-0809',
@@ -100,7 +100,7 @@ export function serviceSchema({
     },
     areaServed: {
       '@type': 'Place',
-      name: 'Piedmont Triad, NC — Statesville to Mebane',
+      name: 'Piedmont Triad, NC — Statesville to Durham',
     },
   };
 }

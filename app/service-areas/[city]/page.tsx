@@ -23,6 +23,9 @@ const PLACEHOLDER_REVIEWS: Review[] = [
   { id: 'sa-12', name: 'Darcy H.', city: 'Mebane', rating: 5, service_type: 'installation', review_text: 'New door and motor installed same day. They hauled away the old one and left the garage cleaner.', contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2025-09-12' },
   { id: 'sa-13', name: 'Rick F.', city: 'Elon', rating: 5, service_type: 'installation', review_text: 'Beautiful carriage house style — exactly what we wanted. Neighbors keep stopping to compliment it.', contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2025-08-20' },
   { id: 'sa-14', name: 'John M.', city: 'McLeansville', rating: 5, service_type: 'repair', review_text: 'Broken torsion spring — they had the right size on the truck. Replaced in under 45 minutes.', contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2025-07-02' },
+  { id: 'sa-15', name: 'Kevin D.', city: 'Durham', rating: 5, service_type: 'opener', review_text: 'Smart opener was acting up after the humidity spike. They recalibrated the sensors and adjusted the opener load — works perfectly now.', contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2026-06-28' },
+  { id: 'sa-16', name: 'Angela R.', city: 'Durham', rating: 5, service_type: 'installation', review_text: 'New insulated steel door on our Hope Valley home. Installation was flawless, and they walked us through the smart opener setup on our phones.', contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2026-05-15' },
+  { id: 'sa-17', name: 'Brian W.', city: 'Durham', rating: 5, service_type: 'repair', review_text: 'Cable snapped on the Southpoint house. They were out same day with the right parts. Professional and thorough — explained everything clearly.', contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2026-04-22' },
 ];
 
 function getReviewsForCity(cityName: string): Review[] {
@@ -91,6 +94,25 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
         }}
       />
 
+      {/* Durham FAQ Schema */}
+      {city === 'durham' && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                { '@type': 'Question', name: 'Why does my garage door make noise in Durham?', acceptedAnswer: { '@type': 'Answer', text: 'Durham homes often experience noise from track expansion due to seasonal temperature swings and humidity. Dry rollers, loose hardware, and opener load imbalance are common causes. Annual lubrication and a balance check resolve most noise issues.' } },
+                { '@type': 'Question', name: 'How does humidity affect garage door sensors in Durham?', acceptedAnswer: { '@type': 'Answer', text: 'Triangle humidity causes condensation on safety sensor lenses and can shift sensor alignment over time — a condition called sensor drift. This leads to intermittent false obstruction alerts and doors that reverse unexpectedly. Proper recalibration and lens cleaning prevent these faults.' } },
+                { '@type': 'Question', name: 'What garage door types are most common in Durham homes?', acceptedAnswer: { '@type': 'Answer', text: 'Durham homes built between 2000–2020 predominantly use insulated steel doors (R-12 to R-18) paired with smart openers. Older neighborhoods like Duke Park feature wood and composite doors. New construction in Southpoint and RTP areas trend toward modern flush-panel steel with integrated smart systems.' } },
+                { '@type': 'Question', name: 'How often should Durham homeowners service their garage doors?', acceptedAnswer: { '@type': 'Answer', text: 'We recommend annual maintenance for Durham homes — spring balance testing, lubrication of all moving parts, hardware tightening, sensor calibration, and opener load testing. Homes with heavy daily use or smart opener systems benefit from semi-annual checks.' } },
+              ],
+            }),
+          }}
+        />
+      )}
+
       {/* HERO */}
       <section className="py-16 lg:py-20 surface-matte">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,6 +142,77 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
       </section>
 
       <div className="divider-gleam" />
+
+      {/* Durham E-E-A-T + Local Authority */}
+      {city === 'durham' && (
+        <>
+          <section className="py-16">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-8">
+                <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+                  <BookOpen className="w-4 h-4" /> Durham Garage Door Expertise
+                </span>
+                <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
+                  Understanding Durham&apos;s Garage Door Systems
+                </h2>
+              </div>
+              <div className="surface-elevated border border-brand-silver/20 rounded-lg p-8 gleam mb-8">
+                <p className="text-foreground/70 leading-relaxed mb-4">
+                  Homes built in Durham between 2000–2020 often use insulated steel doors paired with modern smart openers. These systems rely on precise sensor alignment, balanced spring tension, and correct opener load calibration. Seasonal humidity in the Triangle can accelerate cable wear and cause intermittent sensor faults. Homeowners frequently report noise issues caused by track expansion and opener load imbalance.
+                </p>
+                <p className="text-foreground/70 leading-relaxed font-medium">
+                  Understanding these local patterns helps homeowners make informed decisions about repair, maintenance, and long-term reliability.
+                </p>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+                  <h3 className="font-display text-base text-brand-blue uppercase mb-2">Experience &amp; Expertise</h3>
+                  <p className="text-sm text-foreground/60 leading-relaxed">
+                    We service Durham homes daily, from modern builds to renovated older properties. Our technicians are trained in smart opener calibration and insulated door balance testing — the specific skills Durham homes demand.
+                  </p>
+                </div>
+                <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+                  <h3 className="font-display text-base text-brand-blue uppercase mb-2">Authority &amp; Trust</h3>
+                  <p className="text-sm text-foreground/60 leading-relaxed">
+                    Durham homeowners consistently recommend our clear communication and disciplined workmanship. Every repair includes a safety check, balance test, and sensor verification — no shortcuts, no surprises.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div className="divider-gleam" />
+
+          {/* Durham FAQs */}
+          <section className="py-16 surface-matte">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="font-display text-2xl text-brand-blue uppercase mb-8 text-center">
+                Durham Garage Door FAQs
+              </h2>
+              <div className="space-y-4">
+                {[
+                  { q: 'Why does my garage door make noise in Durham?', a: 'Durham homes often experience noise from track expansion due to seasonal temperature swings and humidity. Dry rollers, loose hardware, and opener load imbalance are common causes. Annual lubrication and a balance check resolve most noise issues.' },
+                  { q: 'How does humidity affect garage door sensors in Durham?', a: 'Triangle humidity causes condensation on safety sensor lenses and can shift sensor alignment over time — a condition called sensor drift. This leads to intermittent false obstruction alerts. Proper recalibration and lens cleaning prevent these faults.' },
+                  { q: 'What garage door types are most common in Durham homes?', a: 'Durham homes built between 2000–2020 predominantly use insulated steel doors (R-12 to R-18) paired with smart openers. Older neighborhoods like Duke Park feature wood and composite doors. New construction trends toward modern flush-panel steel with integrated smart systems.' },
+                  { q: 'How often should Durham homeowners service their garage doors?', a: 'We recommend annual maintenance — spring balance testing, lubrication, hardware tightening, sensor calibration, and opener load testing. Homes with heavy daily use or smart opener systems benefit from semi-annual checks.' },
+                ].map((faq, i) => (
+                  <details key={i} className="surface-elevated border border-brand-silver/20 rounded-lg gleam group">
+                    <summary className="p-5 cursor-pointer font-display text-sm text-brand-blue uppercase tracking-wider list-none flex items-center justify-between">
+                      {faq.q}
+                      <ChevronRight className="w-4 h-4 text-brand-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
+                    </summary>
+                    <div className="px-5 pb-5">
+                      <p className="text-sm text-foreground/60 leading-relaxed">{faq.a}</p>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <div className="divider-gleam" />
+        </>
+      )}
 
       {/* NEIGHBORHOODS */}
       <section className="py-16">
@@ -254,7 +347,7 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
             Other Communities We Serve
           </h2>
           <p className="text-foreground/60 text-sm mb-6">
-            5 counties, {SERVICE_AREAS.length}+ communities — one standard of service across the Piedmont Triad.
+            6 counties, {SERVICE_AREAS.length}+ communities — one standard of service across the Piedmont Triad.
           </p>
           <div className="flex flex-wrap gap-2">
             {otherAreas.map((a) => (

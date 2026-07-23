@@ -18,14 +18,14 @@ function LinkedinIcon({ className }: { className?: string }) {
 
 export const metadata = genMeta({
   title: 'About Us — Top-Notch Garage Doors',
-  description: 'Locally owned garage door company serving the Piedmont Triad from Statesville to Mebane, NC. Certified, insured, and trusted by your neighbors.',
+  description: 'Locally owned garage door company serving the Piedmont Triad from Statesville to Durham, NC. Certified, insured, and trusted by your neighbors.',
   path: '/about',
 });
 
 const VALUES = [
   { icon: <Shield className="w-6 h-6" />, title: 'Certified & Insured', desc: 'Fully licensed, bonded, and insured for your protection. We carry liability and workers\' comp on every job.' },
   { icon: <Clock className="w-6 h-6" />, title: 'Same-Day Service', desc: 'Broken spring at 7am? We can be there by noon. Emergency repairs are our specialty — not an afterthought.' },
-  { icon: <MapPin className="w-6 h-6" />, title: 'Locally Owned', desc: 'Based in Burlington, NC. We live in the communities we serve — from Statesville to Mebane and everywhere between.' },
+  { icon: <MapPin className="w-6 h-6" />, title: 'Locally Owned', desc: 'Based in Burlington, NC. We live in the communities we serve — from Statesville to Durham and everywhere between.' },
   { icon: <Award className="w-6 h-6" />, title: 'Factory Authorized', desc: 'Certified dealer and installer for Clopay, LiftMaster, Chamberlain, Amarr, and other top brands.' },
   { icon: <Users className="w-6 h-6" />, title: 'Trusted by Neighbors', desc: 'Five-star reviews from real homeowners across the Piedmont Triad. Our reputation is built one door at a time.' },
   { icon: <Wrench className="w-6 h-6" />, title: 'No Service Call Fee', desc: 'We don\'t charge just to show up. You pay for the work, not the visit. Fair pricing, always.' },
@@ -93,7 +93,7 @@ export default function AboutPage() {
                   We&apos;re not a franchise. We&apos;re not a call center. When you call Top-Notch, you get a real person who lives in your community. Our technicians are factory-trained, our trucks are fully stocked, and we show up when we say we will.
                 </p>
                 <p>
-                  From Statesville to Mebane, we&apos;ve built our reputation one door at a time — through fast response times, fair pricing, and work we stand behind. Whether it&apos;s a broken spring at 7am or a full new-construction install, we treat every job like it&apos;s our own home.
+                  From Statesville to Durham, we&apos;ve built our reputation one door at a time — through fast response times, fair pricing, and work we stand behind. Whether it&apos;s a broken spring at 7am or a full new-construction install, we treat every job like it&apos;s our own home.
                 </p>
               </div>
             </div>
@@ -198,7 +198,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <Image src="/images/logos/tngd-logo-small-1.png" alt="Top-Notch Garage Doors badge" width={80} height={80} className="w-20 h-20 object-contain mx-auto mb-4" />
             <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
-              <MapPin className="w-4 h-4" /> Statesville to Mebane
+              <MapPin className="w-4 h-4" /> Statesville to Durham
             </span>
             <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Our Coverage Area</h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">

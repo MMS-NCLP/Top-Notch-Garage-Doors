@@ -211,6 +211,23 @@ export const SERVICE_AREAS: ServiceArea[] = [
     ],
     keywords: ['garage door repair Mebane NC', 'garage door installation Mebane', 'garage door service Mebane NC', 'Mebane garage door company'],
   },
+  {
+    name: 'Durham',
+    slug: 'durham',
+    county: 'Durham County',
+    tagline: 'Eastern Metro Anchor',
+    description: 'Durham anchors the eastern reach of our Statesville-to-Durham corridor. Homes built between 2000 and 2020 often use insulated steel doors paired with modern smart openers — systems that rely on precise sensor alignment, balanced spring tension, and correct opener load calibration. Seasonal humidity in the Triangle can accelerate cable wear and cause intermittent sensor faults. We bring the same factory-trained quality to Durham that homeowners across the entire Piedmont Triad expect.',
+    corridorPosition: 'east',
+    neighborhoods: [
+      { name: 'Downtown Durham', slug: 'downtown-durham', description: 'Revitalized urban core with historic warehouses, modern condos, and mixed-use developments.' },
+      { name: 'Duke Park', slug: 'duke-park', description: 'Walkable neighborhood near Duke University with craftsman bungalows and tree-lined streets.' },
+      { name: 'Hope Valley', slug: 'hope-valley', description: 'Established neighborhood surrounding Hope Valley Country Club with mid-century and newer homes.' },
+      { name: 'Southpoint', slug: 'southpoint', description: 'Fast-growing area near Streets at Southpoint with modern construction and smart home systems.' },
+      { name: 'Research Triangle Park', slug: 'research-triangle-park', description: 'Technology corridor with newer residential communities and premium builds.' },
+      { name: 'Woodcroft', slug: 'woodcroft', description: 'Planned community in southwest Durham with townhomes and single-family residences.' },
+    ],
+    keywords: ['garage door repair Durham NC', 'garage door installation Durham NC', 'garage door spring replacement Durham NC', 'garage door opener repair Durham NC', 'Durham garage door company', 'garage door service Durham County'],
+  },
 ];
 
 export function getAreaBySlug(slug: string): ServiceArea | undefined {

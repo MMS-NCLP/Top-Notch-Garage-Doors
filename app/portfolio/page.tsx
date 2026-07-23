@@ -5,7 +5,7 @@ import { generateMetadata as genMeta } from '@/lib/seo';
 
 export const metadata: Metadata = genMeta({
   title: 'Local Inspirations — Portfolio',
-  description: 'Real garage door installations, repairs, and upgrades across the Piedmont Triad. Before & after photos from Statesville to Mebane, NC. See the Top-Notch difference.',
+  description: 'Real garage door installations, repairs, and upgrades across the Piedmont Triad. Before & after photos from Statesville to Durham, NC. See the Top-Notch difference.',
   path: '/portfolio',
 });
 

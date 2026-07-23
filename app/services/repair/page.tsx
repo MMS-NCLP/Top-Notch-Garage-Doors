@@ -141,6 +141,14 @@ export default function RepairPage() {
             </p>
           </div>
 
+          {/* Durham Knowledge Block */}
+          <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-lg p-6 mb-12">
+            <h3 className="font-display text-lg text-brand-blue mb-2">Durham Spring Wear Patterns</h3>
+            <p className="text-sm text-foreground/60 leading-relaxed">
+              Many Durham homes use insulated doors that place higher load on torsion springs. These springs typically reach end-of-life around the 10–14 year mark, especially in homes with frequent daily use. Triangle humidity accelerates cable wear and can cause intermittent sensor faults — issues we diagnose and correct daily across Durham neighborhoods.
+            </p>
+          </div>
+
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Frequently Asked Questions</h2>
           <div className="space-y-6 mb-12">
             {faqs.map((faq) => (

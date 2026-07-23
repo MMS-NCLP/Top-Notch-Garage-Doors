@@ -8,11 +8,11 @@ import FeaturedPortfolio from '@/components/FeaturedPortfolio';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Wrench, Home, Zap, AlertTriangle, BookOpen, Handshake, Shield, Star } from 'lucide-react';
+import { Wrench, Home, Zap, AlertTriangle, BookOpen, Handshake, Shield, Star, Award, CheckCircle, Users } from 'lucide-react';
 
 export const metadata = genMeta({
   title: 'Garage Door Troubleshooting, Repair & Installation',
-  description: 'Expert garage door troubleshooting and repair serving the Piedmont Triad from Statesville to Mebane, NC. Same-day emergency service. Certified & insured — no service call fee.',
+  description: 'Expert garage door troubleshooting and repair serving the Piedmont Triad from Statesville to Durham, NC. Same-day emergency service. Certified & insured — no service call fee.',
   path: '/',
 });
 
@@ -59,6 +59,43 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* E-E-A-T: WHY TOP-NOTCH (Experience + Expertise + Process) */}
+      <section className="py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+              <Award className="w-4 h-4" /> Why Top-Notch
+            </span>
+            <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
+              Professional Experience You Can See in Every Repair
+            </h2>
+            <p className="text-foreground/60 max-w-3xl mx-auto">
+              We work on garage doors every day across the Piedmont Triad — from older homes with builder-grade hardware to new constructions with modern smart systems. Every technician is trained in torsion and extension spring mechanics, safety sensor alignment, balance testing, and proper opener calibration.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-5 mb-6">
+            {[
+              { step: '1', title: 'Inspect', desc: 'Springs, cables, tracks, sensors, and opener load.' },
+              { step: '2', title: 'Diagnose', desc: 'The root cause, not just the symptom.' },
+              { step: '3', title: 'Explain', desc: 'What we found and why it matters.' },
+              { step: '4', title: 'Repair', desc: 'Disciplined, correct workmanship.' },
+              { step: '5', title: 'Verify', desc: 'Balance, alignment, and safety systems.' },
+            ].map((item) => (
+              <div key={item.step} className="surface-elevated border border-brand-silver/20 rounded-lg p-5 text-center gleam">
+                <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-display text-lg flex items-center justify-center mx-auto mb-3">
+                  {item.step}
+                </div>
+                <h3 className="font-display text-sm text-brand-blue uppercase mb-2">{item.title}</h3>
+                <p className="text-xs text-foreground/60 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-foreground/60 text-sm italic">
+            Homeowners trust us because we teach what we see and fix what matters.
+          </p>
         </div>
       </section>
 
@@ -179,6 +216,51 @@ export default function HomePage() {
           <CTAButton text="Learn About Partnerships" variant="outline" showIcon={false} />
         </div>
       </section>
+
+      {/* E-E-A-T: OUR COMMITMENT (Authority + Trust + Founder) */}
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+              <Shield className="w-4 h-4" /> Our Commitment
+            </span>
+            <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
+              Built on Clarity, Safety, and Disciplined Workmanship
+            </h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+              <div className="w-10 h-10 rounded-lg bg-brand-blue/5 flex items-center justify-center text-brand-blue mb-3">
+                <Shield className="w-5 h-5" />
+              </div>
+              <h3 className="font-display text-base text-brand-blue uppercase mb-2">Trusted Authority</h3>
+              <p className="text-sm text-foreground/60 leading-relaxed">
+                One of the most consistently recommended garage door companies in the Piedmont Triad. Homeowners, builders, and property managers rely on us because we explain the system clearly, communicate respectfully, and complete the work the right way.
+              </p>
+            </div>
+            <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+              <div className="w-10 h-10 rounded-lg bg-brand-blue/5 flex items-center justify-center text-brand-blue mb-3">
+                <CheckCircle className="w-5 h-5" />
+              </div>
+              <h3 className="font-display text-base text-brand-blue uppercase mb-2">Safety &amp; Transparency</h3>
+              <p className="text-sm text-foreground/60 leading-relaxed">
+                Garage doors are heavy, tension-loaded systems. Every repair includes a safety check, every installation includes a balance test, and every homeowner receives a clear explanation. No hidden fees. No rushed work. No unclear recommendations.
+              </p>
+            </div>
+            <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+              <div className="w-10 h-10 rounded-lg bg-brand-blue/5 flex items-center justify-center text-brand-blue mb-3">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="font-display text-base text-brand-blue uppercase mb-2">From Our Team</h3>
+              <p className="text-sm text-foreground/60 leading-relaxed">
+                We built Top-Notch on a simple principle: homeowners deserve clear answers and professional work. If we recommend something, it&apos;s because it improves safety, reliability, or long-term performance — never because it increases a sale.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider-gleam" />
 
       {/* 5. LOCAL TOWNS */}
       <LocalTownsGrid />
