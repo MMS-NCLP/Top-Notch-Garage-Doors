@@ -202,22 +202,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. PARTNERSHIPS */}
-      <section className="py-16 surface-matte">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
-            <Handshake className="w-4 h-4" /> Professional Partnerships
-          </span>
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
-            Contractors, Builders &amp; Property Managers
-          </h2>
-          <p className="text-foreground/60 max-w-2xl mx-auto mb-6">
-            Priority scheduling, volume pricing, and dedicated account management for trade professionals.
-          </p>
-          <CTAButton text="Learn About Partnerships" variant="outline" showIcon={false} />
-        </div>
-      </section>
-
       {/* E-E-A-T: OUR COMMITMENT (Authority + Trust + Founder) */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

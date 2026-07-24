@@ -4,7 +4,7 @@ import CTAButton from '@/components/CTAButton';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { SERVICE_AREAS } from '@/lib/service-areas';
-import { Shield, Clock, MapPin, Award, Users, Wrench, Star } from 'lucide-react';
+import { Shield, Clock, MapPin, Award, Users, Wrench, Star, Handshake } from 'lucide-react';
 
 function FacebookIcon({ className }: { className?: string }) {
   return <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>;
@@ -51,9 +51,12 @@ const corridorGroups = [
 export default function AboutPage() {
   return (
     <>
-      {/* HERO — clean, no logos */}
+      {/* HERO */}
       <section className="relative bg-gradient-to-br from-brand-blue via-brand-blue to-blue-900 text-white py-20 lg:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="absolute top-6 left-6 z-20 opacity-60">
+          <Image src="/images/logos/tngd-logo-small-2.png" alt="" width={48} height={48} className="w-12 h-12 object-contain" />
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-hero text-4xl sm:text-5xl lg:text-6xl tracking-wider mb-4">ABOUT US</h1>
           <p className="font-display text-lg sm:text-xl uppercase tracking-wide text-white/80 mb-3">
@@ -270,6 +273,24 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* PARTNERSHIPS */}
+      <section className="py-16 surface-matte">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+            <Handshake className="w-4 h-4" /> Professional Partnerships
+          </span>
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
+            Contractors, Builders &amp; Property Managers
+          </h2>
+          <p className="text-foreground/60 max-w-2xl mx-auto mb-6">
+            Priority scheduling, volume pricing, and dedicated account management for trade professionals. We work alongside general contractors, builders, and property management companies across the Piedmont Triad.
+          </p>
+          <CTAButton text="Learn About Partnerships" variant="outline" showIcon={false} />
+        </div>
+      </section>
+
+      <div className="divider-gleam" />
 
       {/* CONNECT + CTA */}
       <section className="py-16 bg-gradient-to-br from-brand-blue to-blue-900 text-white">

@@ -84,15 +84,14 @@ export default function InstallationPage() {
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Door Styles &amp; Materials</h2>
           <div className="grid gap-6 md:grid-cols-2 mb-12">
             {[
-              { title: 'Steel Raised Panel', desc: 'The classic. Durable, low-maintenance, available in dozens of colors. R-values from R-6 to R-18+.', price: 'From $900' },
-              { title: 'Carriage House', desc: 'Swing-out charm with overhead convenience. Steel or composite with decorative hardware.', price: 'From $1,400' },
-              { title: 'Modern Flush', desc: 'Clean, minimal lines. Full-view glass and aluminum options for contemporary homes.', price: 'From $1,800' },
-              { title: 'Wood & Composite', desc: 'Natural warmth and character. Cedar, mahogany, or maintenance-free composite options.', price: 'From $2,200' },
+              { title: 'Steel Raised Panel', desc: 'The classic. Durable, low-maintenance, available in dozens of colors. R-values from R-6 to R-18+.' },
+              { title: 'Carriage House', desc: 'Swing-out charm with overhead convenience. Steel or composite with decorative hardware.' },
+              { title: 'Modern Flush', desc: 'Clean, minimal lines. Full-view glass and aluminum options for contemporary homes.' },
+              { title: 'Wood & Composite', desc: 'Natural warmth and character. Cedar, mahogany, or maintenance-free composite options.' },
             ].map((item) => (
               <div key={item.title} className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
                 <h3 className="font-display text-lg text-brand-blue mb-2">{item.title}</h3>
-                <p className="text-sm text-foreground/60 leading-relaxed mb-3">{item.desc}</p>
-                <span className="font-display text-sm text-brand-red">{item.price}</span>
+                <p className="text-sm text-foreground/60 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
