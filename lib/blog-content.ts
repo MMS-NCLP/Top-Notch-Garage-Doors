@@ -3,6 +3,8 @@ export interface Article {
   publishedAt: string;
   category: string;
   excerpt: string;
+  image: string;
+  imageAlt: string;
   content: string;
 }
 
@@ -12,6 +14,8 @@ export const articles: Record<string, Article> = {
     publishedAt: '2026-07-01',
     category: 'Repair & Maintenance',
     excerpt: 'Your garage door springs work hard every single day. Learn the warning signs that indicate replacement is needed before a dangerous failure occurs.',
+    image: '/images/blog/garage-door-spring-replacement-guide-nc.jpg',
+    imageAlt: 'Technician lubricating garage door torsion spring with professional spray lubricant',
     content: `Your garage door springs are the unsung heroes of your home. They counterbalance hundreds of pounds of door weight, cycling up and down thousands of times per year. But like all mechanical components, they have a finite lifespan — and when they fail, the results can be dangerous and inconvenient.
 
 At Top-Notch Garage Doors, serving Whitsett, Burlington, Greensboro, and the greater Piedmont Triad area, we handle spring replacements daily. Here is everything homeowners need to know about recognizing the warning signs, understanding the risks, and making informed decisions about repair.
@@ -109,6 +113,8 @@ Call (336) 000-0000 or book online to schedule your spring inspection or replace
     publishedAt: '2026-06-15',
     category: 'Installation & Products',
     excerpt: 'From R-value basics to material options, everything NC homeowners need to know about insulating a garage door for energy efficiency and year-round comfort.',
+    image: '/images/blog/garage-door-insulation-guide-nc.jpg',
+    imageAlt: 'Insulated carriage house garage doors with warm wood finish on white brick home at dusk',
     content: `If your garage shares a wall with your living space — or if you use your garage as a workshop, gym, or hangout spot — insulation is one of the smartest upgrades you can make. For homeowners in Whitsett, Burlington, and the greater Piedmont Triad area, where summers hit 95°F+ and winters dip below freezing, garage door insulation directly affects both comfort and energy bills.
 
 ## Why Insulate Your Garage Door?
@@ -239,6 +245,8 @@ Contact Top-Notch Garage Doors at (336) 000-0000 for a free insulation assessmen
     publishedAt: '2026-06-01',
     category: 'Openers & Technology',
     excerpt: 'Wi-Fi connectivity, camera integration, smartphone control — the complete guide to smart openers for Piedmont Triad homeowners.',
+    image: '/images/blog/smart-garage-door-openers-guide-nc.jpg',
+    imageAlt: 'Elegant white home at twilight with carriage house garage doors and warm interior lighting',
     content: `The garage door opener has evolved from a simple mechanical device into a sophisticated smart home hub. Modern openers connect to your Wi-Fi, send alerts to your phone, include built-in security cameras, and integrate with voice assistants. For homeowners in Whitsett, Burlington, Greensboro, and the surrounding Piedmont Triad area, understanding these features helps you choose the right upgrade for your home and lifestyle.
 
 ## What Makes an Opener "Smart"?
@@ -394,6 +402,8 @@ Contact Top-Notch Garage Doors at (336) 000-0000 or book online for a free opene
     publishedAt: '2026-07-10',
     category: 'Emergency Services',
     excerpt: 'Garage door stuck at 11pm? Spring broke during a storm? Here is exactly what to do — and not do — in a garage door emergency.',
+    image: '/images/blog/emergency-garage-door-repair-nc.webp',
+    imageAlt: 'Damaged garage door off track requiring emergency repair service',
     content: `It is 6:30 AM. You are running late for work. You press the remote and nothing happens. Or worse — the door starts moving, makes a horrible grinding sound, and stops halfway. Your car is trapped inside, your morning is derailed, and you need help fast.
 
 Garage door emergencies happen without warning. At Top-Notch Garage Doors, serving Whitsett, Burlington, Greensboro, and the greater Piedmont Triad area, we handle emergency calls daily. This guide covers exactly what to do in the most common emergency scenarios — and equally important, what NOT to do that could make things worse or put you in danger.
@@ -520,6 +530,8 @@ A $100 maintenance visit prevents $500+ emergency repairs. Contact Top-Notch Gar
     publishedAt: '2026-06-20',
     category: 'DIY & Maintenance',
     excerpt: 'North Carolina weather demands seasonal attention. This checklist keeps your garage door system healthy through spring storms, summer heat, fall prep, and winter cold.',
+    image: '/images/blog/seasonal-garage-door-maintenance-nc.jpg',
+    imageAlt: 'Charming cottage-style garage with white carriage doors surrounded by lush greenery',
     content: `North Carolina's Piedmont Triad region experiences all four seasons with intensity — humid summers exceeding 95°F, spring thunderstorms with high winds, fall temperature swings, and winter freezes that stress mechanical components. Your garage door system responds to every seasonal change, expanding in heat, contracting in cold, and collecting moisture year-round.
 
 This seasonal maintenance checklist, developed from thousands of service calls across Whitsett, Burlington, Greensboro, and surrounding communities, helps homeowners prevent costly failures and extend the life of their garage door system.
@@ -657,6 +669,8 @@ Schedule your seasonal maintenance at (336) 000-0000 or book online. Preventive 
     publishedAt: '2026-05-15',
     category: 'Installation & Products',
     excerpt: 'From traditional colonial to modern farmhouse — which garage door style complements your NC home? A guide to aesthetics, materials, and ROI.',
+    image: '/images/blog/best-garage-door-styles-north-carolina.jpg',
+    imageAlt: 'Stone estate home with rich wood Canyon Ridge carriage house garage doors and arched windows',
     content: `Your garage door represents up to 30% of your home's front-facing facade. In Piedmont Triad neighborhoods from Whitsett's established communities to Greensboro's new developments, the right door style dramatically impacts curb appeal, property value, and neighborhood aesthetic cohesion.
 
 This guide covers the most popular garage door styles for North Carolina homes, which architectural styles they complement, material considerations for our climate, and how to navigate HOA requirements common in Guilford and Alamance County communities.
@@ -810,6 +824,8 @@ Call (336) 000-0000 or book online to schedule your consultation.`,
     publishedAt: '2026-05-01',
     category: 'DIY & Maintenance',
     excerpt: 'Opener not responding? Blinking lights? Door reversing? Diagnose the 8 most common opener problems with this step-by-step guide.',
+    image: '/images/blog/garage-door-opener-troubleshooting-guide-nc.jpg',
+    imageAlt: 'Brick colonial home with modern dark flush garage doors and manicured landscaping',
     content: `Before you call for repair, many garage door opener issues can be diagnosed — and sometimes resolved — with basic troubleshooting. This guide covers the 8 most common opener problems we see in Whitsett, Burlington, Greensboro, and surrounding Piedmont Triad homes, with step-by-step diagnostic instructions.
 
 **Important safety note:** If any troubleshooting step reveals a broken spring, snapped cable, or door off-track, STOP and call for professional service. These are mechanical issues beyond opener troubleshooting and require trained technicians.
@@ -940,6 +956,8 @@ Call (336) 000-0000 or book online for same-day opener service.`,
     publishedAt: '2026-04-20',
     category: 'DIY & Maintenance',
     excerpt: 'Simple maintenance tasks any homeowner can do in 30 minutes that prevent the most common (and expensive) garage door failures.',
+    image: '/images/blog/diy-garage-door-maintenance-tips-nc.jpg',
+    imageAlt: 'White carriage house garage door with transom windows on a sunny day with dappled light',
     content: `The average emergency garage door repair costs $300–$600. A complete opener replacement runs $500–$1,000+. Yet most of these failures are preventable with 30 minutes of maintenance twice per year. These 10 DIY tips, based on the most common repair calls we handle across Whitsett, Burlington, and the Piedmont Triad, keep your system running smoothly and your wallet intact.
 
 **Important disclaimer:** These tips cover maintenance tasks safe for homeowners. Never attempt to adjust springs, replace cables, or modify the torsion system. Those tasks require professional tools and training — attempting them can cause serious injury.
@@ -1152,6 +1170,8 @@ We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and 
     publishedAt: '2026-04-01',
     category: 'Safety & Education',
     excerpt: 'From auto-reverse to pinch-resistant panels — the safety features that protect your family, and how to verify they\'re working properly.',
+    image: '/images/blog/garage-door-safety-features-homeowner-nc.jpg',
+    imageAlt: 'Professional Coachman carriage house garage door installation in Davidson North Carolina',
     content: `Garage doors are the heaviest moving object in most homes — weighing 130 to 400+ pounds and generating tremendous force during operation. According to the U.S. Consumer Product Safety Commission, garage doors cause approximately 30,000 injuries per year, including crush injuries, pinch injuries, and entrapment. Most of these are preventable with properly maintained safety features.
 
 For homeowners in Whitsett, Burlington, Greensboro, and the Piedmont Triad area, understanding these safety features — and verifying they work — is essential, especially in homes with children and pets.
@@ -1292,6 +1312,8 @@ Call (336) 000-0000 or book online for your free safety inspection.`,
     publishedAt: '2026-03-15',
     category: 'Pressure Washing',
     excerpt: 'NC humidity breeds mold and algae fast. Learn optimal timing, surface-specific techniques, and when to call a professional.',
+    image: '/images/blog/pressure-washing-guide-nc.jpg',
+    imageAlt: 'Clean white carriage house garage doors on stone facade with pristine curb appeal',
     content: `North Carolina's humid subtropical climate creates ideal conditions for mold, mildew, algae, and organic staining on exterior surfaces. In the Piedmont Triad — from Whitsett to Greensboro to Burlington — homeowners contend with green algae on concrete, black mold streaks on siding, and moss growth in shaded areas year-round. Professional pressure washing restores surfaces to like-new condition, prevents long-term damage, and dramatically improves curb appeal.
 
 ## Why NC Surfaces Get Dirty Faster
@@ -1471,6 +1493,8 @@ Call (336) 000-0000 or book online. Spring and fall are our busiest seasons — 
     publishedAt: '2026-03-01',
     category: 'Products & Installation',
     excerpt: 'Transform your garage into a bug-free living space. Types, costs, installation, and real use cases from Whitsett to Greensboro.',
+    image: '/images/blog/garage-screen-doors-buyers-guide-nc.jpg',
+    imageAlt: 'Motorized retractable garage screen door installation on residential home',
     content: `The garage screen door market has exploded over the past five years as homeowners discover they can transform underused garage space into versatile living areas. In the Piedmont Triad — where evening temperatures are perfect for open-air enjoyment from April through October — a garage screen door is one of the highest-value lifestyle upgrades available.
 
 This guide covers everything you need to decide: types, features, costs, installation considerations, and real-world use cases from homeowners across Whitsett, Burlington, Greensboro, and surrounding NC communities.

@@ -23,12 +23,16 @@ export default function BlogCard({
   excerpt,
   publishedAt,
   category,
+  image,
+  imageAlt,
 }: {
   title: string;
   slug: string;
   excerpt: string;
   publishedAt: string;
   category?: string;
+  image?: string;
+  imageAlt?: string;
 }) {
   const date = new Date(publishedAt).toLocaleDateString('en-US', {
     month: 'long',
@@ -36,7 +40,9 @@ export default function BlogCard({
     year: 'numeric',
   });
 
-  const img = (category && CATEGORY_IMAGES[category]) || FALLBACK;
+  const img = image
+    ? { src: image, alt: imageAlt || title }
+    : (category && CATEGORY_IMAGES[category]) || FALLBACK;
 
   return (
     <motion.div

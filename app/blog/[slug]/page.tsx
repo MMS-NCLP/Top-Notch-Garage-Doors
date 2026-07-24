@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import { articleSchema } from '@/lib/schema';
 import Link from 'next/link';
@@ -38,19 +39,36 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         }}
       />
 
-      <article className="py-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-4">
-            <time className="text-sm text-foreground/40 uppercase tracking-wider">
-              {new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-            </time>
-            <span className="text-xs bg-brand-blue/10 text-brand-blue px-2 py-0.5 rounded-full font-medium">
-              {article.category}
-            </span>
+      {/* HERO IMAGE */}
+      <section className="relative h-64 sm:h-80 lg:h-96 overflow-hidden">
+        <Image
+          src={article.image}
+          alt={article.imageAlt}
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-3 mb-3">
+              <time className="text-sm text-white/60 uppercase tracking-wider">
+                {new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              </time>
+              <span className="text-xs bg-white/20 text-white px-2.5 py-0.5 rounded-full font-medium backdrop-blur-sm">
+                {article.category}
+              </span>
+            </div>
+            <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl text-white uppercase tracking-wide">
+              {article.title}
+            </h1>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl text-brand-blue uppercase mt-2 mb-8">
-            {article.title}
-          </h1>
+        </div>
+      </section>
+
+      <article className="py-16 sm:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none text-foreground/80 leading-relaxed space-y-4">
             {article.content.split('\n\n').map((para, i) => {
               if (para.startsWith('## ')) {
