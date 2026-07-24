@@ -18,19 +18,8 @@ const TOPICS = [
   { value: 'other', label: 'Other' },
 ];
 
-const TIME_SLOTS = [
-  { value: '', label: 'Any time during office hours' },
-  { value: '8:00 AM', label: '8:00 AM' },
-  { value: '9:00 AM', label: '9:00 AM' },
-  { value: '10:00 AM', label: '10:00 AM' },
-  { value: '11:00 AM', label: '11:00 AM' },
-  { value: '12:00 PM', label: '12:00 PM' },
-  { value: '1:00 PM', label: '1:00 PM' },
-  { value: '2:00 PM', label: '2:00 PM' },
-  { value: '3:00 PM', label: '3:00 PM' },
-  { value: '4:00 PM', label: '4:00 PM' },
-  { value: '5:00 PM', label: '5:00 PM' },
-];
+const HOURS = ['1', '2', '3', '4', '5', '8', '9', '10', '11'];
+const MINUTES = ['00', '15', '30', '45'];
 
 type FilePreview = { file: File; url: string; type: 'image' | 'video' };
 
@@ -83,7 +72,10 @@ export default function CallbackForm() {
     fd.set('topic', (form.elements.namedItem('topic') as HTMLSelectElement).value);
     fd.set('message', (form.elements.namedItem('message') as HTMLTextAreaElement).value);
     fd.set('preferredDate', (form.elements.namedItem('preferredDate') as HTMLInputElement).value);
-    fd.set('preferredTime', (form.elements.namedItem('preferredTime') as HTMLSelectElement).value);
+    const ampm = (form.elements.namedItem('timePeriod') as HTMLSelectElement).value;
+    const hour = (form.elements.namedItem('timeHour') as HTMLSelectElement).value;
+    const minute = (form.elements.namedItem('timeMinute') as HTMLSelectElement).value;
+    fd.set('preferredTime', hour ? `${hour}:${minute} ${ampm}` : '');
 
     for (const att of attachments) {
       fd.append('attachments', att.file);
@@ -188,15 +180,28 @@ export default function CallbackForm() {
               />
             </div>
             <div>
-              <label htmlFor="cb-time" className={labelBase}>
+              <label className={labelBase}>
                 <Clock className="w-3.5 h-3.5 inline -mt-0.5 mr-1" />
                 Preferred Time
               </label>
-              <select id="cb-time" name="preferredTime" className={inputBase}>
-                {TIME_SLOTS.map((t) => (
-                  <option key={t.value} value={t.value}>{t.label}</option>
-                ))}
-              </select>
+              <div className="grid grid-cols-3 gap-2">
+                <select name="timePeriod" className={inputBase} aria-label="AM or PM">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+                <select name="timeHour" className={inputBase} aria-label="Hour">
+                  <option value="">Hr</option>
+                  {HOURS.map((h) => (
+                    <option key={h} value={h}>{h}</option>
+                  ))}
+                </select>
+                <select name="timeMinute" className={inputBase} aria-label="Minutes">
+                  {MINUTES.map((m) => (
+                    <option key={m} value={m}>{m === '00' ? ':00' : `:${m}`}</option>
+                  ))}
+                </select>
+              </div>
+              <p className="text-xs text-foreground/30 mt-1.5">EST (Eastern Standard Time)</p>
             </div>
           </div>
 
@@ -299,7 +304,7 @@ export default function CallbackForm() {
           <div className="bg-brand-blue/[0.03] border border-brand-blue/10 rounded-lg p-4 space-y-1.5">
             <p className="font-display text-xs uppercase tracking-wider text-brand-blue mb-1">Please Note</p>
             <p className="text-xs text-foreground/50 leading-relaxed">
-              Callbacks occur during office hours only (Mon–Sat, 8 AM – 6 PM).
+              Callbacks occur during office hours only (Mon–Fri 8 AM – 6 PM, Sat 9 AM – 4 PM).
             </p>
             <p className="text-xs text-foreground/50 leading-relaxed">
               We return calls as soon as possible around your scheduled time.

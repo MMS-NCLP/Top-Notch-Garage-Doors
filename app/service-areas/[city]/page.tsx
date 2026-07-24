@@ -6,7 +6,7 @@ import PortfolioPreview from '@/components/PortfolioPreview';
 import { serviceSchema } from '@/lib/schema';
 import { SERVICE_AREAS, getAreaBySlug, getAllSlugs } from '@/lib/service-areas';
 import { getProjectsByCity } from '@/lib/portfolio-data';
-import { MapPin, ChevronRight, ShieldCheck, Wrench, Home, Zap, Droplets, PanelTop, BookOpen, Star } from 'lucide-react';
+import { MapPin, ChevronRight, ShieldCheck, Wrench, Home, Zap, Droplets, PanelTop, BookOpen, Star, AlertTriangle, Thermometer, HardHat, HelpCircle } from 'lucide-react';
 import type { Review } from '@/lib/supabaseClient';
 
 const PLACEHOLDER_REVIEWS: Review[] = [
@@ -55,6 +55,100 @@ const SERVICES = [
   { label: 'Maintenance & Tune-Ups', href: '/coupons', icon: <BookOpen className="w-5 h-5" />, desc: '21-point inspection, lubrication, balance check. $69 with coupon.' },
 ];
 
+interface EEATContent {
+  anchor: string;
+  constructionPatterns: string;
+  doorTypes: string;
+  climateImpact: string;
+  failureModes: string[];
+  homeownerConcerns: string;
+  whyThisMatters: string;
+  faqs: { q: string; a: string }[];
+}
+
+const ANCHOR_CITY_EEAT: Record<string, EEATContent> = {
+  statesville: {
+    anchor: 'Western Anchor',
+    constructionPatterns: 'Statesville has a high concentration of homes built between 1980–2005, many of which still use heavy wooden or composite garage doors. These doors place significantly more load on torsion springs and opener motors.',
+    doorTypes: 'Older wooden doors, builder-grade steel doors, and early insulated models are common. Many homes still use chain-drive openers.',
+    climateImpact: 'Western corridor humidity and temperature swings cause track expansion, cable oxidation, and sensor misalignment.',
+    failureModes: [
+      'Spring fatigue from heavy door weight',
+      'Cable fray due to oxidation',
+      'Opener strain from unbalanced doors',
+      'Track warping in older garages',
+    ],
+    homeownerConcerns: 'Noise, slow operation, and sudden spring failure are the most reported issues.',
+    whyThisMatters: 'Understanding Statesville’s older construction patterns helps homeowners make informed decisions about repair vs. replacement, especially when dealing with heavy doors and aging hardware.',
+    faqs: [
+      { q: 'Why do garage doors fail more often in Statesville?', a: 'Many Statesville homes built between 1980–2005 use heavy wooden or composite doors that place excessive load on springs and openers. Combined with western corridor humidity causing cable oxidation and track expansion, these doors wear out hardware faster than modern lightweight systems.' },
+      { q: 'Should I repair or replace my old wooden garage door?', a: 'If the door is structurally sound and you like the look, upgrading the springs, cables, and opener can extend its life 10+ years. If panels are warped, cracked, or the door weighs over 200 lbs, a modern insulated steel replacement will reduce maintenance costs and improve energy efficiency.' },
+      { q: 'How does western NC weather affect garage door hardware?', a: 'Temperature swings between seasons cause track expansion and contraction. Humidity accelerates cable oxidation and can cause sensor misalignment. Annual lubrication and a balance check prevent most weather-related failures.' },
+      { q: 'What opener works best for heavy garage doors in Statesville?', a: 'Heavy wooden doors require a 3/4 HP or 1 HP opener with a jackshaft or chain-drive system. Belt-drive units designed for lightweight doors will burn out prematurely. We match the opener to the door weight and usage pattern.' },
+    ],
+  },
+  greensboro: {
+    anchor: 'Central Hub',
+    constructionPatterns: 'Greensboro homes built between 1995–2020 often use builder-grade torsion springs and mid-weight steel doors. Many neighborhoods feature two-car garages with identical hardware sets.',
+    doorTypes: 'Insulated steel doors, mid-range openers, and newer belt-drive systems are common.',
+    climateImpact: 'Triad humidity causes sensor drift, lubrication breakdown, and intermittent opener faults.',
+    failureModes: [
+      'Spring end-of-life around 12–15 years',
+      'Sensor misalignment from humidity',
+      'Belt-drive tension issues',
+      'Track noise from expansion/contraction',
+    ],
+    homeownerConcerns: 'Grinding noises, uneven door travel, and opener hesitation are frequently reported.',
+    whyThisMatters: 'Greensboro’s mixed-age housing stock requires precise diagnosis — many issues stem from predictable wear patterns rather than sudden failure.',
+    faqs: [
+      { q: 'Why is my garage door grinding in Greensboro?', a: 'Most grinding noises in Greensboro homes come from dry rollers, track buildup from humidity, or belt-drive tension loss. Builder-grade springs installed in the 1995–2010 era are often at end-of-life by now, causing uneven travel that stresses the entire system.' },
+      { q: 'How long do builder-grade garage door springs last?', a: 'Standard builder-grade torsion springs are rated for 10,000 cycles — roughly 7–10 years of normal use. Greensboro homes built in the late 1990s to early 2000s are hitting that window now. Upgrading to high-cycle springs (25,000+) reduces future replacement frequency.' },
+      { q: 'Does Triad humidity really affect garage doors?', a: 'Yes. Humidity causes sensor lens condensation (leading to false obstruction alerts), accelerates lubrication breakdown on rollers and hinges, and can shift sensor alignment over time. Annual maintenance with proper lubrication prevents most humidity-related issues.' },
+      { q: 'My opener hesitates before moving — is that normal?', a: 'Opener hesitation usually indicates a load imbalance. The door may be slightly out of balance, forcing the opener to work harder on startup. A balance test and spring adjustment typically resolves it. If the opener is 15+ years old, the motor itself may be weakening.' },
+    ],
+  },
+  burlington: {
+    anchor: 'East-Central Anchor',
+    constructionPatterns: 'Burlington’s rapid growth between 2000–2018 introduced a wave of insulated steel doors paired with builder-grade torsion springs. Many homes use lightweight doors that mask underlying balance issues.',
+    doorTypes: 'Insulated steel doors, lightweight panels, and mid-range openers.',
+    climateImpact: 'East-central humidity accelerates cable wear and causes intermittent sensor faults.',
+    failureModes: [
+      'Cable fray on lightweight doors',
+      'Spring imbalance from uneven panel weight',
+      'Opener load issues on older belt-drive units',
+      'Sensor obstruction from garage clutter',
+    ],
+    homeownerConcerns: 'Door shaking, uneven travel, and random opener reversals.',
+    whyThisMatters: 'Burlington’s lightweight doors require careful balance testing — small alignment issues can create noticeable operational problems.',
+    faqs: [
+      { q: 'Why does my garage door shake when opening?', a: 'Shaking typically indicates a balance issue — one spring may be weaker than the other, or the door panels have shifted slightly. Burlington homes with lightweight insulated doors are more susceptible because small imbalances are amplified. A balance test and spring adjustment usually resolves it.' },
+      { q: 'Why does my opener reverse for no reason?', a: 'Random reversals are almost always a sensor issue. East-central humidity causes condensation on sensor lenses, or garage clutter may intermittently break the beam. Clean the sensor lenses and ensure nothing is within 6 inches of the beam path. If it persists, the sensors may need recalibration.' },
+      { q: 'Are lightweight garage doors less reliable?', a: 'Not inherently — but they require proper balancing. Builder-grade springs on lightweight doors can create a false sense of smooth operation while the balance is actually off. This stresses cables and the opener over time. Annual balance testing catches these issues early.' },
+      { q: 'How often should Burlington homeowners service their garage doors?', a: 'We recommend annual maintenance — spring balance testing, lubrication of all moving parts, hardware tightening, sensor calibration, and opener load testing. Homes near the Haw River or in higher-humidity areas may benefit from semi-annual checks.' },
+    ],
+  },
+  durham: {
+    anchor: 'Eastern Metro Anchor',
+    constructionPatterns: 'Durham homes built between 2000–2020 frequently use insulated steel doors paired with modern smart openers. These systems rely heavily on precise sensor alignment and correct opener load calibration.',
+    doorTypes: 'Smart openers, insulated steel doors, and multi-panel modern designs.',
+    climateImpact: 'Triangle humidity causes sensor drift, cable oxidation, and intermittent opener faults.',
+    failureModes: [
+      'Smart opener sensor drift',
+      'Cable wear from humidity',
+      'Load imbalance on insulated doors',
+      'Track noise from expansion',
+    ],
+    homeownerConcerns: 'False obstruction alerts, intermittent opener failure, and noisy operation.',
+    whyThisMatters: 'Durham’s modern systems require precise calibration — small alignment issues can cause smart openers to misread door position or trigger safety reversals.',
+    faqs: [
+      { q: 'Why does my garage door make noise in Durham?', a: 'Durham homes often experience noise from track expansion due to seasonal temperature swings and humidity. Dry rollers, loose hardware, and opener load imbalance are common causes. Annual lubrication and a balance check resolve most noise issues.' },
+      { q: 'How does humidity affect garage door sensors in Durham?', a: 'Triangle humidity causes condensation on safety sensor lenses and can shift sensor alignment over time — a condition called sensor drift. This leads to intermittent false obstruction alerts. Proper recalibration and lens cleaning prevent these faults.' },
+      { q: 'What garage door types are most common in Durham homes?', a: 'Durham homes built between 2000–2020 predominantly use insulated steel doors (R-12 to R-18) paired with smart openers. Older neighborhoods like Duke Park feature wood and composite doors. New construction trends toward modern flush-panel steel with integrated smart systems.' },
+      { q: 'How often should Durham homeowners service their garage doors?', a: 'We recommend annual maintenance — spring balance testing, lubrication, hardware tightening, sensor calibration, and opener load testing. Homes with heavy daily use or smart opener systems benefit from semi-annual checks.' },
+    ],
+  },
+};
+
 export async function generateStaticParams() {
   return getAllSlugs().map((city) => ({ city }));
 }
@@ -93,20 +187,19 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
         }}
       />
 
-      {/* Durham FAQ Schema */}
-      {city === 'durham' && (
+      {/* Anchor City FAQ Schema */}
+      {ANCHOR_CITY_EEAT[city] && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
-              mainEntity: [
-                { '@type': 'Question', name: 'Why does my garage door make noise in Durham?', acceptedAnswer: { '@type': 'Answer', text: 'Durham homes often experience noise from track expansion due to seasonal temperature swings and humidity. Dry rollers, loose hardware, and opener load imbalance are common causes. Annual lubrication and a balance check resolve most noise issues.' } },
-                { '@type': 'Question', name: 'How does humidity affect garage door sensors in Durham?', acceptedAnswer: { '@type': 'Answer', text: 'Triangle humidity causes condensation on safety sensor lenses and can shift sensor alignment over time — a condition called sensor drift. This leads to intermittent false obstruction alerts and doors that reverse unexpectedly. Proper recalibration and lens cleaning prevent these faults.' } },
-                { '@type': 'Question', name: 'What garage door types are most common in Durham homes?', acceptedAnswer: { '@type': 'Answer', text: 'Durham homes built between 2000–2020 predominantly use insulated steel doors (R-12 to R-18) paired with smart openers. Older neighborhoods like Duke Park feature wood and composite doors. New construction in Southpoint and RTP areas trend toward modern flush-panel steel with integrated smart systems.' } },
-                { '@type': 'Question', name: 'How often should Durham homeowners service their garage doors?', acceptedAnswer: { '@type': 'Answer', text: 'We recommend annual maintenance for Durham homes — spring balance testing, lubrication of all moving parts, hardware tightening, sensor calibration, and opener load testing. Homes with heavy daily use or smart opener systems benefit from semi-annual checks.' } },
-              ],
+              mainEntity: ANCHOR_CITY_EEAT[city].faqs.map((faq) => ({
+                '@type': 'Question',
+                name: faq.q,
+                acceptedAnswer: { '@type': 'Answer', text: faq.a },
+              })),
             }),
           }}
         />
@@ -142,76 +235,121 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
 
       <div className="divider-gleam" />
 
-      {/* Durham E-E-A-T + Local Authority */}
-      {city === 'durham' && (
-        <>
-          <section className="py-16">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-8">
-                <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
-                  <BookOpen className="w-4 h-4" /> Durham Garage Door Expertise
-                </span>
-                <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
-                  Understanding Durham&apos;s Garage Door Systems
-                </h2>
-              </div>
-              <div className="surface-elevated border border-brand-silver/20 rounded-lg p-8 gleam mb-8">
-                <p className="text-foreground/70 leading-relaxed mb-4">
-                  Homes built in Durham between 2000–2020 often use insulated steel doors paired with modern smart openers. These systems rely on precise sensor alignment, balanced spring tension, and correct opener load calibration. Seasonal humidity in the Triangle can accelerate cable wear and cause intermittent sensor faults. Homeowners frequently report noise issues caused by track expansion and opener load imbalance.
-                </p>
-                <p className="text-foreground/70 leading-relaxed font-medium">
-                  Understanding these local patterns helps homeowners make informed decisions about repair, maintenance, and long-term reliability.
-                </p>
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
-                  <h3 className="font-display text-base text-brand-blue uppercase mb-2">Experience &amp; Expertise</h3>
-                  <p className="text-sm text-foreground/60 leading-relaxed">
-                    We service Durham homes daily, from modern builds to renovated older properties. Our technicians are trained in smart opener calibration and insulated door balance testing — the specific skills Durham homes demand.
+      {/* E-E-A-T Local Authority — Anchor Cities */}
+      {ANCHOR_CITY_EEAT[city] && (() => {
+        const eeat = ANCHOR_CITY_EEAT[city];
+        return (
+          <>
+            <section className="py-16">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-10">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+                    <BookOpen className="w-4 h-4" /> {area.name} Garage Door Expertise
+                  </span>
+                  <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
+                    Understanding {area.name}&apos;s Garage Door Systems
+                  </h2>
+                  <p className="text-foreground/50 text-sm max-w-2xl mx-auto">
+                    {eeat.anchor} — local construction patterns, climate factors, and failure modes specific to {area.name} homes.
                   </p>
                 </div>
-                <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
-                  <h3 className="font-display text-base text-brand-blue uppercase mb-2">Authority &amp; Trust</h3>
-                  <p className="text-sm text-foreground/60 leading-relaxed">
-                    Durham homeowners consistently recommend our clear communication and disciplined workmanship. Every repair includes a safety check, balance test, and sensor verification — no shortcuts, no surprises.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
 
-          <div className="divider-gleam" />
-
-          {/* Durham FAQs */}
-          <section className="py-16 surface-matte">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="font-display text-2xl text-brand-blue uppercase mb-8 text-center">
-                Durham Garage Door FAQs
-              </h2>
-              <div className="space-y-4">
-                {[
-                  { q: 'Why does my garage door make noise in Durham?', a: 'Durham homes often experience noise from track expansion due to seasonal temperature swings and humidity. Dry rollers, loose hardware, and opener load imbalance are common causes. Annual lubrication and a balance check resolve most noise issues.' },
-                  { q: 'How does humidity affect garage door sensors in Durham?', a: 'Triangle humidity causes condensation on safety sensor lenses and can shift sensor alignment over time — a condition called sensor drift. This leads to intermittent false obstruction alerts. Proper recalibration and lens cleaning prevent these faults.' },
-                  { q: 'What garage door types are most common in Durham homes?', a: 'Durham homes built between 2000–2020 predominantly use insulated steel doors (R-12 to R-18) paired with smart openers. Older neighborhoods like Duke Park feature wood and composite doors. New construction trends toward modern flush-panel steel with integrated smart systems.' },
-                  { q: 'How often should Durham homeowners service their garage doors?', a: 'We recommend annual maintenance — spring balance testing, lubrication, hardware tightening, sensor calibration, and opener load testing. Homes with heavy daily use or smart opener systems benefit from semi-annual checks.' },
-                ].map((faq, i) => (
-                  <details key={i} className="surface-elevated border border-brand-silver/20 rounded-lg gleam group">
-                    <summary className="p-5 cursor-pointer font-display text-sm text-brand-blue uppercase tracking-wider list-none flex items-center justify-between">
-                      {faq.q}
-                      <ChevronRight className="w-4 h-4 text-brand-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
-                    </summary>
-                    <div className="px-5 pb-5">
-                      <p className="text-sm text-foreground/60 leading-relaxed">{faq.a}</p>
+                {/* Construction Patterns + Door Types */}
+                <div className="grid gap-6 md:grid-cols-2 mb-6">
+                  <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-lg bg-brand-blue/5 flex items-center justify-center">
+                        <HardHat className="w-4 h-4 text-brand-blue" />
+                      </div>
+                      <h3 className="font-display text-sm text-brand-blue uppercase">Local Construction Patterns</h3>
                     </div>
-                  </details>
-                ))}
-              </div>
-            </div>
-          </section>
+                    <p className="text-sm text-foreground/60 leading-relaxed">{eeat.constructionPatterns}</p>
+                  </div>
+                  <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-lg bg-brand-blue/5 flex items-center justify-center">
+                        <Home className="w-4 h-4 text-brand-blue" />
+                      </div>
+                      <h3 className="font-display text-sm text-brand-blue uppercase">Garage Door Types</h3>
+                    </div>
+                    <p className="text-sm text-foreground/60 leading-relaxed">{eeat.doorTypes}</p>
+                  </div>
+                </div>
 
-          <div className="divider-gleam" />
-        </>
-      )}
+                {/* Climate Impact */}
+                <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center">
+                      <Thermometer className="w-4 h-4 text-brand-gold" />
+                    </div>
+                    <h3 className="font-display text-sm text-brand-blue uppercase">Climate Impact</h3>
+                  </div>
+                  <p className="text-sm text-foreground/60 leading-relaxed">{eeat.climateImpact}</p>
+                </div>
+
+                {/* Failure Modes + Homeowner Concerns */}
+                <div className="grid gap-6 md:grid-cols-2 mb-6">
+                  <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-lg bg-brand-red/5 flex items-center justify-center">
+                        <AlertTriangle className="w-4 h-4 text-brand-red" />
+                      </div>
+                      <h3 className="font-display text-sm text-brand-blue uppercase">Common Failure Modes</h3>
+                    </div>
+                    <ul className="space-y-2">
+                      {eeat.failureModes.map((mode, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-foreground/60">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-red/40 shrink-0 mt-1.5" />
+                          {mode}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-lg bg-brand-blue/5 flex items-center justify-center">
+                        <HelpCircle className="w-4 h-4 text-brand-blue" />
+                      </div>
+                      <h3 className="font-display text-sm text-brand-blue uppercase">Homeowner Concerns</h3>
+                    </div>
+                    <p className="text-sm text-foreground/60 leading-relaxed mb-4">{eeat.homeownerConcerns}</p>
+                    <div className="border-t border-brand-silver/20 pt-4">
+                      <h4 className="font-display text-xs text-brand-gold uppercase tracking-wider mb-2">Why This Matters</h4>
+                      <p className="text-sm text-foreground/60 leading-relaxed">{eeat.whyThisMatters}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div className="divider-gleam" />
+
+            {/* City-Specific FAQs */}
+            <section className="py-16 surface-matte">
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="font-display text-2xl text-brand-blue uppercase mb-8 text-center">
+                  {area.name} Garage Door FAQs
+                </h2>
+                <div className="space-y-4">
+                  {eeat.faqs.map((faq, i) => (
+                    <details key={i} className="surface-elevated border border-brand-silver/20 rounded-lg gleam group">
+                      <summary className="p-5 cursor-pointer font-display text-sm text-brand-blue uppercase tracking-wider list-none flex items-center justify-between">
+                        {faq.q}
+                        <ChevronRight className="w-4 h-4 text-brand-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
+                      </summary>
+                      <div className="px-5 pb-5">
+                        <p className="text-sm text-foreground/60 leading-relaxed">{faq.a}</p>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <div className="divider-gleam" />
+          </>
+        );
+      })()}
 
       {/* NEIGHBORHOODS */}
       <section className="py-16">
