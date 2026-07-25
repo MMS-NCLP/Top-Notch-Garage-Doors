@@ -56,7 +56,7 @@ export default function InstallationPage() {
             A new garage door is one of the highest-ROI home improvements — returning over 90% of its cost at resale. But with dozens of styles, materials, and insulation levels, choosing the right door matters. Here&apos;s what you need to know.
           </p>
 
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">What Every Homeowner Should Know</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">What Every <span className="text-brand-red">Homeowner</span> Should Know</h2>
           <div className="grid gap-6 md:grid-cols-2 mb-12">
             {[
               { icon: <Thermometer className="w-5 h-5" />, title: 'Insulation Matters', desc: 'R-value measures thermal resistance. For attached garages in NC, we recommend R-12+ polyurethane. Non-insulated doors can reach 120°F in summer.' },

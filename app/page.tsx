@@ -265,7 +265,7 @@ export default function HomePage() {
               <Star className="w-4 h-4" /> Verified Reviews
             </span>
             <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">
-              What Your Neighbors Say
+              What Your <span className="text-brand-red">Neighbors</span> Say
             </h2>
           </div>
           <ReviewCarousel />
@@ -284,7 +284,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">
-              New Installations
+              New <span className="text-brand-red">Installations</span>
             </h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               Premium garage doors from top manufacturers, professionally installed. Steel, wood, composite, and insulated options.
@@ -316,7 +316,7 @@ export default function HomePage() {
               <Shield className="w-4 h-4" /> Our Commitment
             </span>
             <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
-              Built on Clarity, Safety, and Disciplined Workmanship
+              Built on Clarity, <span className="text-brand-red">Safety</span>, and Disciplined Workmanship
             </h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">

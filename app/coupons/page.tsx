@@ -94,7 +94,7 @@ export default function CouponsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-4">
             <h1 className="font-hero text-4xl text-brand-blue mb-3">Coupons & Promotions</h1>
-            <p className="text-foreground/60 max-w-2xl mx-auto">
+            <p className="text-foreground/60 max-w-sm mx-auto">
               Official offers from Top-Notch Garage Doors. Print or screenshot your coupon and present at time of service.
             </p>
           </div>
@@ -112,8 +112,8 @@ export default function CouponsPage() {
 
       {/* Coupon Grid */}
       <section className="py-8 print:py-0">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 print:gap-2">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-6 md:grid-cols-2 print:gap-2 print:grid-cols-1">
             {promotions.map((promo) => (
               <CouponCard key={promo.code} {...promo} expiresAt={expiresAt} />
             ))}

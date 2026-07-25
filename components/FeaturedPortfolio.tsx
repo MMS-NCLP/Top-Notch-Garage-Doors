@@ -80,7 +80,7 @@ export default function FeaturedPortfolio() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.08 }}
-            className="flex-shrink-0 w-[85vw] sm:w-[45vw] lg:w-[360px] snap-start"
+            className="flex-shrink-0 w-[92vw] sm:w-[50vw] lg:w-[403px] snap-start"
           >
             <Link href="/portfolio" className="group block">
               {project.images.length >= 2 ? (

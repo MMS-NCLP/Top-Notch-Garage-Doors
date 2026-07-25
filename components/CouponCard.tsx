@@ -35,11 +35,10 @@ export default function CouponCard({
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
       className="coupon-card relative border-2 border-dashed border-brand-gold bg-white rounded-sm overflow-hidden print:break-inside-avoid"
-      style={{ width: '100%', maxWidth: '612px', minHeight: '216px' }}
     >
       {/* Scissors cut indicator */}
-      <div className="absolute -top-1 left-6 text-brand-gold print:text-gray-400">
-        <Scissors className="w-4 h-4 rotate-90" />
+      <div className="absolute -top-1.5 left-6 text-brand-gold print:text-gray-400">
+        <Scissors className="w-8 h-8 rotate-90" />
       </div>
 
       <div className="flex h-full">
@@ -50,12 +49,15 @@ export default function CouponCard({
         <div className="flex-1 p-5 flex flex-col justify-between">
           <div>
             <div className="flex items-start justify-between gap-3">
-              <div>
+              <div className="flex-1">
                 <h3 className="font-display text-lg text-brand-blue uppercase leading-tight">{title}</h3>
-                <p className="text-sm text-foreground/60 mt-1">{description}</p>
+                <p className="text-sm text-foreground/60 mt-1 max-w-[240px]">{description}</p>
               </div>
-              <div className="shrink-0 text-right">
+              <div className="shrink-0 flex flex-col items-center gap-2">
                 <span className="font-hero text-2xl sm:text-3xl text-brand-red leading-none">{value}</span>
+                <div className="w-28 h-14 relative opacity-30">
+                  <Image src="/images/logos/tngd-logo-text.png" alt="" fill className="object-contain" sizes="112px" />
+                </div>
               </div>
             </div>
           </div>
@@ -67,9 +69,6 @@ export default function CouponCard({
                 <span className="font-mono text-sm font-bold text-brand-blue tracking-wider">{code}</span>
               </div>
               <p className="text-[10px] text-foreground/40">EXP. {expDate}</p>
-            </div>
-            <div className="hidden sm:block w-24 h-12 relative opacity-25">
-              <Image src="/images/logos/tngd-logo-text.png" alt="" fill className="object-contain" sizes="96px" />
             </div>
           </div>
         </div>

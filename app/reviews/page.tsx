@@ -196,7 +196,7 @@ export default function ReviewsPage() {
       {/* Featured Review Carousel */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl text-brand-blue uppercase text-center mb-8">Featured Reviews</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase text-center mb-8"><span className="text-brand-red">Featured</span> Reviews</h2>
           <ReviewCarousel reviews={reviews.filter((r) => r.featured)} />
         </div>
       </section>

@@ -87,7 +87,7 @@ export default function AboutPage() {
               <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
                 <MapPin className="w-4 h-4" /> Burlington, NC
               </span>
-              <h2 className="font-display text-3xl text-brand-blue uppercase mb-6">Our Story</h2>
+              <h2 className="font-display text-3xl text-brand-blue uppercase mb-6">Our <span className="text-brand-red">Story</span></h2>
               <div className="space-y-4 text-foreground/70 leading-relaxed">
                 <p>
                   Top-Notch Garage Doors was founded with one goal: provide honest, high-quality garage door service to homeowners across the Piedmont Triad — the kind of service you&apos;d recommend to your own family.
@@ -122,7 +122,7 @@ export default function AboutPage() {
       <section className="py-20 surface-matte">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Why Top-Notch</h2>
+            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Why <span className="text-brand-red">Top-Notch</span></h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               We compete on quality and integrity, not gimmicks. Here&apos;s what sets us apart.
             </p>
@@ -151,7 +151,7 @@ export default function AboutPage() {
               <Star className="w-4 h-4" /> Verified Reviews
             </span>
             <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">
-              What Your Neighbors Say
+              What Your <span className="text-brand-red">Neighbors</span> Say
             </h2>
           </div>
           <ReviewCarousel />
@@ -169,7 +169,7 @@ export default function AboutPage() {
       <section className="py-20 surface-matte">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Our Work Across the Triad</h2>
+            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Our Work Across the <span className="text-brand-red">Triad</span></h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               Every door tells a story. Here are a few of the jobs we&apos;re most proud of.
             </p>
@@ -203,7 +203,7 @@ export default function AboutPage() {
             <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
               <MapPin className="w-4 h-4" /> Statesville to Durham
             </span>
-            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Our Coverage Area</h2>
+            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Our <span className="text-brand-red">Coverage</span> Area</h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               We serve {SERVICE_AREAS.length} towns and cities across the Piedmont Triad corridor — from the Lake Norman area to the eastern Alamance border.
             </p>
@@ -257,7 +257,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div>
-              <h2 className="font-display text-3xl text-brand-blue uppercase mb-6">On the Road, Every Day</h2>
+              <h2 className="font-display text-3xl text-brand-blue uppercase mb-6">On the <span className="text-brand-red">Road</span>, Every Day</h2>
               <div className="space-y-4 text-foreground/70 leading-relaxed">
                 <p>
                   Our fully branded trucks are stocked with the parts and tools to handle most repairs in a single visit. When you see the Top-Notch truck pull up, you know the job is getting done right.
@@ -281,7 +281,7 @@ export default function AboutPage() {
             <Handshake className="w-4 h-4" /> Professional Partnerships
           </span>
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
-            Contractors, Builders &amp; Property Managers
+            Contractors, Builders &amp; <span className="text-brand-red">Property Managers</span>
           </h2>
           <p className="text-foreground/60 max-w-2xl mx-auto mb-6">
             Priority scheduling, volume pricing, and dedicated account management for trade professionals. We work alongside general contractors, builders, and property management companies across the Piedmont Triad.

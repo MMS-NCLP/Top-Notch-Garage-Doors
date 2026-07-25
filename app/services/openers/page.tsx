@@ -63,7 +63,7 @@ export default function OpenersPage() {
             Your opener is the brain of the system — controlling access, safety, and convenience. Understanding how it works helps you troubleshoot issues and choose the right upgrade when it&apos;s time.
           </p>
 
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Troubleshooting Your Opener</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6"><span className="text-brand-red">Troubleshooting</span> Your Opener</h2>
           <div className="space-y-3 mb-12">
             {troubleshooting.map((t) => (
               <div key={t.symptom} className="surface-elevated border border-brand-silver/20 rounded-lg p-4 gleam">

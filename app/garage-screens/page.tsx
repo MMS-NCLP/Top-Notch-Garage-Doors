@@ -432,7 +432,7 @@ export default function GarageScreensPage() {
               <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-1">
                 <Smartphone className="w-4 h-4" /> Premium Upgrade
               </span>
-              <h2 className="font-display text-3xl text-brand-blue uppercase">Motorized Retractable Screens</h2>
+              <h2 className="font-display text-3xl text-brand-blue uppercase">Motorized <span className="text-brand-red">Retractable</span> Screens</h2>
             </div>
           </div>
 
@@ -485,7 +485,7 @@ export default function GarageScreensPage() {
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Screen Enclosures</h2>
+            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">Screen <span className="text-brand-red">Enclosures</span></h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               Go beyond the garage opening. Custom aluminum screen enclosures extend your screened-in living space to patios, porches, carports, and breezeways — built with the same commercial-grade materials.
             </p>

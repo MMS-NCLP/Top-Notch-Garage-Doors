@@ -83,7 +83,7 @@ export default function RepairPage() {
       {/* SYMPTOMS TABLE */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Symptom Checker</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Symptom <span className="text-brand-red">Checker</span></h2>
           <div className="space-y-3 mb-12">
             {symptoms.map((s) => (
               <div key={s.symptom} className="surface-elevated border border-brand-silver/20 rounded-lg p-4 flex items-start gap-4 gleam">
@@ -112,7 +112,7 @@ export default function RepairPage() {
       <section className="py-12 bg-brand-red/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AlertTriangle className="w-8 h-8 text-brand-red mx-auto mb-3" />
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Same-Day Emergency Repair</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Same-Day <span className="text-brand-red">Emergency</span> Repair</h2>
           <p className="text-foreground/60 text-sm mb-4">
             Broken spring? Door off track? Don&apos;t wait — we carry common parts on every truck for single-visit fixes.
           </p>

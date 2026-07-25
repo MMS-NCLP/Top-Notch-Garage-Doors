@@ -71,7 +71,7 @@ export default function ServicesPage() {
       {/* ALL SERVICES */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl text-brand-blue uppercase text-center mb-10">All Services</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase text-center mb-10">All <span className="text-brand-red">Services</span></h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
               <Link

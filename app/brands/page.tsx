@@ -183,7 +183,7 @@ export default function BrandsPage() {
               <Star className="w-4 h-4" /> Garage Door Manufacturers
             </span>
             <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">
-              The Doors We Install
+              The Doors We <span className="text-brand-red">Install</span>
             </h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               We carry and install garage doors from the industry&apos;s most trusted manufacturers. Every door is backed by the manufacturer&apos;s warranty plus our own 2-year parts guarantee.
@@ -264,7 +264,7 @@ export default function BrandsPage() {
               <Wrench className="w-4 h-4" /> Opener & Smart Access Brands
             </span>
             <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">
-              The Technology We Trust
+              The Technology We <span className="text-brand-red">Trust</span>
             </h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               We install and service openers from the industry&apos;s top smart access brands. Every installation includes full smart platform setup, app configuration, and hands-on training.
@@ -370,7 +370,7 @@ export default function BrandsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">
-              Premium Parts. No Exceptions.
+              Premium Parts. No <span className="text-brand-red">Exceptions</span>.
             </h2>
             <p className="text-foreground/60 max-w-2xl mx-auto">
               We never substitute with off-brand or cut-rate components. Every spring, roller, cable, and bearing plate we install is sourced directly from the manufacturer or from certified OEM suppliers.
