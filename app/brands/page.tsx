@@ -196,13 +196,13 @@ export default function BrandsPage() {
                 <div className="flex flex-col lg:flex-row">
                   {/* Logo + Authority */}
                   <div className="lg:w-72 shrink-0 bg-gradient-to-b from-brand-blue/[0.03] to-transparent p-8 flex flex-col items-center justify-center border-b lg:border-b-0 lg:border-r border-brand-silver/20">
-                    <div className="w-32 h-20 relative mb-4">
+                    <div className="w-36 h-22 relative mb-4">
                       <Image
                         src={brand.logo}
                         alt={`${brand.name} logo`}
                         fill
                         className="object-contain"
-                        sizes="128px"
+                        sizes="144px"
                       />
                     </div>
                     <span className="inline-flex items-center gap-1.5 text-[10px] font-display uppercase tracking-widest text-brand-gold bg-brand-gold/10 px-3 py-1.5 rounded-full">
@@ -276,13 +276,13 @@ export default function BrandsPage() {
               <div key={brand.name} className="surface-elevated border border-brand-silver/20 rounded-xl overflow-hidden gleam flex flex-col">
                 {/* Logo header */}
                 <div className="bg-gradient-to-b from-brand-blue/[0.03] to-transparent p-6 border-b border-brand-silver/20 text-center">
-                  <div className="w-28 h-16 relative mx-auto mb-3">
+                  <div className="w-31 h-18 relative mx-auto mb-3">
                     <Image
                       src={brand.logo}
                       alt={`${brand.name} logo`}
                       fill
                       className="object-contain"
-                      sizes="112px"
+                      sizes="124px"
                     />
                   </div>
                   <span className="inline-flex items-center gap-1.5 text-[10px] font-display uppercase tracking-widest text-brand-gold bg-brand-gold/10 px-3 py-1.5 rounded-full">

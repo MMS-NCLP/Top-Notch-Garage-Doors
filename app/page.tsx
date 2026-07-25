@@ -359,6 +359,9 @@ export default function HomePage() {
       {/* BRANDS */}
       <BrandGrid />
 
+      {/* CALLBACK FORM */}
+      <CallbackForm />
+
       {/* PROMOTIONS */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -378,9 +381,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* CALLBACK FORM */}
-      <CallbackForm />
 
       {/* FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">

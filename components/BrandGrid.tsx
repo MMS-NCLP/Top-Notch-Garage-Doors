@@ -17,12 +17,12 @@ const BRANDS = [
 
 function BrandItem({ name, logo }: { name: string; logo: string }) {
   return (
-    <div className="flex-shrink-0 w-36 h-20 flex items-center justify-center px-4">
+    <div className="flex-shrink-0 w-40 h-22 flex items-center justify-center px-4">
       <Image
         src={logo}
         alt={`${name} logo`}
-        width={120}
-        height={60}
+        width={132}
+        height={66}
         className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
       />
     </div>
