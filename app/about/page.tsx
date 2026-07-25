@@ -39,7 +39,7 @@ const JOB_IMAGES = [
   { src: '/images/portfolio/door-styles/walnut-woodgrain-garage-door-modern-farmhouse-nc.jpg', alt: 'Dark walnut woodgrain door on modern farmhouse in Mooresville NC', location: 'Mooresville' },
   { src: '/images/portfolio/screens/screen-door-brick-american-flag-hero-nc.jpg', alt: 'Screen door on brick home with American flag in Advance NC', location: 'Advance' },
   { src: '/images/portfolio/before-after/brick-house-new-black-door-after-nc.jpg', alt: 'New black door on brick home in Thomasville NC', location: 'Thomasville' },
-  { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Completed duplex doors with TNGD truck at dusk in Burlington NC', location: 'Burlington' },
+  { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Completed new construction duplex with TNGD truck at dusk in Burlington NC', location: 'Burlington' },
 ];
 
 const corridorGroups = [

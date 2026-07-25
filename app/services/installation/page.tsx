@@ -117,11 +117,11 @@ export default function InstallationPage() {
           <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Recent Installations</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
             {[
-              { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Day Ave duplex new construction completed with TNGD truck Burlington NC' },
+              { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'New construction duplex completed with TNGD truck in Burlington NC' },
               { src: '/images/portfolio/installations/craftsman-raised-panel-7-windows-exterior-nc.jpg', alt: 'Craftsman raised-panel garage door installation NC' },
               { src: '/images/portfolio/installations/residential-door-installation-piedmont-after.jpg', alt: 'Residential garage door installation Piedmont Triad' },
               { src: '/images/portfolio/installations/new-garage-door-burlington-nc-exterior.jpg', alt: 'New garage door installation Burlington NC' },
-              { src: '/images/portfolio/construction/day-ave-black-door-completed-exterior-burlington-nc.jpg', alt: 'Day Ave new construction black door installation Burlington NC' },
+              { src: '/images/portfolio/construction/day-ave-black-door-completed-exterior-burlington-nc.jpg', alt: 'Black raised-panel door on new construction duplex in Burlington NC' },
               { src: '/images/portfolio/installations/garage-door-install-alamance-county-1.jpg', alt: 'Garage door installation Alamance County NC' },
             ].map((img) => (
               <div key={img.src} className="relative aspect-[4/3] rounded-lg overflow-hidden">
