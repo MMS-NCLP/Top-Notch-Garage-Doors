@@ -29,6 +29,7 @@ export interface PortfolioProject {
   outcome: string;
   images: PortfolioImage[];
   featured?: boolean;
+  pendingVideo?: { drive: string; sizeMB: number; note: string }[];
 }
 
 export const SERVICE_TYPE_LABELS: Record<ServiceType, string> = {
@@ -141,6 +142,13 @@ export const projects: PortfolioProject[] = [
     solution: 'We replaced both bays with brand-new Clopay black raised-panel steel doors with transom windows — a bold color change that pairs beautifully with the red brick. Each door was fitted with new torsion springs, galvanized steel tracks, and insulated backing for year-round efficiency. A new belt-drive opener with smartphone control replaced the noisy chain unit, giving the homeowner push-button convenience from anywhere.',
     outcome: 'A dramatic curb-appeal transformation — the sleek black Clopay doors with transom windows turned this Thomasville brick home into a neighborhood standout. The belt-drive opener runs so quietly you barely know it\'s working, and the insulated panels keep the garage comfortable through Carolina summers.',
     featured: true,
+    pendingVideo: [
+      { drive: 'G:/My Drive/Brick and Black door/IMG_6347.mp4', sizeMB: 4.3, note: 'Interior install footage — needs QC scrub' },
+      { drive: 'G:/My Drive/Brick and Black door/IMG_6348.mp4', sizeMB: 3.8, note: 'Interior install footage — needs QC scrub' },
+      { drive: 'G:/My Drive/Brick and Black door/IMG_6351.mp4', sizeMB: 4.3, note: 'Interior install footage — needs QC scrub' },
+      { drive: 'G:/My Drive/Brick and Black door/IMG_6355.mp4', sizeMB: 3.8, note: 'Interior install footage — needs QC scrub' },
+      { drive: 'G:/My Drive/Brick and Black door/video.mp4', sizeMB: 4.2, note: 'General job footage — needs QC scrub' },
+    ],
     images: [
       { src: '/images/portfolio/door-styles/black-garage-doors-red-brick-nc.jpg', alt: 'Two completed Clopay black raised-panel doors with transom windows on red brick home in Thomasville NC', tag: 'after' },
       { src: '/images/portfolio/before-after/brick-house-old-blue-gray-door-before-nc.jpg', alt: 'Faded blue-gray garage door on right bay of brick home before Clopay replacement in Thomasville NC', tag: 'before' },
