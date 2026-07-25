@@ -126,8 +126,8 @@ export const projects: PortfolioProject[] = [
       { src: '/images/portfolio/construction/day-ave-new-construction-interior-nc.jpg', alt: 'Interior view of completed door installation with workbench setup at Burlington NC duplex', tag: 'after' },
       { src: '/images/portfolio/construction/duplex-new-construction-interior-opener-track-burlington-nc.jpg', alt: 'Interior view of completed door with LiftMaster opener and galvanized track system at Burlington NC duplex', tag: 'after' },
       { src: '/images/portfolio/construction/day-ave-liftmaster-video-keypad-burlington-nc.jpg', alt: 'LiftMaster video keypad installed on exterior door frame at Burlington NC new construction', tag: 'after' },
-      { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Both duplex units with completed black doors and TNGD truck on-site at dusk in Burlington NC', tag: 'after' },
       { src: '/images/portfolio/construction/duplex-new-construction-both-bays-open-before-burlington-nc.jpg', alt: 'Wide view of new construction duplex with both garage bays open before door installation in Burlington NC', tag: 'before' },
+      { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Both duplex units with completed black doors and TNGD truck on-site at dusk in Burlington NC', tag: 'after' },
     ],
   },
   {
