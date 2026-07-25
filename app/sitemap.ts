@@ -1,58 +1,51 @@
 import type { MetadataRoute } from 'next';
+import { articles } from '@/lib/blog-content';
 
 const BASE_URL = 'https://www.trytopnotchdoors.com';
 
 const cities = ['statesville', 'mooresville', 'salisbury', 'lexington', 'thomasville', 'high-point', 'greensboro', 'mcleansville', 'gibsonville', 'whitsett', 'burlington', 'elon', 'mebane'];
 
-const blogSlugs = [
-  'garage-door-springs-replacement-guide',
-  'garage-door-insulation-guide',
-  'smart-garage-door-openers-2026',
-  'emergency-garage-door-repair-what-to-do',
-  'garage-door-maintenance-seasonal-checklist',
-  'best-garage-door-styles-for-north-carolina-homes',
-  'garage-door-opener-troubleshooting-guide',
-  'diy-garage-door-maintenance-tips',
-  'garage-door-safety-features-every-homeowner-needs',
-  'pressure-washing-guide-when-why-how',
-  'garage-screen-doors-complete-buyers-guide',
-];
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = [
-    { url: `${BASE_URL}`, changeFrequency: 'weekly' as const, priority: 1.0 },
-    { url: `${BASE_URL}/services`, changeFrequency: 'monthly' as const, priority: 0.9 },
-    { url: `${BASE_URL}/services/repair`, changeFrequency: 'monthly' as const, priority: 0.9 },
-    { url: `${BASE_URL}/services/installation`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/services/openers`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/services/pressure-washing`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/garage-screens`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/brands`, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${BASE_URL}/design-tool`, changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: `${BASE_URL}/coupons`, changeFrequency: 'weekly' as const, priority: 0.7 },
-    { url: `${BASE_URL}/promotions`, changeFrequency: 'weekly' as const, priority: 0.7 },
-    { url: `${BASE_URL}/portfolio`, changeFrequency: 'weekly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/blog`, changeFrequency: 'weekly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/reviews`, changeFrequency: 'weekly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/warranty`, changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: `${BASE_URL}/resources`, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${BASE_URL}/contact`, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${BASE_URL}/partnership`, changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: `${BASE_URL}/privacy`, changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: `${BASE_URL}/terms`, changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: `${BASE_URL}/accessibility`, changeFrequency: 'yearly' as const, priority: 0.3 },
+  const now = new Date().toISOString();
+
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}`, changeFrequency: 'weekly', priority: 1.0, lastModified: now },
+    { url: `${BASE_URL}/about`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-07-24' },
+    { url: `${BASE_URL}/services`, changeFrequency: 'monthly', priority: 0.9, lastModified: '2026-06-01' },
+    { url: `${BASE_URL}/services/repair`, changeFrequency: 'monthly', priority: 0.9, lastModified: '2026-06-01' },
+    { url: `${BASE_URL}/services/installation`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-07-24' },
+    { url: `${BASE_URL}/services/openers`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-06-01' },
+    { url: `${BASE_URL}/services/pressure-washing`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-06-01' },
+    { url: `${BASE_URL}/garage-screens`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-06-01' },
+    { url: `${BASE_URL}/brands`, changeFrequency: 'monthly', priority: 0.7, lastModified: '2026-06-01' },
+    { url: `${BASE_URL}/design-tool`, changeFrequency: 'monthly', priority: 0.6, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/coupons`, changeFrequency: 'weekly', priority: 0.7, lastModified: now },
+    { url: `${BASE_URL}/promotions`, changeFrequency: 'weekly', priority: 0.7, lastModified: now },
+    { url: `${BASE_URL}/portfolio`, changeFrequency: 'weekly', priority: 0.8, lastModified: now },
+    { url: `${BASE_URL}/blog`, changeFrequency: 'weekly', priority: 0.8, lastModified: now },
+    { url: `${BASE_URL}/reviews`, changeFrequency: 'weekly', priority: 0.8, lastModified: now },
+    { url: `${BASE_URL}/service-areas`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-07-24' },
+    { url: `${BASE_URL}/warranty`, changeFrequency: 'monthly', priority: 0.6, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/resources`, changeFrequency: 'monthly', priority: 0.7, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/contact`, changeFrequency: 'monthly', priority: 0.7, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/partnership`, changeFrequency: 'monthly', priority: 0.6, lastModified: '2026-07-24' },
+    { url: `${BASE_URL}/privacy`, changeFrequency: 'yearly', priority: 0.3, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/terms`, changeFrequency: 'yearly', priority: 0.3, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/accessibility`, changeFrequency: 'yearly', priority: 0.3, lastModified: '2026-05-01' },
   ];
 
-  const cityPages = cities.map((city) => ({
+  const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({
     url: `${BASE_URL}/service-areas/${city}`,
-    changeFrequency: 'monthly' as const,
+    changeFrequency: 'monthly',
     priority: 0.7,
+    lastModified: '2026-07-24',
   }));
 
-  const blogPages = blogSlugs.map((slug) => ({
+  const blogPages: MetadataRoute.Sitemap = Object.entries(articles).map(([slug, article]) => ({
     url: `${BASE_URL}/blog/${slug}`,
     changeFrequency: 'monthly' as const,
     priority: 0.7,
+    lastModified: article.publishedAt,
   }));
 
   return [...staticPages, ...cityPages, ...blogPages];

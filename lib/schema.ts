@@ -29,6 +29,11 @@ export const BUSINESS_SCHEMA = {
     'https://www.facebook.com/topnotchdoorsnc',
     'https://www.instagram.com/topnotchdoorsnc',
     'https://www.linkedin.com/company/topnotchdoorsnc',
+    'https://www.thumbtack.com/nc/burlington/garage-doors/top-notch-garage-doors/service/517176114416656385',
+    'https://www.angi.com/companylist/us/nc/burlington/topnotch-garage-doors-llc-reviews-1.htm',
+    'https://nextdoor.com/pages/top-notch-garage-doors-llc-burlington-nc/',
+    'https://www.homeadvisor.com/rated.topnotchgaragedoorsnc.144851891.html',
+    'https://www.yelp.com/biz/top-notch-garage-doors-no-title-3',
   ],
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -110,11 +115,15 @@ export function articleSchema({
   description,
   url,
   publishedAt,
+  image,
+  dateModified,
 }: {
   title: string;
   description: string;
   url: string;
   publishedAt: string;
+  image?: string;
+  dateModified?: string;
 }) {
   return {
     '@context': 'https://schema.org',
@@ -123,6 +132,13 @@ export function articleSchema({
     description,
     url,
     datePublished: publishedAt,
+    ...(dateModified && { dateModified }),
+    ...(image && {
+      image: {
+        '@type': 'ImageObject',
+        url: `${BUSINESS_ID}${image}`,
+      },
+    }),
     author: {
       '@type': 'Organization',
       '@id': BUSINESS_ID,

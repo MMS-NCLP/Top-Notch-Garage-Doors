@@ -80,12 +80,25 @@ export default function Footer() {
               </div>
             </address>
 
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1">
               <a href="https://www.facebook.com/topnotchdoorsnc" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Facebook</a>
               <span className="text-white/20">|</span>
               <a href="https://www.instagram.com/topnotchdoorsnc" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Instagram</a>
               <span className="text-white/20">|</span>
               <a href="https://www.linkedin.com/company/topnotchdoorsnc" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">LinkedIn</a>
+            </div>
+
+            <h4 className="font-display text-sm uppercase tracking-wider mt-5 mb-2 text-brand-gold">Find Us On</h4>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <a href="https://www.thumbtack.com/nc/burlington/garage-doors/top-notch-garage-doors/service/517176114416656385" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Thumbtack</a>
+              <span className="text-white/20">|</span>
+              <a href="https://www.angi.com/companylist/us/nc/burlington/topnotch-garage-doors-llc-reviews-1.htm" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Angi</a>
+              <span className="text-white/20">|</span>
+              <a href="https://nextdoor.com/pages/top-notch-garage-doors-llc-burlington-nc/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Nextdoor</a>
+              <span className="text-white/20">|</span>
+              <a href="https://www.homeadvisor.com/rated.topnotchgaragedoorsnc.144851891.html" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">HomeAdvisor</a>
+              <span className="text-white/20">|</span>
+              <a href="https://www.yelp.com/biz/top-notch-garage-doors-no-title-3" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors text-xs uppercase tracking-wider">Yelp</a>
             </div>
           </div>
         </div>

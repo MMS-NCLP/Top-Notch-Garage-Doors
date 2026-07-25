@@ -35,6 +35,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             description: article.excerpt,
             url: `https://www.trytopnotchdoors.com/blog/${slug}`,
             publishedAt: article.publishedAt,
+            image: article.image,
+            dateModified: article.publishedAt,
           })),
         }}
       />

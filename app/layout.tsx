@@ -37,6 +37,10 @@ export const metadata: Metadata = {
   title: 'Top-Notch Garage Doors | Piedmont Triad, NC',
   description: 'Professional garage door repair, installation, and maintenance serving the Piedmont Triad corridor from Statesville to Durham. Fast service by real pros — certified & insured.',
   metadataBase: new URL('https://www.trytopnotchdoors.com'),
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export default function RootLayout({
