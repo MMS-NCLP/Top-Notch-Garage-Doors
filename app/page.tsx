@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import ServiceCard from '@/components/ServiceCard';
+import FlipCard from '@/components/FlipCard';
 import BrandGrid from '@/components/BrandGrid';
 import CTAButton from '@/components/CTAButton';
 import ReviewCarousel from '@/components/ReviewCarousel';
@@ -9,7 +10,7 @@ import CallbackForm from '@/components/CallbackForm';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Wrench, Home, Zap, AlertTriangle, BookOpen, Handshake, Shield, Star, Award, CheckCircle, Users } from 'lucide-react';
+import { Wrench, Home, Zap, AlertTriangle, BookOpen, Shield, Star, Award, CheckCircle, Users, Eye, MessageSquare, Settings, ClipboardCheck } from 'lucide-react';
 
 export const metadata = genMeta({
   title: 'Garage Door Troubleshooting, Repair & Installation',
@@ -28,7 +29,7 @@ export default function HomePage() {
         slideshow
       />
 
-      {/* 1. EDUCATION FIRST */}
+      {/* 1. EDUCATION FIRST — FLIP CARDS */}
       <section className="py-20 surface-matte">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -43,108 +44,213 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { title: 'Door Won\'t Open or Close?', desc: 'Check your safety sensors for obstructions, verify the opener is powered, and look for blinking LED codes. A stuck door often means a broken spring — do not attempt to force it.', icon: <AlertTriangle className="w-5 h-5" /> },
-              { title: 'Loud Grinding or Squealing?', desc: 'Metal-on-metal noise usually means dry rollers or hinges. Annual lubrication extends the life of your system by years. Never use WD-40 — use silicone or lithium-based garage door lubricant.', icon: <Wrench className="w-5 h-5" /> },
-              { title: 'How Long Do Springs Last?', desc: 'Standard torsion springs are rated for ~10,000 cycles (about 7 years). If your door feels heavy or you hear a loud bang from the garage, your spring has likely failed.', icon: <Shield className="w-5 h-5" /> },
-              { title: 'Smart Opener Benefits', desc: 'Modern openers offer smartphone control, camera feeds, activity alerts, and automatic closing. Most premium models include battery backup for power outages.', icon: <Zap className="w-5 h-5" /> },
-              { title: 'When to Replace vs. Repair', desc: 'Doors older than 15–20 years, those with multiple panel damage, or doors with R-0 insulation are candidates for replacement. Single-component repairs are usually the smarter investment.', icon: <Home className="w-5 h-5" /> },
-              { title: 'Maintenance Saves Money', desc: 'A $100 annual tune-up prevents $500+ emergency repairs. Lubrication, balance testing, and hardware tightening keep your system running smoothly for years.', icon: <Handshake className="w-5 h-5" /> },
-            ].map((item, i) => (
-              <div key={i} className="surface-elevated border border-brand-silver/20 rounded-lg p-6 gleam">
-                <div className="w-10 h-10 rounded-lg bg-brand-blue/5 flex items-center justify-center text-brand-blue mb-3">
-                  {item.icon}
-                </div>
-                <h3 className="font-display text-lg text-brand-blue mb-2">{item.title}</h3>
-                <p className="text-sm text-foreground/60 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+            <FlipCard
+              icon={<AlertTriangle className="w-5 h-5" />}
+              title="Door Won't Open or Close?"
+              description="Check your safety sensors for obstructions, verify the opener is powered, and look for blinking LED codes. A stuck door often means a broken spring — do not attempt to force it."
+              backImage="/images/blog/garage-door-opener-troubleshooting-guide-nc.jpg"
+              backImageAlt="Brick colonial home with dark garage doors"
+              backInsight="Most opener failures trace back to three things: misaligned safety sensors, stripped gears, or a dead logic board. Before calling for repair, check your wall button — if it works but the remote doesn't, it's likely a signal issue, not a motor issue."
+              blogSlug="garage-door-opener-troubleshooting-guide"
+              blogLabel="Troubleshooting Guide"
+            />
+            <FlipCard
+              icon={<Wrench className="w-5 h-5" />}
+              title="Loud Grinding or Squealing?"
+              description="Metal-on-metal noise usually means dry rollers or hinges. Annual lubrication extends the life of your system by years. Never use WD-40 — use silicone or lithium-based garage door lubricant."
+              backImage="/images/blog/diy-garage-door-maintenance-tips-nc.jpg"
+              backImageAlt="White carriage house garage door on sunny day"
+              backInsight="The #1 mistake homeowners make: using WD-40 on garage door parts. It's a solvent, not a lubricant — it strips existing grease and leaves parts drier than before. Use white lithium grease on hinges and rollers, silicone spray on tracks and springs."
+              blogSlug="diy-garage-door-maintenance-tips"
+              blogLabel="DIY Maintenance Tips"
+            />
+            <FlipCard
+              icon={<Shield className="w-5 h-5" />}
+              title="How Long Do Springs Last?"
+              description="Standard torsion springs are rated for ~10,000 cycles (about 7 years). If your door feels heavy or you hear a loud bang from the garage, your spring has likely failed."
+              backImage="/images/blog/garage-door-spring-replacement-guide-nc.jpg"
+              backImageAlt="Technician lubricating garage door torsion spring"
+              backInsight="A torsion spring under tension stores enough energy to cause serious injury. Never attempt to adjust or replace springs yourself. If one spring breaks, we recommend replacing both — the second is on borrowed time and mismatched tension causes premature wear."
+              blogSlug="garage-door-springs-replacement-guide"
+              blogLabel="Spring Replacement Guide"
+            />
+            <FlipCard
+              icon={<Zap className="w-5 h-5" />}
+              title="Smart Opener Benefits"
+              description="Modern openers offer smartphone control, camera feeds, activity alerts, and automatic closing. Most premium models include battery backup for power outages."
+              backImage="/images/blog/smart-garage-door-openers-guide-nc.jpg"
+              backImageAlt="LiftMaster myQ smart garage door opener installed on ceiling rail"
+              backInsight="LiftMaster's myQ technology lets you monitor and control your garage from anywhere. Get real-time alerts when the door opens, set schedules for auto-close, and integrate with smart home systems. Battery backup keeps your door working during outages."
+              blogSlug="smart-garage-door-openers-2026"
+              blogLabel="Smart Openers Guide"
+            />
+            <FlipCard
+              icon={<Home className="w-5 h-5" />}
+              title="When to Replace vs. Repair"
+              description="Doors older than 15–20 years, those with multiple panel damage, or doors with R-0 insulation are candidates for replacement. Single-component repairs are usually the smarter investment."
+              backImage="/images/blog/seasonal-garage-door-maintenance-nc.jpg"
+              backImageAlt="Well-maintained white cottage garage with greenery"
+              backInsight="Here's the honest rule: if a single repair costs more than 50% of a new door, replacement makes more financial sense. But age alone isn't a reason to replace — a well-maintained 20-year-old door with good springs and panels can outlast a neglected 5-year-old one."
+              blogSlug="garage-door-maintenance-seasonal-checklist"
+              blogLabel="Seasonal Maintenance Checklist"
+            />
+            <FlipCard
+              icon={<CheckCircle className="w-5 h-5" />}
+              title="Maintenance Saves Money"
+              description="A $100 annual tune-up prevents $500+ emergency repairs. Lubrication, balance testing, and hardware tightening keep your system running smoothly for years."
+              backImage="/images/blog/seasonal-garage-door-maintenance-nc.jpg"
+              backImageAlt="Well-maintained garage door with seasonal greenery"
+              backInsight="Our 21-point tune-up covers spring tension, cable condition, track alignment, roller wear, weatherseal integrity, safety sensor calibration, and opener force settings. Most emergency calls we get are problems a $79 tune-up would have caught months earlier."
+              blogSlug="garage-door-maintenance-seasonal-checklist"
+              blogLabel="Year-Round Checklist"
+            />
           </div>
         </div>
       </section>
 
-      {/* E-E-A-T: WHY TOP-NOTCH (Experience + Expertise + Process) */}
-      <section className="py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
-              <Award className="w-4 h-4" /> Why Top-Notch
-            </span>
-            <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
-              Professional Experience You Can See in Every Repair
-            </h2>
-            <p className="text-foreground/60 max-w-3xl mx-auto">
-              We work on garage doors every day across the Piedmont Triad — from older homes with builder-grade hardware to new constructions with modern smart systems. Every technician is trained in torsion and extension spring mechanics, safety sensor alignment, balance testing, and proper opener calibration.
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-5 mb-6">
-            {[
-              { step: '1', title: 'Inspect', desc: 'Springs, cables, tracks, sensors, and opener load.' },
-              { step: '2', title: 'Diagnose', desc: 'The root cause, not just the symptom.' },
-              { step: '3', title: 'Explain', desc: 'What we found and why it matters.' },
-              { step: '4', title: 'Repair', desc: 'Disciplined, correct workmanship.' },
-              { step: '5', title: 'Verify', desc: 'Balance, alignment, and safety systems.' },
-            ].map((item) => (
-              <div key={item.step} className="surface-elevated border border-brand-silver/20 rounded-lg p-5 text-center gleam">
-                <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-display text-lg flex items-center justify-center mx-auto mb-3">
-                  {item.step}
+      {/* WHY TOP-NOTCH — REDESIGNED: NARRATIVE + PROOF POINTS */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2 items-center">
+            {/* Left — narrative */}
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-4">
+                <Award className="w-4 h-4" /> Why Top-Notch
+              </span>
+              <h2 className="font-display text-3xl text-brand-blue uppercase mb-5 leading-tight">
+                We Don&apos;t Just Fix Doors.<br />We Teach You What We See.
+              </h2>
+              <p className="text-foreground/70 leading-relaxed mb-6">
+                Every technician on our team works on garage doors every day — from older homes with builder-grade hardware to new constructions with modern smart systems. We don&apos;t upsell. We don&apos;t rush. We explain the system clearly, show you what we found, and complete the repair the right way.
+              </p>
+              <p className="text-foreground/60 leading-relaxed mb-8">
+                That&apos;s why homeowners, builders, and property managers across the Piedmont Triad call us back. Not because we&apos;re the cheapest — because they trust the work.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <Eye className="w-4 h-4 text-brand-gold" />
+                  </div>
+                  <div>
+                    <h4 className="font-display text-sm text-brand-blue uppercase">Thorough Inspection</h4>
+                    <p className="text-xs text-foreground/50 mt-0.5">Springs, cables, tracks, sensors, and opener load — every visit.</p>
+                  </div>
                 </div>
-                <h3 className="font-display text-sm text-brand-blue uppercase mb-2">{item.title}</h3>
-                <p className="text-xs text-foreground/60 leading-relaxed">{item.desc}</p>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <MessageSquare className="w-4 h-4 text-brand-gold" />
+                  </div>
+                  <div>
+                    <h4 className="font-display text-sm text-brand-blue uppercase">Clear Explanation</h4>
+                    <p className="text-xs text-foreground/50 mt-0.5">What we found, why it matters, and your real options.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <Settings className="w-4 h-4 text-brand-gold" />
+                  </div>
+                  <div>
+                    <h4 className="font-display text-sm text-brand-blue uppercase">Correct Workmanship</h4>
+                    <p className="text-xs text-foreground/50 mt-0.5">Disciplined repair — done right, not just done fast.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <ClipboardCheck className="w-4 h-4 text-brand-gold" />
+                  </div>
+                  <div>
+                    <h4 className="font-display text-sm text-brand-blue uppercase">Safety Verified</h4>
+                    <p className="text-xs text-foreground/50 mt-0.5">Balance, alignment, and safety systems confirmed before we leave.</p>
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
+            {/* Right — accent image */}
+            <div className="relative rounded-lg overflow-hidden h-[420px] lg:h-[500px]">
+              <Image
+                src="/images/hero/coachman-carriage-house-door-nc.jpg"
+                alt="Coachman carriage house style garage door — professional installation by Top-Notch Garage Doors"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="font-accent text-2xl text-white/90">Quality You Can Trust</p>
+                <p className="text-sm text-white/60 mt-1">Serving the Piedmont Triad since day one.</p>
+              </div>
+            </div>
           </div>
-          <p className="text-center text-foreground/60 text-sm italic">
-            Homeowners trust us because we teach what we see and fix what matters.
-          </p>
         </div>
       </section>
 
       <div className="divider-gleam" />
 
-      {/* 2. EMERGENCY / HIGH-INTENT */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* EMERGENCY / HIGH-INTENT — ALTERNATE COLOR TREATMENT */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-[#001a45] to-[#3d0a18]" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-red mb-3">
+            <span className="inline-flex items-center gap-2 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
               <AlertTriangle className="w-4 h-4" /> Emergency Service
             </span>
-            <h2 className="font-display text-3xl text-brand-blue uppercase mb-3">
+            <h2 className="font-display text-3xl text-white uppercase mb-3">
               Need Immediate Help?
             </h2>
-            <p className="text-foreground/60 max-w-2xl mx-auto">
+            <p className="text-white/60 max-w-2xl mx-auto">
               Broken spring? Door off track? Opener not responding? We offer same-day emergency repair across the Piedmont Triad.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <ServiceCard
+            <FlipCard
+              icon={<Wrench className="w-6 h-6" />}
               title="Emergency Repair"
               description="Same-day response for broken springs, snapped cables, doors off-track, and opener failures."
-              href="/services/repair"
-              icon={<Wrench className="w-6 h-6" />}
+              backImage="/images/blog/emergency-garage-door-repair-nc.webp"
+              backImageAlt="Crashed garage door requiring emergency repair"
+              backInsight="A door off its tracks is a safety hazard — don't try to force it back. Disconnect the opener, secure the area, and call us. We stock common springs and cables on our trucks for single-visit emergency repairs."
+              blogSlug="emergency-garage-door-repair-what-to-do"
+              blogLabel="Emergency Guide"
+              overlay="red"
             />
-            <ServiceCard
+            <FlipCard
+              icon={<AlertTriangle className="w-6 h-6" />}
               title="Spring Replacement"
               description="Torsion and extension spring replacement. We stock common sizes for single-visit repairs."
-              href="/services/repair"
-              icon={<AlertTriangle className="w-6 h-6" />}
+              backImage="/images/blog/garage-door-spring-replacement-guide-nc.jpg"
+              backImageAlt="Technician lubricating garage door torsion spring"
+              backInsight="Springs are under extreme tension — never attempt DIY replacement. We match spring wire gauge, length, and inside diameter precisely. Mismatched springs cause uneven door travel and accelerate wear on your opener."
+              blogSlug="garage-door-springs-replacement-guide"
+              blogLabel="Springs Guide"
+              overlay="red"
             />
-            <ServiceCard
+            <FlipCard
+              icon={<Zap className="w-6 h-6" />}
               title="Opener Repair"
               description="Diagnosis and repair for all major opener brands. Motor, gear, logic board, and sensor issues."
-              href="/services/openers"
-              icon={<Zap className="w-6 h-6" />}
+              backImage="/images/blog/smart-garage-door-openers-guide-nc.jpg"
+              backImageAlt="LiftMaster myQ smart garage door opener on ceiling rail"
+              backInsight="Before calling: check if the wall button works (rules out remote issues), look for blinking LED codes on the motor unit, and verify the safety sensors have solid green lights. These three checks save time and help us arrive with the right parts."
+              blogSlug="garage-door-opener-troubleshooting-guide"
+              blogLabel="Troubleshooting Guide"
+              overlay="red"
             />
-            <ServiceCard
+            <FlipCard
+              icon={<Home className="w-6 h-6" />}
               title="Door Installation"
               description="New residential and commercial garage door installation. Custom sizes, styles, and insulation options."
-              href="/services/installation"
-              icon={<Home className="w-6 h-6" />}
+              backImage="/images/blog/best-garage-door-styles-north-carolina.jpg"
+              backImageAlt="Canyon Ridge stone and wood luxury garage doors"
+              backInsight="We're authorized dealers for Clopay, LiftMaster, and Amarr. From steel raised-panel to Canyon Ridge wood-look carriage house doors, we help you choose the right style, insulation R-value, and wind load rating for your NC home."
+              blogSlug="best-garage-door-styles-for-north-carolina-homes"
+              blogLabel="NC Door Styles Guide"
+              overlay="red"
             />
           </div>
           <div className="text-center mt-10">
-            <p className="text-foreground/60 text-sm mb-4">If your door is stuck or making unusual sounds, don&apos;t wait — call now.</p>
-            <CTAButton text="Call for Emergency Service" variant="primary" />
+            <p className="text-white/50 text-sm mb-4">If your door is stuck or making unusual sounds, don&apos;t wait — call now.</p>
+            <CTAButton text="Call for Emergency Service" variant="secondary" />
           </div>
         </div>
       </section>
@@ -173,7 +279,7 @@ export default function HomePage() {
 
       <div className="divider-gleam" />
 
-      {/* 3. INSTALLATIONS */}
+      {/* INSTALLATIONS */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -202,7 +308,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* E-E-A-T: OUR COMMITMENT (Authority + Trust + Founder) */}
+      {/* E-E-A-T: OUR COMMITMENT */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
@@ -247,13 +353,13 @@ export default function HomePage() {
 
       <div className="divider-gleam" />
 
-      {/* 5. LOCAL TOWNS */}
+      {/* LOCAL TOWNS */}
       <LocalTownsGrid />
 
-      {/* 6. BRANDS */}
+      {/* BRANDS */}
       <BrandGrid />
 
-      {/* 7. PROMOTIONS */}
+      {/* PROMOTIONS */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="surface-elevated border border-brand-gold/30 rounded-lg p-8 gleam">
@@ -273,10 +379,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. CALLBACK FORM */}
+      {/* CALLBACK FORM */}
       <CallbackForm />
 
-      {/* 9. FINAL CTA */}
+      {/* FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-hero text-3xl tracking-wider mb-4">

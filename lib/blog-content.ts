@@ -246,7 +246,7 @@ Contact Top-Notch Garage Doors at (336) 000-0000 for a free insulation assessmen
     category: 'Openers & Technology',
     excerpt: 'Wi-Fi connectivity, camera integration, smartphone control — the complete guide to smart openers for Piedmont Triad homeowners.',
     image: '/images/blog/smart-garage-door-openers-guide-nc.jpg',
-    imageAlt: 'Elegant white home at twilight with carriage house garage doors and warm interior lighting',
+    imageAlt: 'LiftMaster myQ smart garage door opener installed on ceiling rail in residential garage',
     content: `The garage door opener has evolved from a simple mechanical device into a sophisticated smart home hub. Modern openers connect to your Wi-Fi, send alerts to your phone, include built-in security cameras, and integrate with voice assistants. For homeowners in Whitsett, Burlington, Greensboro, and the surrounding Piedmont Triad area, understanding these features helps you choose the right upgrade for your home and lifestyle.
 
 ## What Makes an Opener "Smart"?
