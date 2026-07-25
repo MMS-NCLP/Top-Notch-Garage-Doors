@@ -16,9 +16,7 @@ import {
 const TAG_STYLES: Record<ImageTag, { bg: string; text: string; label: string }> = {
   before: { bg: 'bg-brand-red', text: 'text-white', label: 'Before' },
   after: { bg: 'bg-green-600', text: 'text-white', label: 'After' },
-  detail: { bg: 'bg-brand-blue', text: 'text-white', label: 'Detail' },
-  process: { bg: 'bg-brand-gold', text: 'text-brand-blue', label: 'In Progress' },
-  verification: { bg: 'bg-green-700', text: 'text-white', label: 'Verified' },
+  progress: { bg: 'bg-brand-gold', text: 'text-brand-blue', label: 'In Progress' },
 };
 
 function ImageTagBadge({ tag }: { tag: ImageTag }) {
@@ -71,7 +69,7 @@ function ProjectCard({ project, onClick }: { project: PortfolioProject; onClick:
             {SERVICE_TYPE_LABELS[project.serviceType]}
           </span>
           <span className="px-2 py-0.5 bg-brand-gold/10 border border-brand-gold/20 rounded text-[10px] font-display uppercase tracking-wider text-brand-gold">
-            {project.anchorCity}
+            {project.secondaryCity || project.anchorCity}
           </span>
         </div>
         <h3 className="font-display text-sm text-brand-blue uppercase mb-1">{project.title}</h3>
@@ -79,7 +77,7 @@ function ProjectCard({ project, onClick }: { project: PortfolioProject; onClick:
           <MapPin className="w-3 h-3" />
           {project.location}
         </div>
-        <p className="text-xs text-foreground/60 line-clamp-2">{project.caption}</p>
+        <p className="text-sm text-foreground/60 line-clamp-2">{project.caption}</p>
         <span className="inline-flex items-center gap-1 text-xs text-brand-gold font-display uppercase mt-3">
           View Project <ChevronRight className="w-3 h-3" />
         </span>
@@ -114,7 +112,7 @@ function ProjectModal({ project, onClose }: { project: PortfolioProject; onClose
               <span className="text-xs text-foreground/30">|</span>
               <span className="text-xs text-brand-blue/70 font-display uppercase">{SERVICE_TYPE_LABELS[project.serviceType]}</span>
               <span className="text-xs text-foreground/30">|</span>
-              <span className="text-xs text-brand-gold font-display uppercase">{project.anchorCity}</span>
+              <span className="text-xs text-brand-gold font-display uppercase">{project.secondaryCity || project.anchorCity}</span>
             </div>
           </div>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-brand-silver/10 transition-colors">
@@ -145,7 +143,7 @@ function ProjectModal({ project, onClose }: { project: PortfolioProject; onClose
 
           {/* Educator Caption */}
           <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-lg p-4 mb-6">
-            <p className="text-sm text-foreground/70 leading-relaxed italic">&ldquo;{project.caption}&rdquo;</p>
+            <p className="text-base text-foreground/70 leading-relaxed italic">&ldquo;{project.caption}&rdquo;</p>
           </div>
 
           {/* Image Grid */}
@@ -165,7 +163,7 @@ function ProjectModal({ project, onClose }: { project: PortfolioProject; onClose
           </div>
 
           {/* Problem / Solution / Outcome */}
-          <div className="grid gap-4 sm:grid-cols-3 text-sm">
+          <div className="grid gap-4 sm:grid-cols-3 text-base">
             <div className="p-4 bg-brand-red/5 rounded-lg border border-brand-red/10">
               <h4 className="font-display text-brand-red uppercase text-xs mb-1">The Problem</h4>
               <p className="text-foreground/70">{project.problem}</p>

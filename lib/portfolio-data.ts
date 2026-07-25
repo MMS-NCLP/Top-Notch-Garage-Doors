@@ -4,7 +4,7 @@
 export type ServiceType = 'repairs' | 'installations' | 'spring-work' | 'opener-work' | 'panel-work' | 'emergency' | 'screen-doors' | 'commercial';
 export type CorridorPosition = 'west' | 'central' | 'east-central' | 'east';
 export type AnchorCity = 'Statesville' | 'Greensboro' | 'Burlington' | 'Durham';
-export type ImageTag = 'before' | 'after' | 'detail' | 'process' | 'verification';
+export type ImageTag = 'before' | 'after' | 'progress';
 
 export interface PortfolioImage {
   src: string;
@@ -120,9 +120,9 @@ export const projects: PortfolioProject[] = [
       { src: '/images/portfolio/construction/day-ave-black-door-completed-exterior-burlington-nc.jpg', alt: 'Completed black garage door with transom windows on Day Ave new construction in Burlington NC', tag: 'after' },
       { src: '/images/portfolio/installations/new-construction-door-install-nc-progress.jpg', alt: 'Open garage bay before door installation at Day Ave new construction in Burlington NC', tag: 'before' },
       { src: '/images/portfolio/construction/day-ave-empty-garage-bay-before-burlington-nc.jpg', alt: 'Empty garage bay interior before door install at Day Ave Burlington NC', tag: 'before' },
-      { src: '/images/portfolio/construction/day-ave-new-construction-interior-nc.jpg', alt: 'Interior view of new door installed with workbench at Day Ave Burlington NC', tag: 'detail' },
-      { src: '/images/portfolio/construction/day-ave-opener-motor-install-burlington-nc.jpg', alt: 'Garage door opener and motor installation in progress at Day Ave Burlington NC', tag: 'process' },
-      { src: '/images/portfolio/construction/day-ave-liftmaster-video-keypad-burlington-nc.jpg', alt: 'LiftMaster video keypad installed on exterior at Day Ave Burlington NC', tag: 'detail' },
+      { src: '/images/portfolio/construction/day-ave-new-construction-interior-nc.jpg', alt: 'Interior view of new door installed with workbench at Day Ave Burlington NC', tag: 'after' },
+      { src: '/images/portfolio/construction/day-ave-opener-motor-install-burlington-nc.jpg', alt: 'Garage door opener and motor installation in progress at Day Ave Burlington NC', tag: 'progress' },
+      { src: '/images/portfolio/construction/day-ave-liftmaster-video-keypad-burlington-nc.jpg', alt: 'LiftMaster video keypad installed on exterior at Day Ave Burlington NC', tag: 'after' },
       { src: '/images/portfolio/construction/day-ave-duplex-completed-tngd-truck-burlington-nc.jpg', alt: 'Both Day Ave duplex units with completed black doors and TNGD truck at dusk in Burlington NC', tag: 'after' },
     ],
   },
@@ -153,14 +153,14 @@ export const projects: PortfolioProject[] = [
       { src: '/images/portfolio/door-styles/black-garage-doors-red-brick-nc.jpg', alt: 'Two completed Clopay black raised-panel doors with transom windows on red brick home in Thomasville NC', tag: 'after' },
       { src: '/images/portfolio/before-after/brick-house-old-blue-gray-door-before-nc.jpg', alt: 'Faded blue-gray garage door on right bay of brick home before Clopay replacement in Thomasville NC', tag: 'before' },
       { src: '/images/portfolio/before-after/brick-house-new-black-door-after-nc.jpg', alt: 'Worn blue-gray garage door on left bay of brick home before replacement in Thomasville NC', tag: 'before' },
-      { src: '/images/portfolio/before-after/brick-house-two-bay-tngd-truck-during-nc.jpg', alt: 'Top-Notch Garage Doors truck arrives at two-bay brick home for Clopay door replacement in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/before-after/brick-house-interior-old-door-removal-thomasville-nc.jpg', alt: 'Interior view during old door removal with TNGD truck outside brick home in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/before-after/brick-house-new-black-door-mid-install-nc.jpg', alt: 'New Clopay black raised-panel door mid-installation with old gray panels removed in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/before-after/brick-house-interior-blue-film-torsion-spring-thomasville-nc.jpg', alt: 'New Clopay door with blue protective film and torsion spring hardware installed in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/before-after/brick-house-interior-second-bay-install-thomasville-nc.jpg', alt: 'Second bay interior during Clopay door installation with TNGD truck visible in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/before-after/brick-house-interior-insulated-back-track-thomasville-nc.jpg', alt: 'Interior view of new Clopay door insulated backing and galvanized track hardware in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/installations/cinderblock-house-new-door-completed-nc.jpg', alt: 'New Clopay door with blue protective film and track hardware during install in Thomasville NC', tag: 'process' },
-      { src: '/images/portfolio/installations/cinderblock-house-new-door-tngd-truck-nc.jpg', alt: 'Interior view during belt-drive opener install with TNGD Same Day Service truck outside in Thomasville NC', tag: 'process' },
+      { src: '/images/portfolio/before-after/brick-house-two-bay-tngd-truck-during-nc.jpg', alt: 'Top-Notch Garage Doors truck arrives at two-bay brick home for Clopay door replacement in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/before-after/brick-house-interior-old-door-removal-thomasville-nc.jpg', alt: 'Interior view during old door removal with TNGD truck outside brick home in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/before-after/brick-house-new-black-door-mid-install-nc.jpg', alt: 'New Clopay black raised-panel door mid-installation with old gray panels removed in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/before-after/brick-house-interior-blue-film-torsion-spring-thomasville-nc.jpg', alt: 'New Clopay door with blue protective film and torsion spring hardware installed in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/before-after/brick-house-interior-second-bay-install-thomasville-nc.jpg', alt: 'Second bay interior during Clopay door installation with TNGD truck visible in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/before-after/brick-house-interior-insulated-back-track-thomasville-nc.jpg', alt: 'Interior view of new Clopay door insulated backing and galvanized track hardware in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/installations/cinderblock-house-new-door-tngd-truck-nc.jpg', alt: 'Interior view during belt-drive opener install with TNGD Same Day Service truck outside in Thomasville NC', tag: 'progress' },
+      { src: '/images/portfolio/installations/cinderblock-house-new-door-completed-nc.jpg', alt: 'Completed Clopay door interior view with track hardware and torsion spring system in Thomasville NC', tag: 'after' },
       { src: '/images/portfolio/before-after/brick-house-blue-gray-door-before-wide-nc.jpg', alt: 'Wide view of original blue-gray door with landscaping on brick home before upgrade in Thomasville NC', tag: 'before' },
     ],
   },
@@ -180,9 +180,9 @@ export const projects: PortfolioProject[] = [
     outcome: 'Brand-new door operating smoothly with updated spring system and modern opener. Clean, professional finish inside and out.',
     images: [
       { src: '/images/portfolio/installations/new-garage-door-burlington-nc-exterior.jpg', alt: 'New white garage door installed on residential home in Burlington NC', tag: 'after' },
-      { src: '/images/portfolio/installations/new-garage-door-burlington-nc-interior.jpg', alt: 'Interior view of new garage door installation showing spring system in Burlington NC', tag: 'detail' },
-      { src: '/images/portfolio/installations/new-garage-door-burlington-nc-open.jpg', alt: 'New garage door in open position showing opener in Burlington NC', tag: 'verification' },
-      { src: '/images/portfolio/openers/garage-door-opener-burlington-nc.jpg', alt: 'New garage door opener installed at Burlington NC residence', tag: 'detail' },
+      { src: '/images/portfolio/installations/new-garage-door-burlington-nc-interior.jpg', alt: 'Interior view of new garage door installation showing spring system in Burlington NC', tag: 'after' },
+      { src: '/images/portfolio/installations/new-garage-door-burlington-nc-open.jpg', alt: 'New garage door in open position showing opener in Burlington NC', tag: 'after' },
+      { src: '/images/portfolio/openers/garage-door-opener-burlington-nc.jpg', alt: 'New garage door opener installed at Burlington NC residence', tag: 'after' },
     ],
   },
   {
@@ -201,10 +201,10 @@ export const projects: PortfolioProject[] = [
     outcome: 'Night-and-day transformation. The new door modernized the entire front elevation. TNGD truck on-site, completed same day.',
     featured: true,
     images: [
-      { src: '/images/portfolio/before-after/culdesac-old-door-before-replacement-nc.jpg', alt: 'Old weathered garage door before replacement on cul-de-sac home in Greensboro NC', tag: 'before' },
       { src: '/images/portfolio/before-after/culdesac-new-door-after-tngd-truck-nc.jpg', alt: 'New white garage door installed with TNGD truck in driveway in Greensboro NC', tag: 'after' },
-      { src: '/images/portfolio/before-after/culdesac-new-door-after-interior-nc.jpg', alt: 'Interior view of new garage door installation in Greensboro NC', tag: 'detail' },
-      { src: '/images/portfolio/before-after/culdesac-new-door-installed-interior-nc.jpg', alt: 'New door interior finish with spring system in Greensboro NC', tag: 'verification' },
+      { src: '/images/portfolio/before-after/culdesac-old-door-before-replacement-nc.jpg', alt: 'Old weathered garage door before replacement on cul-de-sac home in Greensboro NC', tag: 'before' },
+      { src: '/images/portfolio/before-after/culdesac-new-door-after-interior-nc.jpg', alt: 'Interior view of new garage door installation in Greensboro NC', tag: 'after' },
+      { src: '/images/portfolio/before-after/culdesac-new-door-installed-interior-nc.jpg', alt: 'New door interior finish with spring system in Greensboro NC', tag: 'after' },
     ],
   },
   {
@@ -224,8 +224,8 @@ export const projects: PortfolioProject[] = [
     outcome: 'Quiet belt-drive operation with smartphone control. Clean exterior finish complements the brick facade.',
     images: [
       { src: '/images/portfolio/before-after/door-installation-guilford-county-after-exterior.jpg', alt: 'New garage door installed on brick home in McLeansville NC', tag: 'after' },
-      { src: '/images/portfolio/before-after/door-installation-guilford-county-after-interior.jpg', alt: 'Interior view of new door installation in McLeansville NC', tag: 'detail' },
-      { src: '/images/portfolio/openers/opener-motor-guilford-county-1.jpg', alt: 'New opener motor installed at brick front home in Guilford County NC', tag: 'detail' },
+      { src: '/images/portfolio/before-after/door-installation-guilford-county-after-interior.jpg', alt: 'Interior view of new door installation in McLeansville NC', tag: 'after' },
+      { src: '/images/portfolio/openers/opener-motor-guilford-county-1.jpg', alt: 'New opener motor installed at brick front home in Guilford County NC', tag: 'after' },
     ],
   },
   {
@@ -243,8 +243,8 @@ export const projects: PortfolioProject[] = [
     solution: 'Full tear-out and replacement with new white raised-panel door with transom windows. New tracks, springs, and weatherstripping installed.',
     outcome: 'Night-and-day transformation. New door with windows brings light into the garage and dramatically improves curb appeal of the detached structure.',
     images: [
-      { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-before.jpg', alt: 'Old weathered door on detached garage before replacement in Piedmont Triad NC', tag: 'before' },
       { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-after.jpg', alt: 'New white raised-panel door with windows on detached garage in Piedmont Triad NC', tag: 'after' },
+      { src: '/images/portfolio/before-after/door-replacement-piedmont-triad-before.jpg', alt: 'Old weathered door on detached garage before replacement in Piedmont Triad NC', tag: 'before' },
     ],
   },
   {
@@ -265,7 +265,7 @@ export const projects: PortfolioProject[] = [
     featured: false,
     images: [
       { src: '/images/portfolio/door-styles/carriage-house-door-dusk-lighting-nc.jpg', alt: 'Cream carriage house garage door at dusk with warm interior lighting in Clemmons NC', tag: 'after' },
-      { src: '/images/portfolio/door-styles/carriage-house-door-dusk-lighting-nc-2.jpg', alt: 'Carriage house door golden hour second angle in Clemmons NC', tag: 'detail' },
+      { src: '/images/portfolio/door-styles/carriage-house-door-dusk-lighting-nc-2.jpg', alt: 'Carriage house door golden hour second angle in Clemmons NC', tag: 'after' },
     ],
   },
   {
@@ -310,8 +310,8 @@ export const projects: PortfolioProject[] = [
     featured: true,
     images: [
       { src: '/images/portfolio/door-styles/carriage-house-door-decorative-hardware-nc.jpg', alt: 'Carriage house door with screen door combo at upscale home in Kernersville NC', tag: 'after' },
-      { src: '/images/portfolio/door-styles/carriage-house-door-exterior-combo-job-nc.jpg', alt: 'Screen door and carriage door combo exterior view in Kernersville NC', tag: 'detail' },
-      { src: '/images/portfolio/openers/liftmaster-jackshaft-opener-detail-nc.jpg', alt: 'LiftMaster 98022 jackshaft wall-mount opener installed in Kernersville NC', tag: 'detail' },
+      { src: '/images/portfolio/door-styles/carriage-house-door-exterior-combo-job-nc.jpg', alt: 'Screen door and carriage door combo exterior view in Kernersville NC', tag: 'after' },
+      { src: '/images/portfolio/openers/liftmaster-jackshaft-opener-detail-nc.jpg', alt: 'LiftMaster 98022 jackshaft wall-mount opener installed in Kernersville NC', tag: 'after' },
     ],
   },
   {
@@ -331,14 +331,14 @@ export const projects: PortfolioProject[] = [
     outcome: 'Workshop transformed — full airflow without insects. Screen retracts completely. Quiet Chamberlain opener with myQ app control installed on same visit.',
     featured: true,
     images: [
+      { src: '/images/portfolio/screens/garage-screen-door-green-house-nc.jpg', alt: 'Completed retractable garage screen door on green house in High Point NC', tag: 'after' },
       { src: '/images/portfolio/screens/green-house-old-door-before-screen-nc.jpg', alt: 'Garage before screen door installation showing old panel in High Point NC', tag: 'before' },
       { src: '/images/portfolio/screens/green-house-exterior-before-screen-nc.jpg', alt: 'Exterior view of green house garage before screen installation in High Point NC', tag: 'before' },
-      { src: '/images/portfolio/screens/tngd-tech-screen-panel-assembly-nc.jpg', alt: 'TNGD technician assembling screen door panel in garage in High Point NC', tag: 'process' },
-      { src: '/images/portfolio/screens/screen-door-frame-assembly-tngd-truck-nc.jpg', alt: 'Screen door frame assembly with TNGD truck in High Point NC', tag: 'process' },
-      { src: '/images/portfolio/screens/screen-door-install-progress-man-cave-nc.jpg', alt: 'Screen door installation in progress at man cave garage in High Point NC', tag: 'process' },
-      { src: '/images/portfolio/screens/garage-screen-door-green-house-nc.jpg', alt: 'Completed retractable garage screen door on green house in High Point NC', tag: 'after' },
-      { src: '/images/portfolio/openers/chamberlain-opener-closeup-product-nc.jpg', alt: 'Chamberlain Smart opener close-up installed during screen door visit in High Point NC', tag: 'detail' },
-      { src: '/images/portfolio/openers/chamberlain-ceiling-mount-opener-install-nc.jpg', alt: 'Chamberlain ceiling-mount opener installed in High Point NC garage', tag: 'detail' },
+      { src: '/images/portfolio/screens/tngd-tech-screen-panel-assembly-nc.jpg', alt: 'TNGD technician assembling screen door panel in garage in High Point NC', tag: 'progress' },
+      { src: '/images/portfolio/screens/screen-door-frame-assembly-tngd-truck-nc.jpg', alt: 'Screen door frame assembly with TNGD truck in High Point NC', tag: 'progress' },
+      { src: '/images/portfolio/screens/screen-door-install-progress-man-cave-nc.jpg', alt: 'Screen door installation in progress at man cave garage in High Point NC', tag: 'progress' },
+      { src: '/images/portfolio/openers/chamberlain-opener-closeup-product-nc.jpg', alt: 'Chamberlain Smart opener close-up installed during screen door visit in High Point NC', tag: 'after' },
+      { src: '/images/portfolio/openers/chamberlain-ceiling-mount-opener-install-nc.jpg', alt: 'Chamberlain ceiling-mount opener installed in High Point NC garage', tag: 'after' },
     ],
   },
   {
@@ -358,9 +358,9 @@ export const projects: PortfolioProject[] = [
     outcome: 'Garage transforms into a screened patio space. Easy operation — screen rolls up completely when driving in or out.',
     images: [
       { src: '/images/portfolio/screens/garage-screen-door-nc-1.jpg', alt: 'Garage screen door installed in Elon NC', tag: 'after' },
-      { src: '/images/portfolio/screens/retractable-screen-piedmont-triad-1.jpg', alt: 'Retractable mesh garage screen in Elon NC', tag: 'detail' },
-      { src: '/images/portfolio/screens/retractable-screen-piedmont-triad-2.jpg', alt: 'Mesh screening detail on garage door in Elon NC', tag: 'detail' },
-      { src: '/images/portfolio/screens/garage-screen-door-nc-2.jpg', alt: 'Completed screen door installation side angle in Elon NC', tag: 'detail' },
+      { src: '/images/portfolio/screens/retractable-screen-piedmont-triad-1.jpg', alt: 'Retractable mesh garage screen in Elon NC', tag: 'after' },
+      { src: '/images/portfolio/screens/retractable-screen-piedmont-triad-2.jpg', alt: 'Mesh screening detail on garage door in Elon NC', tag: 'after' },
+      { src: '/images/portfolio/screens/garage-screen-door-nc-2.jpg', alt: 'Completed screen door installation side angle in Elon NC', tag: 'after' },
     ],
   },
   {
@@ -380,8 +380,8 @@ export const projects: PortfolioProject[] = [
     outcome: 'Clean, premium look that complements the brick facade. Screen provides full ventilation while keeping bugs out.',
     images: [
       { src: '/images/portfolio/screens/screen-door-brick-american-flag-hero-nc.jpg', alt: 'Premium garage screen door on brick home with American flag in Advance NC', tag: 'after' },
-      { src: '/images/portfolio/screens/screen-door-interior-view-completed-nc.jpg', alt: 'Interior view of retractable garage screen door in Advance NC', tag: 'detail' },
-      { src: '/images/portfolio/screens/retractable-screen-door-completed-beige-house-nc.jpg', alt: 'Completed retractable screen door installation in Advance NC', tag: 'detail' },
+      { src: '/images/portfolio/screens/screen-door-interior-view-completed-nc.jpg', alt: 'Interior view of retractable garage screen door in Advance NC', tag: 'after' },
+      { src: '/images/portfolio/screens/retractable-screen-door-completed-beige-house-nc.jpg', alt: 'Completed retractable screen door installation in Advance NC', tag: 'after' },
     ],
   },
 
@@ -405,10 +405,10 @@ export const projects: PortfolioProject[] = [
     outcome: 'Quiet, smooth operation restored. New opener with modern safety features and smartphone compatibility.',
     featured: true,
     images: [
+      { src: '/images/portfolio/openers/opener-replacement-greensboro-nc-after.jpg', alt: 'New garage door opener installed in Greensboro NC', tag: 'after' },
       { src: '/images/portfolio/before-after/door-opener-service-greensboro-before.jpg', alt: 'Garage door with worn rollers before service in Greensboro NC', tag: 'before' },
       { src: '/images/portfolio/openers/opener-replacement-greensboro-nc-before.jpg', alt: 'Old opener system before replacement in Greensboro NC', tag: 'before' },
-      { src: '/images/portfolio/openers/opener-replacement-greensboro-nc-after.jpg', alt: 'New garage door opener installed in Greensboro NC', tag: 'after' },
-      { src: '/images/portfolio/before-after/old-roller-replacement-nc-before.jpg', alt: 'Old worn garage door roller before replacement', tag: 'detail' },
+      { src: '/images/portfolio/before-after/old-roller-replacement-nc-before.jpg', alt: 'Old worn garage door roller before replacement', tag: 'before' },
     ],
   },
 
@@ -431,8 +431,8 @@ export const projects: PortfolioProject[] = [
     solution: 'Full door replacement with new raised-panel door. Updated tracks, rollers, and weatherstripping.',
     outcome: 'Clean, modern single-car door that operates smoothly and seals properly against the elements. Complete before/after transformation.',
     images: [
-      { src: '/images/portfolio/before-after/single-door-replacement-nc-before.jpg', alt: 'Old single-car garage door before replacement in Piedmont Triad NC', tag: 'before' },
       { src: '/images/portfolio/before-after/single-door-replacement-nc-after.jpg', alt: 'New single-car garage door after replacement in Piedmont Triad NC', tag: 'after' },
+      { src: '/images/portfolio/before-after/single-door-replacement-nc-before.jpg', alt: 'Old single-car garage door before replacement in Piedmont Triad NC', tag: 'before' },
     ],
   },
   {
@@ -494,9 +494,9 @@ export const projects: PortfolioProject[] = [
     solution: 'Emergency same-day response. Removed destroyed door, installed new raised-panel door with full hardware and opener. Interior finished to match existing trim.',
     outcome: 'Home secured same day with a brand-new door. Interior completed with clean finish — popcorn ceiling neighborhood looks better than before the crash.',
     images: [
+      { src: '/images/portfolio/installations/mona-completed-door-install-interior-nc.jpg', alt: 'Completed door installation interior view in Alamance County NC', tag: 'after' },
       { src: '/images/portfolio/installations/garage-door-install-alamance-county-1.jpg', alt: 'Crashed garage door on tan-sided home in Alamance County NC', tag: 'before' },
       { src: '/images/portfolio/installations/garage-door-install-alamance-county-2.jpg', alt: 'Interior view of crashed garage door damage in Alamance County NC', tag: 'before' },
-      { src: '/images/portfolio/installations/mona-completed-door-install-interior-nc.jpg', alt: 'Completed door installation interior view in Alamance County NC', tag: 'after' },
     ],
   },
 
@@ -520,8 +520,8 @@ export const projects: PortfolioProject[] = [
     solution: 'Replaced failed extension springs with new high-cycle torsion spring system — a safer, more durable upgrade over the original extension setup.',
     outcome: 'Door balanced and operational. Upgraded to torsion springs for longer lifespan and smoother operation.',
     images: [
-      { src: '/images/portfolio/springs/extension-spring-repair-nc-before.jpg', alt: 'Broken extension spring on garage door before repair in Mooresville NC', tag: 'before' },
       { src: '/images/portfolio/springs/torsion-spring-repair-nc-after.jpg', alt: 'New torsion spring installed on garage door in Mooresville NC', tag: 'after' },
+      { src: '/images/portfolio/springs/extension-spring-repair-nc-before.jpg', alt: 'Broken extension spring on garage door before repair in Mooresville NC', tag: 'before' },
     ],
   },
   {
@@ -540,9 +540,9 @@ export const projects: PortfolioProject[] = [
     outcome: 'Door back in service within hours. New spring rated for 15,000+ cycles.',
     featured: true,
     images: [
-      { src: '/images/portfolio/springs/broken-torsion-spring-piedmont-triad.jpg', alt: 'Broken torsion spring on garage door in Greensboro NC', tag: 'before' },
       { src: '/images/portfolio/springs/spring-failure-repair-greensboro-1.jpg', alt: 'New torsion spring installed after emergency repair in Greensboro NC', tag: 'after' },
-      { src: '/images/portfolio/springs/spring-failure-repair-greensboro-2.jpg', alt: 'Completed spring replacement with balanced door in Greensboro NC', tag: 'verification' },
+      { src: '/images/portfolio/springs/broken-torsion-spring-piedmont-triad.jpg', alt: 'Broken torsion spring on garage door in Greensboro NC', tag: 'before' },
+      { src: '/images/portfolio/springs/spring-failure-repair-greensboro-2.jpg', alt: 'Completed spring replacement with balanced door in Greensboro NC', tag: 'after' },
     ],
   },
   {
@@ -560,8 +560,8 @@ export const projects: PortfolioProject[] = [
     solution: 'On-site spring replacement with properly rated torsion springs. Full balance test and safety inspection.',
     outcome: 'Door balanced and operational within the hour. Spring rated for 20,000+ cycles.',
     images: [
-      { src: '/images/portfolio/springs/spring-repair-tngd-truck-nc.jpg', alt: 'Torsion spring repair in progress with TNGD service truck in Piedmont Triad NC', tag: 'process' },
-      { src: '/images/portfolio/springs/broken-spring-replacement-nc.jpg', alt: 'Spring replacement hardware detail in Piedmont Triad NC', tag: 'detail' },
+      { src: '/images/portfolio/springs/spring-repair-tngd-truck-nc.jpg', alt: 'Torsion spring repair in progress with TNGD service truck in Piedmont Triad NC', tag: 'progress' },
+      { src: '/images/portfolio/springs/broken-spring-replacement-nc.jpg', alt: 'Spring replacement hardware in progress in Piedmont Triad NC', tag: 'progress' },
     ],
   },
 
@@ -589,14 +589,14 @@ export const projects: PortfolioProject[] = [
       { src: '/images/portfolio/commercial/virtual-tee-systems-commercial-door-completed-exterior-charlotte-nc.jpg', alt: 'Completed commercial garage door replacement at Virtual Tee Systems Charlotte NC', tag: 'after' },
       { src: '/images/portfolio/commercial/virtual-tee-systems-damaged-door-exterior-charlotte-nc.jpg', alt: 'Damaged commercial door that could not close — security hazard at Virtual Tee Systems Charlotte NC', tag: 'before' },
       { src: '/images/portfolio/commercial/virtual-tee-systems-old-door-open-exterior-charlotte-nc.jpg', alt: 'Old dilapidated commercial door partially open showing deterioration Charlotte NC', tag: 'before' },
-      { src: '/images/portfolio/commercial/virtual-tee-systems-rusted-bracket-detail-charlotte-nc.jpg', alt: 'Rusted and corroded door bracket showing hardware failure at Virtual Tee Systems Charlotte NC', tag: 'detail' },
-      { src: '/images/portfolio/commercial/virtual-tee-systems-old-door-removed-tngd-truck-charlotte-nc.jpg', alt: 'Old door removed with TNGD service truck on-site at Virtual Tee Systems Charlotte NC', tag: 'process' },
-      { src: '/images/portfolio/commercial/virtual-tee-systems-new-panels-prep-charlotte-nc.jpg', alt: 'New commercial door panels being prepped for installation Charlotte NC', tag: 'process' },
-      { src: '/images/portfolio/commercial/virtual-tee-systems-technician-installation-charlotte-nc.jpg', alt: 'TNGD technician installing new commercial door sections at Virtual Tee Systems Charlotte NC', tag: 'process' },
-      { src: '/images/portfolio/commercial/virtual-tee-systems-track-installation-charlotte-nc.jpg', alt: 'Track and bracket installation for new commercial door system Charlotte NC', tag: 'process' },
+      { src: '/images/portfolio/commercial/virtual-tee-systems-old-door-removed-tngd-truck-charlotte-nc.jpg', alt: 'Old door removed with TNGD service truck on-site at Virtual Tee Systems Charlotte NC', tag: 'progress' },
+      { src: '/images/portfolio/commercial/virtual-tee-systems-new-panels-prep-charlotte-nc.jpg', alt: 'New commercial door panels being prepped for installation Charlotte NC', tag: 'progress' },
+      { src: '/images/portfolio/commercial/virtual-tee-systems-technician-installation-charlotte-nc.jpg', alt: 'TNGD technician installing new commercial door sections at Virtual Tee Systems Charlotte NC', tag: 'progress' },
+      { src: '/images/portfolio/commercial/virtual-tee-systems-track-installation-charlotte-nc.jpg', alt: 'Track and bracket installation for new commercial door system Charlotte NC', tag: 'progress' },
       { src: '/images/portfolio/commercial/virtual-tee-systems-tech-completed-interior-charlotte-nc.jpg', alt: 'TNGD technician with completed new commercial door interior view Charlotte NC', tag: 'after' },
       { src: '/images/portfolio/commercial/virtual-tee-systems-new-door-interior-charlotte-nc.jpg', alt: 'New commercial door interior view showing proper installation and hardware Charlotte NC', tag: 'after' },
       { src: '/images/portfolio/commercial/virtual-tee-systems-new-door-exterior-charlotte-nc.jpg', alt: 'New commercial door exterior view at Virtual Tee Systems Charlotte NC — clean professional finish', tag: 'after' },
+      { src: '/images/portfolio/commercial/virtual-tee-systems-rusted-bracket-detail-charlotte-nc.jpg', alt: 'Rusted and corroded door bracket showing hardware failure at Virtual Tee Systems Charlotte NC', tag: 'before' },
     ],
   },
 ];
