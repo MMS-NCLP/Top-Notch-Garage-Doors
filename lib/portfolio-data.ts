@@ -15,6 +15,7 @@ export interface PortfolioImage {
 export interface PortfolioProject {
   id: string;
   title: string;
+  slug?: string;
   serviceType: ServiceType;
   systemType: string;
   failureMode: string;
@@ -853,6 +854,10 @@ export const projects: PortfolioProject[] = [
     title: 'Raised-Panel Door Replacement — Buckled Wooden Door to Insulated Upgrade',
     slug: 'raised-panel-door-damaged-wooden-replacement',
     serviceType: 'installations',
+    systemType: 'Raised-Panel Insulated Steel',
+    failureMode: 'Buckled wooden panels, weather intrusion, failing opener',
+    materials: 'Almond raised-panel insulated steel door, torsion spring, struts, modern opener',
+    corridorPosition: 'central',
     anchorCity: 'Greensboro',
     secondaryCity: 'Greensboro',
     location: 'Greensboro, NC',
@@ -876,6 +881,10 @@ export const projects: PortfolioProject[] = [
     title: 'Raised-Panel Two-Bay Replacement — Crashed Door & Worn Hardware Overhaul',
     slug: 'raised-panel-two-bay-crashed-door-replacement',
     serviceType: 'installations',
+    systemType: 'Raised-Panel Steel (Two-Bay)',
+    failureMode: 'Crashed/buckled panels, worn track hardware, seal gaps',
+    materials: 'White raised-panel steel doors (x2), tracks, rollers, torsion springs, weatherseal',
+    corridorPosition: 'central',
     anchorCity: 'Greensboro',
     secondaryCity: 'Greensboro',
     location: 'Greensboro, NC',
@@ -892,6 +901,53 @@ export const projects: PortfolioProject[] = [
       { src: '/images/portfolio/installations/two-bay-one-door-completed-progress-nc.jpg', alt: 'Two-bay garage with one new door installed and second bay mid-installation progress NC', tag: 'progress' },
       { src: '/images/portfolio/installations/raised-panel-single-bay-closeup-exterior-nc.jpg', alt: 'New white raised-panel door single bay close-up exterior after installation NC', tag: 'after' },
       { src: '/images/portfolio/before-after/old-door-interior-floor-track-dirty-before-nc.jpg', alt: 'Interior floor-level view of old door track and dirty conditions before replacement NC', tag: 'before' },
+    ],
+  },
+  {
+    id: 'liftmaster-opener-system-complete-install-anatomy',
+    title: 'LiftMaster Opener System — Complete Installation Anatomy',
+    slug: 'liftmaster-opener-system-complete-install-anatomy',
+    serviceType: 'opener-work',
+    anchorCity: 'Greensboro',
+    secondaryCity: 'Greensboro',
+    location: 'Greensboro, NC',
+    featured: true,
+    caption: 'What does a properly installed garage door opener system actually look like? This walkthrough breaks down every component — from the LiftMaster motor head and force-limit adjustments to the paired safety sensors, myQ wall control, wireless keypad, and track hardware. If your system is missing any of these elements or they look different from what you see here, it may be time for a professional evaluation. TNGD installs and services every component shown.',
+    problem: 'Most homeowners never see the inside of their opener system until something fails. Without knowing what "right" looks like, it\'s hard to spot the warning signs — misaligned sensors, worn cable drums, improper force settings — that lead to costly breakdowns or safety hazards.',
+    solution: 'A complete LiftMaster opener system installation includes the motor unit with proper ceiling mounting, calibrated force-limit adjustments, paired safety photo-eye sensors (amber sending, green receiving), a Chamberlain myQ smart wall control for app-based monitoring, a wireless exterior keypad for keyless entry, and properly aligned track curves with cable drums on both sides.',
+    outcome: 'Every component installed to manufacturer spec, tested, and documented. The homeowner walks away understanding their system — and knowing exactly who to call when it needs service.',
+    images: [
+      { src: '/images/portfolio/installations/arch-window-door-interior-torsion-spring-nc.jpg', alt: 'Premium garage door interior with arch-top window inserts torsion spring and strut system NC', tag: 'after' },
+      { src: '/images/portfolio/openers/liftmaster-one-third-hp-ceiling-mount-installed-nc.jpg', alt: 'LiftMaster 1/3 HP ceiling-mount garage door opener properly installed with chain rail NC', tag: 'after' },
+      { src: '/images/portfolio/openers/chamberlain-force-limit-panel-adjustment-dials-nc.jpg', alt: 'Chamberlain opener force limit adjustment panel showing open and close force dials and learn button NC', tag: 'after' },
+      { src: '/images/portfolio/openers/safety-sensor-amber-led-sending-wiring-nc.jpg', alt: 'Safety photo-eye sensor sending side with amber LED and proper wire nut splicing at track base NC', tag: 'after' },
+      { src: '/images/portfolio/openers/safety-sensor-green-led-receiving-aligned-nc.jpg', alt: 'Safety photo-eye sensor receiving side with green LED confirming proper alignment NC', tag: 'after' },
+      { src: '/images/portfolio/openers/chamberlain-myq-wall-control-panel-mounted-nc.jpg', alt: 'Chamberlain myQ smart wall control panel with app download QR code mounted interior NC', tag: 'after' },
+      { src: '/images/portfolio/openers/liftmaster-wireless-keypad-exterior-jamb-nc.jpg', alt: 'LiftMaster wireless keypad mounted on exterior door jamb for keyless garage entry NC', tag: 'after' },
+      { src: '/images/portfolio/installations/track-curve-cable-drum-radius-junction-nc.jpg', alt: 'Track curve with cable drum and radius junction showing proper hardware alignment NC', tag: 'after' },
+    ],
+  },
+  {
+    id: 'torsion-spring-hardware-overhaul-liftmaster-upgrade',
+    title: 'Torsion Spring & Hardware Overhaul — Broken Spring to LiftMaster myQ Upgrade',
+    slug: 'torsion-spring-hardware-overhaul-liftmaster-upgrade',
+    serviceType: 'spring-work',
+    anchorCity: 'Greensboro',
+    secondaryCity: 'Greensboro',
+    location: 'Greensboro, NC',
+    featured: true,
+    caption: 'Heard a loud bang in the garage? That\'s what a broken torsion spring sounds like — and this is what it looks like. This job started as an emergency spring replacement, but our inspection revealed worn rollers, deteriorated cable drums, and a failed end bearing plate. Rather than patch one problem and leave the others ticking, TNGD replaced every worn component and upgraded the opener to a LiftMaster Battery Backup myQ. If your door won\'t open or feels unusually heavy, don\'t force it — call a professional before the damage compounds.',
+    problem: 'The torsion spring snapped at the center plate, leaving the door inoperable. Inspection revealed additional failures: worn rollers with flat spots, corroded cable drums, and end bearing plates with dried-out bearings — all signs of deferred maintenance that contributed to the spring failure.',
+    solution: 'Complete hardware overhaul: new matched torsion springs wound to manufacturer spec, new cable drums and cables, new rollers throughout, and new end bearing plates. The aging opener was replaced with a LiftMaster Battery Backup belt-drive with myQ smart connectivity.',
+    outcome: 'Every load-bearing component replaced — the door operates smoothly and silently with the new belt-drive system. Battery backup means the door still works during power outages, and myQ lets the homeowner monitor and control it from anywhere.',
+    images: [
+      { src: '/images/portfolio/springs/new-torsion-springs-installed-header-wide-nc.jpg', alt: 'New torsion springs properly installed on header with center plate and opener rail NC', tag: 'after' },
+      { src: '/images/portfolio/springs/broken-torsion-spring-separated-center-plate-nc.jpg', alt: 'Broken torsion spring separated at center plate — this is what spring failure looks like NC', tag: 'before' },
+      { src: '/images/portfolio/before-after/worn-garage-door-roller-closeup-track-before-nc.jpg', alt: 'Worn garage door roller with flat spot and corrosion close-up in track before replacement NC', tag: 'before' },
+      { src: '/images/portfolio/before-after/old-cable-drum-worn-track-junction-before-nc.jpg', alt: 'Old cable drum showing wear at track junction with fraying cable before replacement NC', tag: 'before' },
+      { src: '/images/portfolio/before-after/old-end-bearing-plate-worn-removed-before-nc.jpg', alt: 'Old end bearing plate removed showing worn bearing — a silent failure point NC', tag: 'before' },
+      { src: '/images/portfolio/springs/new-torsion-cable-drum-installed-clean-nc.jpg', alt: 'New torsion cable drum installed with properly wound cable on clean hardware NC', tag: 'after' },
+      { src: '/images/portfolio/openers/liftmaster-battery-backup-myq-belt-drive-installed-nc.jpg', alt: 'LiftMaster Battery Backup myQ belt-drive opener installed — premium smart opener upgrade NC', tag: 'after' },
     ],
   },
 ];
