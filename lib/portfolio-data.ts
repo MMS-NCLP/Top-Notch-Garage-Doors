@@ -218,6 +218,7 @@ export const projects: PortfolioProject[] = [
       { src: '/images/portfolio/springs/broken-torsion-spring-separated-header-before-nc.jpg', alt: 'Broken torsion spring separated at center above garage door header', tag: 'before' },
       { src: '/images/portfolio/openers/old-genie-intellicode-opener-ceiling-before-nc.jpg', alt: 'Old Genie IntelliCode opener mounted on ceiling before replacement', tag: 'before' },
       { src: '/images/portfolio/before-after/old-door-daylight-leak-insulation-failure-before-nc.jpg', alt: 'Old non-insulated door interior showing daylight leaking through panel gaps', tag: 'before' },
+      { src: '/images/portfolio/installations/two-bay-home-one-new-door-wide-exterior-progress-nc.jpg', alt: 'Two-bay home wide exterior with one new raised-panel door installed and second bay open during replacement NC', tag: 'progress' },
       { src: '/images/portfolio/installations/new-door-interior-struts-spring-installed-nc.jpg', alt: 'New insulated door interior with reinforced struts and new torsion spring', tag: 'after' },
       { src: '/images/portfolio/openers/chamberlain-myq-belt-drive-stairway-garage-nc.jpg', alt: 'New Chamberlain myQ belt-drive opener installed in garage with stairway', tag: 'after' },
       { src: '/images/portfolio/before-after/old-door-grease-drip-stain-panels-before-nc.jpg', alt: 'Close-up of grease and rust drip stain on old door panels before replacement', tag: 'before' },
