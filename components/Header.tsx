@@ -23,6 +23,7 @@ const INSPIRATIONS_LINKS = [
 ];
 
 const INSIGHTS_LINKS = [
+  { label: 'Knowledge Hub', href: '/learn' },
   { label: 'Blog', href: '/blog' },
   { label: 'Brands & Partners', href: '/brands' },
   { label: 'FAQ', href: '/resources' },

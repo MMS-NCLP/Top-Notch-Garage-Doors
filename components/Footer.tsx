@@ -44,6 +44,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm text-white/70">
               <li><Link href="/about" className="hover:text-white transition-colors">Our Story</Link></li>
               <li><Link href="/reviews" className="hover:text-white transition-colors">Local Inspirations</Link></li>
+              <li><Link href="/learn" className="hover:text-white transition-colors">Knowledge Hub</Link></li>
               <li><Link href="/blog" className="hover:text-white transition-colors">TNGD Blog</Link></li>
               <li><Link href="/resources" className="hover:text-white transition-colors">FAQ</Link></li>
               <li><Link href="/warranty" className="hover:text-white transition-colors">Product Warranty Disclosures</Link></li>

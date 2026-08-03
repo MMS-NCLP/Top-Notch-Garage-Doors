@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { articles } from '@/lib/blog-content';
+import { KNOWLEDGE_TOPICS } from '@/lib/knowledge-hub';
 
 const BASE_URL = 'https://www.trytopnotchdoors.com';
 
@@ -48,5 +49,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: article.publishedAt,
   }));
 
-  return [...staticPages, ...cityPages, ...blogPages];
+  const learnPages: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/learn`, changeFrequency: 'weekly', priority: 0.9, lastModified: now },
+    ...KNOWLEDGE_TOPICS.map((topic) => ({
+      url: `${BASE_URL}/learn/${topic.slug}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+      lastModified: now,
+    })),
+  ];
+
+  return [...staticPages, ...cityPages, ...blogPages, ...learnPages];
 }
