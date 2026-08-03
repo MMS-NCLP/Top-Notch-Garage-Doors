@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/services/repair`, changeFrequency: 'monthly', priority: 0.9, lastModified: '2026-06-01' },
     { url: `${BASE_URL}/services/installation`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-07-24' },
     { url: `${BASE_URL}/services/openers`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-06-01' },
-    { url: `${BASE_URL}/services/pressure-washing`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-06-01' },
     { url: `${BASE_URL}/garage-screens`, changeFrequency: 'monthly', priority: 0.8, lastModified: '2026-06-01' },
     { url: `${BASE_URL}/brands`, changeFrequency: 'monthly', priority: 0.7, lastModified: '2026-06-01' },
     { url: `${BASE_URL}/design-tool`, changeFrequency: 'monthly', priority: 0.6, lastModified: '2026-05-01' },

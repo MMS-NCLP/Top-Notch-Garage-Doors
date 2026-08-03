@@ -11,7 +11,6 @@ const SERVICE_LINKS = [
   { label: 'Door Repair', href: '/services/repair' },
   { label: 'Door Installation', href: '/services/installation' },
   { label: 'Opener Services', href: '/services/openers' },
-  { label: 'Pressure Washing', href: '/services/pressure-washing' },
   { label: 'Garage Screen Doors', href: '/garage-screens' },
   { label: 'Design Your Door', href: '/design-tool' },
 ];

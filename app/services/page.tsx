@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
-import { Wrench, Home, Zap, Droplets, PanelTop, BookOpen, AlertTriangle } from 'lucide-react';
+import { Wrench, Home, Zap, PanelTop, BookOpen, AlertTriangle } from 'lucide-react';
 
 export const metadata = genMeta({
   title: 'Garage Door Services — Troubleshooting, Repair & Installation',
-  description: 'Complete garage door services: troubleshooting, emergency repair, installation, openers, pressure washing, and screen doors in Whitsett, NC & surrounding areas.',
+  description: 'Complete garage door services: troubleshooting, emergency repair, installation, openers, and screen doors. Burlington, NC — serving the Piedmont Triad.',
   path: '/services',
 });
 
@@ -20,7 +20,6 @@ const services = [
   { title: 'Garage Door Repair', description: 'Springs, cables, panels, rollers, tracks — diagnosed and fixed. Same-day emergency service available.', href: '/services/repair', icon: <Wrench className="w-6 h-6" /> },
   { title: 'Garage Door Installation', description: 'New construction or replacement. Premium doors from top manufacturers, professionally installed.', href: '/services/installation', icon: <Home className="w-6 h-6" /> },
   { title: 'Garage Door Openers', description: 'Belt-drive, chain-drive, wall-mount. Smart-home ready openers from LiftMaster, Chamberlain, and more.', href: '/services/openers', icon: <Zap className="w-6 h-6" /> },
-  { title: 'Pressure Washing', description: 'Driveways, sidewalks, siding, decks — professional-grade cleaning that restores surfaces to like-new.', href: '/services/pressure-washing', icon: <Droplets className="w-6 h-6" /> },
   { title: 'Garage Screen Doors', description: 'Enjoy fresh air without the bugs. Retractable and fixed screen solutions for any garage opening.', href: '/garage-screens', icon: <PanelTop className="w-6 h-6" /> },
 ];
 
