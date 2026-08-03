@@ -61,12 +61,12 @@ export default function AccessibilityPage() {
           <address className="not-italic">
             <p>Top-Notch Garage Doors</p>
             <p>705 NC Hwy 61, Whitsett, NC 27377</p>
-            <p>Phone: (336) 000-0000</p>
+            <p>Phone: (336) 604-6494</p>
           </address>
           <p>We aim to respond to accessibility-related inquiries within 2 business days.</p>
 
           <h2 className="font-display text-xl text-brand-blue mt-8">Alternative Access</h2>
-          <p>If you are unable to access any content or feature on our website, please call us directly at (336) 000-0000. We will provide the information or service you need through an alternative method.</p>
+          <p>If you are unable to access any content or feature on our website, please call us directly at (336) 604-6494. We will provide the information or service you need through an alternative method.</p>
         </div>
       </div>
     </section>

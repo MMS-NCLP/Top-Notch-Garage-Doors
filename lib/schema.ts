@@ -56,6 +56,7 @@ export const BUSINESS_SCHEMA = {
     { '@type': 'City', name: 'McLeansville', containedInPlace: { '@type': 'State', name: 'North Carolina' } },
     { '@type': 'City', name: 'Elon', containedInPlace: { '@type': 'State', name: 'North Carolina' } },
     { '@type': 'City', name: 'Mebane', containedInPlace: { '@type': 'State', name: 'North Carolina' } },
+    { '@type': 'City', name: 'Durham', containedInPlace: { '@type': 'State', name: 'North Carolina' } },
   ],
   openingHoursSpecification: [
     {
@@ -153,6 +154,21 @@ export function articleSchema({
         url: `${BUSINESS_ID}/images/logos/tngd-logo-small-1.png`,
       },
     },
+  };
+}
+
+export function breadcrumbSchema(
+  items: { name: string; href: string }[],
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `${BUSINESS_ID}${item.href}`,
+    })),
   };
 }
 

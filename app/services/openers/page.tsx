@@ -2,7 +2,7 @@ import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import PortfolioPreview from '@/components/PortfolioPreview';
 import { generateMetadata as genMeta } from '@/lib/seo';
-import { serviceSchema } from '@/lib/schema';
+import { serviceSchema, breadcrumbSchema } from '@/lib/schema';
 import { getProjectsByService } from '@/lib/portfolio-data';
 import { BookOpen, Wifi, Battery, Volume2, Smartphone, AlertTriangle } from 'lucide-react';
 
@@ -32,6 +32,16 @@ export default function OpenersPage() {
             description: 'Professional garage door opener services in Whitsett, NC and surrounding areas.',
             url: 'https://www.trytopnotchdoors.com/services/openers',
           })),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Services', href: '/services' },
+            { name: 'Openers', href: '/services/openers' },
+          ])),
         }}
       />
 

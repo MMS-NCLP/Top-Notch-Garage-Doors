@@ -4,7 +4,7 @@ import { KNOWLEDGE_TOPICS } from '@/lib/knowledge-hub';
 
 const BASE_URL = 'https://www.trytopnotchdoors.com';
 
-const cities = ['statesville', 'mooresville', 'salisbury', 'lexington', 'thomasville', 'high-point', 'greensboro', 'mcleansville', 'gibsonville', 'whitsett', 'burlington', 'elon', 'mebane'];
+const cities = ['statesville', 'mooresville', 'salisbury', 'lexington', 'thomasville', 'high-point', 'greensboro', 'mcleansville', 'gibsonville', 'whitsett', 'burlington', 'elon', 'mebane', 'durham'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/privacy`, changeFrequency: 'yearly', priority: 0.3, lastModified: '2026-05-01' },
     { url: `${BASE_URL}/terms`, changeFrequency: 'yearly', priority: 0.3, lastModified: '2026-05-01' },
     { url: `${BASE_URL}/accessibility`, changeFrequency: 'yearly', priority: 0.3, lastModified: '2026-05-01' },
+    { url: `${BASE_URL}/book`, changeFrequency: 'monthly', priority: 0.8, lastModified: now },
   ];
 
   const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({

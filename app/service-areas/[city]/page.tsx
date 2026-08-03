@@ -3,7 +3,7 @@ import Link from 'next/link';
 import CTAButton from '@/components/CTAButton';
 import ReviewCard from '@/components/ReviewCard';
 import PortfolioPreview from '@/components/PortfolioPreview';
-import { serviceSchema } from '@/lib/schema';
+import { serviceSchema, breadcrumbSchema } from '@/lib/schema';
 import { SERVICE_AREAS, getAreaBySlug, getAllSlugs } from '@/lib/service-areas';
 import { getProjectsByCity } from '@/lib/portfolio-data';
 import { MapPin, ChevronRight, ShieldCheck, Wrench, Home, Zap, Droplets, PanelTop, BookOpen, Star, AlertTriangle, Thermometer, HardHat, HelpCircle } from 'lucide-react';
@@ -204,6 +204,17 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
           }}
         />
       )}
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Service Areas', href: '/service-areas' },
+            { name: `${area.name}, NC`, href: `/service-areas/${city}` },
+          ])),
+        }}
+      />
 
       {/* HERO */}
       <section className="py-16 lg:py-20 surface-matte">

@@ -80,7 +80,7 @@ export default function PrivacyPage() {
           <address className="not-italic">
             <p>Top-Notch Garage Doors</p>
             <p>705 NC Hwy 61, Whitsett, NC 27377</p>
-            <p>Phone: (336) 000-0000</p>
+            <p>Phone: (336) 604-6494</p>
           </address>
         </div>
       </div>

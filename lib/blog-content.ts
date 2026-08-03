@@ -105,7 +105,7 @@ Contact Top-Notch Garage Doors immediately if you notice any warning signs above
 
 We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and the surrounding Piedmont Triad area with same-day spring replacement for most residential doors. We stock the most common spring sizes on our trucks, so your repair can often be completed in a single visit.
 
-Call (336) 000-0000 or book online to schedule your spring inspection or replacement today.`,
+Call (336) 604-6494 or book online to schedule your spring inspection or replacement today.`,
   },
 
   'garage-door-insulation-guide': {
@@ -237,7 +237,7 @@ Based on our experience serving hundreds of homes across the Piedmont Triad:
 - **Garage workshops, gyms, or living spaces:** R-16+ with complete weathersealing package
 - **Homes with rooms above the garage:** R-18 with ceiling insulation coordination
 
-Contact Top-Notch Garage Doors at (336) 000-0000 for a free insulation assessment. We will evaluate your current door, measure heat transfer characteristics, and recommend the most cost-effective insulation solution for your specific home and usage pattern. Serving Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding communities.`,
+Contact Top-Notch Garage Doors at (336) 604-6494 for a free insulation assessment. We will evaluate your current door, measure heat transfer characteristics, and recommend the most cost-effective insulation solution for your specific home and usage pattern. Serving Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding communities.`,
   },
 
   'smart-garage-door-openers-2026': {
@@ -394,7 +394,7 @@ For budget-conscious upgrades where camera integration is not needed, the **Cham
 
 For workshops, garages with storage lifts, or homes with low ceilings, the **LiftMaster 85503** wall-mount keeps the ceiling clear while delivering identical smart functionality.
 
-Contact Top-Notch Garage Doors at (336) 000-0000 or book online for a free opener consultation. We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding Piedmont Triad communities with same-day installation available.`,
+Contact Top-Notch Garage Doors at (336) 604-6494 or book online for a free opener consultation. We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding Piedmont Triad communities with same-day installation available.`,
   },
 
   'emergency-garage-door-repair-what-to-do': {
@@ -522,7 +522,7 @@ Most garage door emergencies are preventable with regular maintenance:
 - **Balance testing** — identifies weakening springs 6–12 months before failure
 - **Visual inspection** — check cables, rollers, and hinges monthly for visible wear
 
-A $100 maintenance visit prevents $500+ emergency repairs. Contact Top-Notch Garage Doors at (336) 000-0000 to schedule preventive maintenance or request emergency same-day service.`,
+A $100 maintenance visit prevents $500+ emergency repairs. Contact Top-Notch Garage Doors at (336) 604-6494 to schedule preventive maintenance or request emergency same-day service.`,
   },
 
   'garage-door-maintenance-seasonal-checklist': {
@@ -661,7 +661,7 @@ While homeowner maintenance extends system life, certain tasks require professio
 
 Top-Notch Garage Doors offers comprehensive annual tune-up packages that cover everything on this checklist plus professional-grade adjustments. We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all Piedmont Triad communities.
 
-Schedule your seasonal maintenance at (336) 000-0000 or book online. Preventive maintenance is the single best investment in your garage door's longevity and your family's safety.`,
+Schedule your seasonal maintenance at (336) 604-6494 or book online. Preventive maintenance is the single best investment in your garage door's longevity and your family's safety.`,
   },
 
   'best-garage-door-styles-for-north-carolina-homes': {
@@ -816,7 +816,7 @@ We recommend choosing based on this priority order:
 
 Top-Notch Garage Doors offers free on-site design consultations throughout Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, and Elon. We bring color samples, provide style recommendations based on your home's architecture, and can use the Clopay Door Imagination System to visualize different options on a photo of your actual home.
 
-Call (336) 000-0000 or book online to schedule your consultation.`,
+Call (336) 604-6494 or book online to schedule your consultation.`,
   },
 
   'garage-door-opener-troubleshooting-guide': {
@@ -948,7 +948,7 @@ This is specifically the scenario where the wall button causes the opener light 
 
 Top-Notch Garage Doors serves Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all Piedmont Triad communities. We diagnose and repair all major opener brands — LiftMaster, Chamberlain, Genie, Craftsman, and more.
 
-Call (336) 000-0000 or book online for same-day opener service.`,
+Call (336) 604-6494 or book online for same-day opener service.`,
   },
 
   'diy-garage-door-maintenance-tips': {
@@ -1162,7 +1162,7 @@ These 10 tips handle the maintenance layer. For actual repair work, call Top-Not
 - Opener motor or gear repair
 - Any time you're uncertain whether something is safe to touch
 
-We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding Piedmont Triad communities. Call (336) 000-0000 or book online.`,
+We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding Piedmont Triad communities. Call (336) 604-6494 or book online.`,
   },
 
   'garage-door-safety-features-every-homeowner-needs': {
@@ -1304,7 +1304,7 @@ Consider upgrading your garage door system if:
 
 Top-Notch Garage Doors provides free safety assessments for homeowners in Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and the greater Piedmont Triad. We evaluate your current system against modern safety standards and recommend targeted upgrades.
 
-Call (336) 000-0000 or book online for your free safety inspection.`,
+Call (336) 604-6494 or book online for your free safety inspection.`,
   },
 
   'pressure-washing-guide-when-why-how': {
@@ -1485,7 +1485,7 @@ Typical pricing for Top-Notch Garage Doors pressure washing services:
 
 Top-Notch Garage Doors provides professional pressure washing and soft washing throughout Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and the surrounding Piedmont Triad. We bring commercial-grade equipment, professional-strength solutions, and surface-specific expertise to every job.
 
-Call (336) 000-0000 or book online. Spring and fall are our busiest seasons — we recommend booking 1–2 weeks in advance during March–May and September–October.`,
+Call (336) 604-6494 or book online. Spring and fall are our busiest seasons — we recommend booking 1–2 weeks in advance during March–May and September–October.`,
   },
 
   'garage-screen-doors-complete-buyers-guide': {
@@ -1690,6 +1690,6 @@ Garage screens are low-maintenance:
 
 Top-Notch Garage Doors installs all garage screen types throughout Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and the surrounding Piedmont Triad. We carry retractable motorized, manual roll-up, and fixed panel options with multiple mesh types.
 
-Call (336) 000-0000 or book online for a free measurement and consultation. We'll assess your garage, discuss your intended use, and recommend the best option for your needs and budget.`,
+Call (336) 604-6494 or book online for a free measurement and consultation. We'll assess your garage, discuss your intended use, and recommend the best option for your needs and budget.`,
   },
 };

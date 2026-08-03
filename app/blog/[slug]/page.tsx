@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
-import { articleSchema } from '@/lib/schema';
+import { articleSchema, breadcrumbSchema } from '@/lib/schema';
 import Link from 'next/link';
 import { articles } from '@/lib/blog-content';
+import { SITE_URL, SITE_NAME } from '@/lib/seo';
 
 export async function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({ slug }));
@@ -13,10 +14,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const article = articles[slug];
   if (!article) return {};
+  const url = `${SITE_URL}/blog/${slug}`;
+  const fullTitle = `${article.title} | ${SITE_NAME}`;
   return {
-    title: `${article.title} | Top-Notch Garage Doors`,
+    title: fullTitle,
     description: article.excerpt,
-    alternates: { canonical: `https://www.trytopnotchdoors.com/blog/${slug}` },
+    alternates: { canonical: url },
+    openGraph: {
+      title: fullTitle,
+      description: article.excerpt,
+      url,
+      siteName: SITE_NAME,
+      images: [{ url: article.image, width: 1200, height: 630 }],
+      locale: 'en_US',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title: fullTitle,
+      description: article.excerpt,
+      images: [article.image],
+    },
   };
 }
 
@@ -33,11 +51,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           __html: JSON.stringify(articleSchema({
             title: article.title,
             description: article.excerpt,
-            url: `https://www.trytopnotchdoors.com/blog/${slug}`,
+            url: `${SITE_URL}/blog/${slug}`,
             publishedAt: article.publishedAt,
             image: article.image,
             dateModified: article.publishedAt,
           })),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Blog', href: '/blog' },
+            { name: article.title, href: `/blog/${slug}` },
+          ])),
         }}
       />
 

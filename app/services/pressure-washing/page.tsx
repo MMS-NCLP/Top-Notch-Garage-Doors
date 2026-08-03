@@ -1,6 +1,6 @@
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
-import { serviceSchema, faqSchema } from '@/lib/schema';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '@/lib/schema';
 import { BookOpen, Droplets, CheckCircle, AlertTriangle } from 'lucide-react';
 
 export const metadata = genMeta({
@@ -32,6 +32,16 @@ export default function PressureWashingPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Services', href: '/services' },
+            { name: 'Pressure Washing', href: '/services/pressure-washing' },
+          ])),
+        }}
       />
 
       {/* EDUCATION */}

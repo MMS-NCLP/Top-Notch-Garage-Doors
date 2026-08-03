@@ -2,7 +2,7 @@ import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import PortfolioPreview from '@/components/PortfolioPreview';
 import { generateMetadata as genMeta } from '@/lib/seo';
-import { serviceSchema } from '@/lib/schema';
+import { serviceSchema, breadcrumbSchema } from '@/lib/schema';
 import { getProjectsByService } from '@/lib/portfolio-data';
 import { BookOpen, Home, Thermometer, Palette, Shield } from 'lucide-react';
 
@@ -25,6 +25,16 @@ export default function InstallationPage() {
             description: 'Professional garage door installation in Whitsett, NC and surrounding areas.',
             url: 'https://www.trytopnotchdoors.com/services/installation',
           })),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Services', href: '/services' },
+            { name: 'Installation', href: '/services/installation' },
+          ])),
         }}
       />
 

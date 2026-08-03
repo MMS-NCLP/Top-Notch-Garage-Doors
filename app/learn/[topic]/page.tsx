@@ -6,6 +6,7 @@ import BlogCard from '@/components/BlogCard';
 import { KNOWLEDGE_TOPICS, getTopicBySlug, getRelatedTopics } from '@/lib/knowledge-hub';
 import { articles } from '@/lib/blog-content';
 import { getProjectsByService } from '@/lib/portfolio-data';
+import { breadcrumbSchema } from '@/lib/schema';
 import {
   BookOpen,
   Settings,
@@ -71,6 +72,11 @@ export async function generateMetadata({
       siteName: 'Top-Notch Garage Doors',
       locale: 'en_US',
       type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description: topic.metaDescription,
     },
   };
 }
@@ -252,6 +258,16 @@ export default async function TopicPage({
                   },
                 })),
               }),
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(breadcrumbSchema([
+                { name: 'Home', href: '/' },
+                { name: 'Knowledge Hub', href: '/learn' },
+                { name: topic.title, href: `/learn/${topic.slug}` },
+              ])),
             }}
           />
         </div>

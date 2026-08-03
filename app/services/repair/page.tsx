@@ -2,7 +2,7 @@ import Image from 'next/image';
 import CTAButton from '@/components/CTAButton';
 import PortfolioPreview from '@/components/PortfolioPreview';
 import { generateMetadata as genMeta } from '@/lib/seo';
-import { serviceSchema, faqSchema } from '@/lib/schema';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '@/lib/schema';
 import { getProjectsByService } from '@/lib/portfolio-data';
 import { AlertTriangle, CheckCircle, BookOpen, Phone } from 'lucide-react';
 
@@ -48,6 +48,16 @@ export default function RepairPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Services', href: '/services' },
+            { name: 'Repair', href: '/services/repair' },
+          ])),
+        }}
       />
 
       {/* HERO BANNER */}
@@ -118,8 +128,8 @@ export default function RepairPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <CTAButton text="Book Emergency Repair" variant="primary" />
-            <a href="tel:+13360000000" className="inline-flex items-center gap-2 text-brand-blue font-display text-sm uppercase">
-              <Phone className="w-4 h-4" /> (336) 000-0000
+            <a href="tel:+13366046494" className="inline-flex items-center gap-2 text-brand-blue font-display text-sm uppercase">
+              <Phone className="w-4 h-4" /> (336) 604-6494
             </a>
           </div>
         </div>

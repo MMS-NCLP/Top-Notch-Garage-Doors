@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
-import { serviceSchema, faqSchema } from '@/lib/schema';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '@/lib/schema';
 import { BookOpen, Wind, Bug, Sun, Eye, Home, Thermometer, CheckCircle, ExternalLink, Shield, Ruler, Smartphone, Zap, Lock, PawPrint, Download, FileText } from 'lucide-react';
 
 export const metadata = genMeta({
@@ -61,6 +61,15 @@ export default function GarageScreensPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: 'Home', href: '/' },
+            { name: 'Garage Screen Doors', href: '/garage-screens' },
+          ])),
+        }}
       />
 
       {/* EDUCATION */}

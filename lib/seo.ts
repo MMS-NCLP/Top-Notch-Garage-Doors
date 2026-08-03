@@ -8,7 +8,7 @@ export function generateMetadata({
   title,
   description = DEFAULT_DESCRIPTION,
   path = '',
-  image = '/brand/og-default.jpg',
+  image = '/opengraph-image',
   keywords = [] as string[],
 }: {
   title: string;
