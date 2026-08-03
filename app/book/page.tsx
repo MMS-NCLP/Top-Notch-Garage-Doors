@@ -1,5 +1,12 @@
-import { redirect } from 'next/navigation';
+import { generateMetadata as genMeta } from '@/lib/seo';
+import BookingFlow from './BookingFlow';
+
+export const metadata = genMeta({
+  title: 'Book a Service — Schedule Your Garage Door Appointment',
+  description: 'Book your garage door repair, installation, or maintenance appointment online. Same-day emergency service available in the Piedmont Triad.',
+  path: '/book',
+});
 
 export default function BookPage() {
-  redirect('https://app.squareup.com/appointments/book/3h4bcnk512pz19/LJ7P7KQK2FTA6/start');
+  return <BookingFlow />;
 }

@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
-const BOOKING_URL = 'https://app.squareup.com/appointments/book/3h4bcnk512pz19/LJ7P7KQK2FTA6/start';
-
 export default function CTAButton({
   text = 'Book Now',
   variant = 'primary',
@@ -31,9 +29,7 @@ export default function CTAButton({
       className="inline-block"
     >
       <Link
-        href={BOOKING_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/book"
         className={`${base} ${variants[variant]} ${className}`}
       >
         {showIcon && <Calendar className="w-4 h-4" />}
