@@ -92,7 +92,7 @@ export default function OpenersPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AlertTriangle className="w-6 h-6 text-brand-red mx-auto mb-2" />
           <p className="font-display text-sm uppercase text-brand-red mb-2">Opener completely dead?</p>
-          <p className="text-sm text-foreground/60 mb-4">We diagnose and repair or replace same-day. Motor, gear, logic board, and sensor issues — all covered.</p>
+          <p className="text-sm text-foreground/60 mb-4">We diagnose and repair or replace promptly. Motor, gear, logic board, and sensor issues — all covered.</p>
           <CTAButton text="Book Opener Repair" variant="primary" />
         </div>
       </section>

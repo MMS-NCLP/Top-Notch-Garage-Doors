@@ -3,7 +3,7 @@ import BookingFlow from './BookingFlow';
 
 export const metadata = genMeta({
   title: 'Book a Service — Schedule Your Garage Door Appointment',
-  description: 'Book your garage door repair, installation, or maintenance appointment online. Same-day emergency service available in the Piedmont Triad.',
+  description: 'Book your garage door repair, installation, or maintenance appointment online. Fast emergency response in the Piedmont Triad.',
   path: '/book',
 });
 

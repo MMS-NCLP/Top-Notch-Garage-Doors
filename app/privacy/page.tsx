@@ -79,7 +79,7 @@ export default function PrivacyPage() {
           <p>For questions about this Privacy Policy or your personal data, contact us at:</p>
           <address className="not-italic">
             <p>Top-Notch Garage Doors</p>
-            <p>705 NC Hwy 61, Whitsett, NC 27377</p>
+            <p>Burlington, NC</p>
             <p>Phone: (336) 604-6494</p>
           </address>
         </div>

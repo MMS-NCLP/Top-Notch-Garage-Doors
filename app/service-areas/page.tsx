@@ -7,7 +7,7 @@ import { MapPin, ShieldCheck, Truck, Clock, ChevronRight, Users, Star } from 'lu
 
 export const metadata = genMeta({
   title: 'Service Areas — Statesville to Durham, NC',
-  description: 'Top-Notch Garage Doors covers 6 counties and 50+ neighborhoods across the Piedmont Triad corridor from Statesville to Durham, NC. Factory-trained technicians, same-day emergency service, and authorized dealer coverage throughout the region.',
+  description: 'Top-Notch Garage Doors covers 6 counties and 50+ neighborhoods across the Piedmont Triad corridor from Statesville to Durham, NC. Factory-trained technicians, prompt emergency response, and authorized dealer coverage throughout the region.',
   path: '/service-areas',
   keywords: [
     'garage door service Piedmont Triad',
@@ -51,7 +51,7 @@ export default function ServiceAreasPage() {
             The Piedmont Triad corridor is the operational backbone of Top-Notch Garage Doors. 6 counties, {totalNeighborhoods}+ neighborhoods, and the same factory-trained service at every stop.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-white/50 uppercase tracking-wider">
-            <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5 text-brand-gold" /> Same-Day Emergency Service</span>
+            <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5 text-brand-gold" /> Fast Emergency Response</span>
             <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-brand-gold" /> Factory-Trained Technicians</span>
             <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-brand-gold" /> No Service Call Fee</span>
           </div>
@@ -162,7 +162,7 @@ export default function ServiceAreasPage() {
             YOUR TOWN. YOUR NEIGHBORS. YOUR GARAGE DOOR TEAM.
           </h2>
           <p className="text-white/70 max-w-2xl mx-auto mb-8">
-            Whether you&apos;re in Statesville or Mebane, we bring the same care and quality to every job. No service call fee, same-day emergency available.
+            Whether you&apos;re in Statesville or Mebane, we bring the same care and quality to every job. No service call fee, fast emergency response.
           </p>
           <CTAButton text="Book Service in Your Area" variant="secondary" />
         </div>

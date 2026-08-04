@@ -13,7 +13,6 @@ const SERVICE_TYPES = [
   { value: 'spring', label: 'Spring Replacement' },
   { value: 'maintenance', label: 'Tune-Up / Maintenance' },
   { value: 'screen_door', label: 'Garage Screen Door' },
-  { value: 'pressure_washing', label: 'Pressure Washing' },
   { value: 'other', label: 'Other' },
 ];
 

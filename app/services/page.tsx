@@ -17,7 +17,7 @@ const educationItems = [
 ];
 
 const services = [
-  { title: 'Garage Door Repair', description: 'Springs, cables, panels, rollers, tracks — diagnosed and fixed. Same-day emergency service available.', href: '/services/repair', icon: <Wrench className="w-6 h-6" /> },
+  { title: 'Garage Door Repair', description: 'Springs, cables, panels, rollers, tracks — diagnosed and fixed. Fast emergency response available.', href: '/services/repair', icon: <Wrench className="w-6 h-6" /> },
   { title: 'Garage Door Installation', description: 'New construction or replacement. Premium doors from top manufacturers, professionally installed.', href: '/services/installation', icon: <Home className="w-6 h-6" /> },
   { title: 'Garage Door Openers', description: 'Belt-drive, chain-drive, wall-mount. Smart-home ready openers from LiftMaster, Chamberlain, and more.', href: '/services/openers', icon: <Zap className="w-6 h-6" /> },
   { title: 'Garage Screen Doors', description: 'Enjoy fresh air without the bugs. Retractable and fixed screen solutions for any garage opening.', href: '/garage-screens', icon: <PanelTop className="w-6 h-6" /> },
@@ -59,9 +59,9 @@ export default function ServicesPage() {
             <span className="font-display text-sm uppercase tracking-wider text-brand-red">Emergency?</span>
           </div>
           <p className="text-foreground/70 mb-4">
-            Door stuck? Spring snapped? Opener dead? We offer same-day emergency service across the Triad.
+            Door stuck? Spring snapped? Opener dead? We offer fast emergency response across the Triad.
           </p>
-          <CTAButton text="Call for Same-Day Repair" variant="primary" />
+          <CTAButton text="Call for Emergency Repair" variant="primary" />
         </div>
       </section>
 

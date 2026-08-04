@@ -11,13 +11,13 @@ const springProjects = getProjectsByService('spring-work', 3);
 const portfolioProjects = [...repairProjects, ...springProjects].slice(0, 3);
 
 export const metadata = genMeta({
-  title: 'Garage Door Repair — Troubleshooting & Same-Day Service',
-  description: 'Garage door stuck, won\'t open, or making noise? Expert troubleshooting and same-day repair in Whitsett, NC. Springs, cables, panels, openers. Fair pricing, no surprises.',
+  title: 'Garage Door Repair — Troubleshooting & Emergency Service',
+  description: 'Garage door stuck, won\'t open, or making noise? Expert troubleshooting and fast repair in Burlington, NC. Springs, cables, panels, openers. Fair pricing, no surprises.',
   path: '/services/repair',
 });
 
 const faqs = [
-  { question: 'How quickly can you repair my garage door?', answer: 'We offer same-day service for most repairs. Call us in the morning, and we can typically be there by afternoon.' },
+  { question: 'How quickly can you repair my garage door?', answer: 'We prioritize emergency calls and respond promptly. Call us and we\'ll work to get a technician out as quickly as possible.' },
   { question: 'How much does a garage door spring replacement cost?', answer: 'Spring replacements typically range from $150–$350 depending on the type (torsion vs. extension) and door size. We provide upfront pricing before any work begins.' },
   { question: 'Is it safe to use my garage door with a broken spring?', answer: 'No. A broken spring makes the door extremely heavy and unpredictable. Do not attempt to open or close it manually. Call us for immediate service.' },
   { question: 'Do you repair all brands of garage doors?', answer: 'Yes. We service Clopay, Amarr, CHI, Wayne Dalton, and all other major manufacturers.' },
@@ -40,7 +40,7 @@ export default function RepairPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(serviceSchema({
             name: 'Garage Door Repair',
-            description: 'Expert garage door repair services including emergency same-day service in Whitsett, NC and surrounding areas.',
+            description: 'Expert garage door repair services including emergency response in Burlington, NC and surrounding areas.',
             url: 'https://www.trytopnotchdoors.com/services/repair',
           })),
         }}
@@ -122,7 +122,7 @@ export default function RepairPage() {
       <section className="py-12 bg-brand-red/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AlertTriangle className="w-8 h-8 text-brand-red mx-auto mb-3" />
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Same-Day <span className="text-brand-red">Emergency</span> Repair</h2>
+          <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Rapid <span className="text-brand-red">Emergency</span> Response</h2>
           <p className="text-foreground/60 text-sm mb-4">
             Broken spring? Door off track? Don&apos;t wait — we carry common parts on every truck for single-visit fixes.
           </p>

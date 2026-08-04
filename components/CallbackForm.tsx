@@ -14,7 +14,6 @@ const TOPICS = [
   { value: 'maintenance', label: 'Tune-Up / Maintenance' },
   { value: 'commercial', label: 'Commercial Service' },
   { value: 'troubleshoot', label: 'Troubleshoot My Door' },
-  { value: 'pressure_washing', label: 'Pressure Washing' },
   { value: 'other', label: 'Other' },
 ];
 

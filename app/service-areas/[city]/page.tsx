@@ -6,7 +6,7 @@ import PortfolioPreview from '@/components/PortfolioPreview';
 import { serviceSchema, breadcrumbSchema } from '@/lib/schema';
 import { SERVICE_AREAS, getAreaBySlug, getAllSlugs } from '@/lib/service-areas';
 import { getProjectsByCity } from '@/lib/portfolio-data';
-import { MapPin, ChevronRight, ShieldCheck, Wrench, Home, Zap, Droplets, PanelTop, BookOpen, Star, AlertTriangle, Thermometer, HardHat, HelpCircle } from 'lucide-react';
+import { MapPin, ChevronRight, ShieldCheck, Wrench, Home, Zap, PanelTop, BookOpen, Star, AlertTriangle, Thermometer, HardHat, HelpCircle } from 'lucide-react';
 import type { Review } from '@/lib/supabaseClient';
 
 const PLACEHOLDER_REVIEWS: Review[] = [
@@ -47,10 +47,9 @@ function getPortfolioForCity(cityName: string) {
 }
 
 const SERVICES = [
-  { label: 'Garage Door Repair', href: '/services/repair', icon: <Wrench className="w-5 h-5" />, desc: 'Springs, cables, panels, rollers, tracks — same-day emergency available.' },
+  { label: 'Garage Door Repair', href: '/services/repair', icon: <Wrench className="w-5 h-5" />, desc: 'Springs, cables, panels, rollers, tracks — fast emergency response.' },
   { label: 'New Door Installation', href: '/services/installation', icon: <Home className="w-5 h-5" />, desc: 'Premium doors from Clopay, Amarr, Haas, and more. Professionally installed.' },
   { label: 'Opener Service', href: '/services/openers', icon: <Zap className="w-5 h-5" />, desc: 'LiftMaster, Chamberlain, Genie — smart openers with Wi-Fi and camera.' },
-  { label: 'Pressure Washing', href: '/services/pressure-washing', icon: <Droplets className="w-5 h-5" />, desc: 'Driveways, sidewalks, siding — restore surfaces to like-new.' },
   { label: 'Garage Screen Doors', href: '/garage-screens', icon: <PanelTop className="w-5 h-5" />, desc: 'Retractable screens for bug-free airflow all summer.' },
   { label: 'Maintenance & Tune-Ups', href: '/coupons', icon: <BookOpen className="w-5 h-5" />, desc: '21-point inspection, lubrication, balance check. $69 with coupon.' },
 ];
@@ -159,7 +158,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!area) return {};
   return {
     title: `Garage Door Services in ${area.name}, NC — ${area.county} | Top-Notch Garage Doors`,
-    description: `Professional garage door repair, installation, and maintenance in ${area.name}, NC. Serving ${area.neighborhoods.length}+ neighborhoods in ${area.county}. Factory-trained technicians, same-day emergency service, no service call fee.`,
+    description: `Professional garage door repair, installation, and maintenance in ${area.name}, NC. Serving ${area.neighborhoods.length}+ neighborhoods in ${area.county}. Factory-trained technicians, prompt emergency response, no service call fee.`,
     alternates: { canonical: `https://www.trytopnotchdoors.com/service-areas/${city}` },
     keywords: area.keywords.join(', '),
   };
@@ -238,7 +237,7 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-foreground/50 uppercase tracking-wider">
             <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-brand-gold" /> Factory-Trained Technicians</span>
-            <span className="flex items-center gap-1.5"><Wrench className="w-3.5 h-3.5 text-brand-gold" /> Same-Day Emergency</span>
+            <span className="flex items-center gap-1.5"><Wrench className="w-3.5 h-3.5 text-brand-gold" /> Fast Emergency Response</span>
             <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-brand-gold" /> 2-Year Parts Warranty</span>
           </div>
         </div>
@@ -489,7 +488,7 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ ci
             READY TO BOOK IN {area.name.toUpperCase()}?
           </h2>
           <p className="text-white/70 max-w-xl mx-auto mb-8">
-            Same-day emergency service available. No service call fee. Factory-trained technicians who know your neighborhood.
+            Fast emergency response available. No service call fee. Factory-trained technicians who know your neighborhood.
           </p>
           <CTAButton text={`Book Service in ${area.name}`} variant="secondary" />
         </div>

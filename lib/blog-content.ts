@@ -62,7 +62,7 @@ Garage door springs store lethal amounts of energy. A standard torsion spring on
 
 Every year in the United States, thousands of emergency room visits result from garage door spring injuries — and fatalities, while rare, do occur. Professional technicians use specialized winding bars, safety equipment, and training that takes years to develop. This is not a YouTube tutorial project.
 
-At Top-Notch Garage Doors, our technicians carry proper insurance, use calibrated equipment, and follow manufacturer-specified procedures for every spring installation. We serve the entire Piedmont Triad — from Whitsett to Greensboro to Elon — with same-day spring replacement service.
+At Top-Notch Garage Doors, our technicians carry proper insurance, use calibrated equipment, and follow manufacturer-specified procedures for every spring installation. We serve the entire Piedmont Triad — from Whitsett to Greensboro to Elon — with prompt spring replacement service.
 
 ## What Professional Spring Replacement Looks Like
 
@@ -103,7 +103,7 @@ Avoid using WD-40 on springs — it is a solvent and degreaser, not a lubricant.
 
 Contact Top-Notch Garage Doors immediately if you notice any warning signs above. Operating a garage door with failing springs puts dangerous stress on the opener motor, cables, and other hardware — potentially turning a single-component repair into a multi-system failure.
 
-We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and the surrounding Piedmont Triad area with same-day spring replacement for most residential doors. We stock the most common spring sizes on our trucks, so your repair can often be completed in a single visit.
+We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and the surrounding Piedmont Triad area with fast spring replacement for most residential doors. We stock the most common spring sizes on our trucks, so your repair can often be completed in a single visit.
 
 Call (336) 604-6494 or book online to schedule your spring inspection or replacement today.`,
   },
@@ -394,7 +394,7 @@ For budget-conscious upgrades where camera integration is not needed, the **Cham
 
 For workshops, garages with storage lifts, or homes with low ceilings, the **LiftMaster 85503** wall-mount keeps the ceiling clear while delivering identical smart functionality.
 
-Contact Top-Notch Garage Doors at (336) 604-6494 or book online for a free opener consultation. We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding Piedmont Triad communities with same-day installation available.`,
+Contact Top-Notch Garage Doors at (336) 604-6494 or book online for a free opener consultation. We serve Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all surrounding Piedmont Triad communities with fast installation turnaround.`,
   },
 
   'emergency-garage-door-repair-what-to-do': {
@@ -426,7 +426,7 @@ Garage door emergencies happen without warning. At Top-Notch Garage Doors, servi
 - Do NOT try to manually wind or adjust springs
 - Do NOT drive your car into the door to force it open (yes, this has happened)
 
-**When to call:** If the spring is broken, if the door won't lift manually, or if you're unsure what's wrong — call immediately. We offer same-day emergency service throughout the Piedmont Triad.
+**When to call:** If the spring is broken, if the door won't lift manually, or if you're unsure what's wrong — call immediately. We offer fast emergency response throughout the Piedmont Triad.
 
 ## Scenario 2: The Door Is Stuck Halfway
 
@@ -502,7 +502,7 @@ We stock the most common residential spring sizes on every truck. Most spring re
 
 **Prevention:** We strongly recommend battery backup openers for all Piedmont Triad homeowners. NC storms frequently cause multi-hour outages, and being locked in (or out) of your garage during severe weather is dangerous.
 
-## When Same-Day Service Is Critical
+## When Immediate Service Is Critical
 
 Call immediately (don't wait) if:
 - Your only vehicle is trapped in the garage
@@ -511,7 +511,7 @@ Call immediately (don't wait) if:
 - Weather is incoming and the garage cannot be closed
 - The door is partially open and unstable
 
-We provide same-day emergency service throughout the Piedmont Triad — Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, and Elon. Most emergencies are resolved in 1–2 hours from the time of your call.
+We provide fast emergency response throughout the Piedmont Triad — Burlington, Greensboro, Gibsonville, McLeansville, and Elon. Most emergencies are resolved within hours of your call.
 
 ## Preventing Emergencies
 
@@ -522,7 +522,7 @@ Most garage door emergencies are preventable with regular maintenance:
 - **Balance testing** — identifies weakening springs 6–12 months before failure
 - **Visual inspection** — check cables, rollers, and hinges monthly for visible wear
 
-A $100 maintenance visit prevents $500+ emergency repairs. Contact Top-Notch Garage Doors at (336) 604-6494 to schedule preventive maintenance or request emergency same-day service.`,
+A $100 maintenance visit prevents $500+ emergency repairs. Contact Top-Notch Garage Doors at (336) 604-6494 to schedule preventive maintenance or request emergency service.`,
   },
 
   'garage-door-maintenance-seasonal-checklist': {
@@ -948,7 +948,7 @@ This is specifically the scenario where the wall button causes the opener light 
 
 Top-Notch Garage Doors serves Whitsett, Burlington, Greensboro, Gibsonville, McLeansville, Elon, and all Piedmont Triad communities. We diagnose and repair all major opener brands — LiftMaster, Chamberlain, Genie, Craftsman, and more.
 
-Call (336) 604-6494 or book online for same-day opener service.`,
+Call (336) 604-6494 or book online for prompt opener service.`,
   },
 
   'diy-garage-door-maintenance-tips': {

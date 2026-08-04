@@ -18,7 +18,6 @@ import {
   Home,
   Zap,
   PanelTop,
-  Droplets,
   Shield,
   Settings,
 } from 'lucide-react';
@@ -41,7 +40,6 @@ const SERVICES: ServiceOption[] = [
   { id: 'opener', name: 'Opener Install or Repair', description: 'Belt-drive, chain-drive, wall-mount. Smart-home ready openers.', icon: <Zap className="w-5 h-5" />, category: 'Installation' },
   { id: 'tuneup', name: 'Tune-Up & Maintenance', description: '21-point inspection: lubrication, balance check, safety calibration, hardware tightening.', icon: <Shield className="w-5 h-5" />, category: 'Service' },
   { id: 'screen', name: 'Garage Screen Door', description: 'Retractable and fixed motorized screen solutions for any garage opening.', icon: <PanelTop className="w-5 h-5" />, category: 'Installation' },
-  { id: 'pressure', name: 'Pressure Washing', description: 'Driveways, sidewalks, siding, decks — professional-grade cleaning.', icon: <Droplets className="w-5 h-5" />, category: 'Service' },
   { id: 'other', name: 'Something Else', description: 'Not sure what you need? No problem — we\'ll figure it out together.', icon: <MessageSquare className="w-5 h-5" />, category: 'Other' },
 ];
 
@@ -132,7 +130,7 @@ export default function BookingFlow() {
             Schedule Your Free Estimate
           </h1>
           <p className="text-foreground/60 max-w-lg mx-auto">
-            Tell us what you need and we&apos;ll reach out to schedule your no-obligation, on-site estimate. Same-day emergency service available by phone.
+            Tell us what you need and we&apos;ll reach out to schedule your no-obligation, on-site estimate. Emergency service available — call for fastest response.
           </p>
         </div>
 

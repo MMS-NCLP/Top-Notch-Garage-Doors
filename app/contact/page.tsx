@@ -86,7 +86,6 @@ export default function ContactPage() {
                     <option value="spring">Spring Replacement</option>
                     <option value="tune-up">Tune-Up / Maintenance</option>
                     <option value="screens">Garage Screen Doors</option>
-                    <option value="pressure-washing">Pressure Washing</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -117,10 +116,10 @@ export default function ContactPage() {
             <h2 className="font-display text-2xl text-brand-blue uppercase mb-6">Info</h2>
             <div className="space-y-6 mb-8">
               <div>
-                <h3 className="font-display text-sm uppercase tracking-wider text-brand-gold mb-1">Address</h3>
+                <h3 className="font-display text-sm uppercase tracking-wider text-brand-gold mb-1">Location</h3>
                 <p className="text-foreground/70 flex items-start gap-2">
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-gold" />
-                  <span>1183 University Drive Ste 105, #2115<br />Burlington, NC 27215</span>
+                  <span>Burlington, NC — Serving the Piedmont Triad<br />Statesville to Durham</span>
                 </p>
               </div>
               <div>

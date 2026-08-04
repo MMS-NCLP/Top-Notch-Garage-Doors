@@ -60,7 +60,7 @@ export default function AccessibilityPage() {
           <p>If you encounter any accessibility barriers on our website, please contact us. We take all feedback seriously and will work to resolve issues promptly.</p>
           <address className="not-italic">
             <p>Top-Notch Garage Doors</p>
-            <p>705 NC Hwy 61, Whitsett, NC 27377</p>
+            <p>Burlington, NC</p>
             <p>Phone: (336) 604-6494</p>
           </address>
           <p>We aim to respond to accessibility-related inquiries within 2 business days.</p>

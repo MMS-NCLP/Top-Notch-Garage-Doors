@@ -211,7 +211,7 @@ export default function WarrantyPage() {
           <div className="text-center space-y-3">
             <CTAButton text="Contact Us About Warranty" variant="primary" />
             <p className="text-xs text-foreground/40">
-              Also see our <Link href="/terms" className="text-brand-blue hover:text-brand-red transition-colors underline">Terms of Service</Link> and <Link href="/terms#pressure-washing" className="text-brand-blue hover:text-brand-red transition-colors underline">Pressure Washing Terms &amp; Conditions</Link>.
+              Also see our <Link href="/terms" className="text-brand-blue hover:text-brand-red transition-colors underline">Terms of Service</Link>.
             </p>
           </div>
         </div>

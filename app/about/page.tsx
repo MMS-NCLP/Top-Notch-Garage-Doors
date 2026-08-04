@@ -24,7 +24,7 @@ export const metadata = genMeta({
 
 const VALUES = [
   { icon: <Shield className="w-6 h-6" />, title: 'Certified & Insured', desc: 'Fully licensed, bonded, and insured for your protection. We carry liability and workers\' comp on every job.' },
-  { icon: <Clock className="w-6 h-6" />, title: 'Same-Day Service', desc: 'Broken spring at 7am? We can be there by noon. Emergency repairs are our specialty — not an afterthought.' },
+  { icon: <Clock className="w-6 h-6" />, title: 'Fast Response', desc: 'Broken spring at 7am? We prioritize urgent calls. Emergency repairs are our specialty — not an afterthought.' },
   { icon: <MapPin className="w-6 h-6" />, title: 'Locally Owned', desc: 'Based in Burlington, NC. We live in the communities we serve — from Statesville to Durham and everywhere between.' },
   { icon: <Award className="w-6 h-6" />, title: 'Factory Authorized', desc: 'Certified dealer and installer for Clopay, LiftMaster, Chamberlain, Amarr, and other top brands.' },
   { icon: <Users className="w-6 h-6" />, title: 'Trusted by Neighbors', desc: 'Five-star reviews from real homeowners across the Piedmont Triad. Our reputation is built one door at a time.' },

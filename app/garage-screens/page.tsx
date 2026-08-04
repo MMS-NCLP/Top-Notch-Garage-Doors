@@ -14,7 +14,7 @@ export const metadata = genMeta({
 const faqs = [
   { question: 'What types of garage screens do you offer?', answer: 'Retractable motorized screens, manual roll-up screens, and fixed panel systems. All custom-measured to your garage opening.' },
   { question: 'Can I still use my garage door with a screen installed?', answer: 'Absolutely. Retractable screens roll up completely out of the way when not in use, so your garage door operates normally. You typically lose no more than 1.75 inches of clearance.' },
-  { question: 'How long does installation take?', answer: 'Single-car: 2–3 hours. Double-car: 3–4 hours. Same-day installation available for most configurations.' },
+  { question: 'How long does installation take?', answer: 'Single-car: 2–3 hours. Double-car: 3–4 hours. Most installations are completed in a single visit.' },
   { question: 'Are garage screens durable?', answer: 'Yes. Commercial-grade mesh resists tears, UV damage, and pet claws. Powder-coated aluminum frames for long-term durability.' },
   { question: 'What sizes are available?', answer: 'Lifestyle Screens come in widths from 6 to 18 feet and heights from 7 to 10 feet. Heights of 9–10 feet are available up to 16 feet wide. Custom sizes can be built from existing kits.' },
   { question: 'What screen mesh options are available?', answer: 'Two primary options: standard fiberglass in an 18x14 weave (58% airflow, best for ventilation) and PVC-coated polyester in a 17x20 weave (48% airflow, maximum durability and pet resistance). Both available in charcoal; PVC also available in white.' },

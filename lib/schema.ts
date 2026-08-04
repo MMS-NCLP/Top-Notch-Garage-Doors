@@ -13,10 +13,8 @@ export const BUSINESS_SCHEMA = {
   logo: `${BUSINESS_ID}/images/logos/tngd-logo-small-1.png`,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '1183 University Drive Ste 105, #2115',
     addressLocality: 'Burlington',
     addressRegion: 'NC',
-    postalCode: '27215',
     addressCountry: 'US',
   },
   geo: {
@@ -24,7 +22,6 @@ export const BUSINESS_SCHEMA = {
     latitude: 36.0726,
     longitude: -79.4378,
   },
-  hasMap: 'https://maps.google.com/?q=1183+University+Drive+Ste+105+Burlington+NC+27215',
   sameAs: [
     'https://www.facebook.com/topnotchdoorsnc',
     'https://www.instagram.com/topnotchdoorsnc',
@@ -79,7 +76,6 @@ export const BUSINESS_SCHEMA = {
     'garage door opener installation',
     'garage door spring replacement',
     'garage door maintenance',
-    'pressure washing',
     'garage screen doors',
   ],
 };

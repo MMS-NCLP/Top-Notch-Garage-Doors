@@ -37,7 +37,7 @@ export default function NotFound() {
               <span className="font-display text-sm text-brand-blue uppercase group-hover:text-brand-red transition-colors">
                 Repair Services
               </span>
-              <p className="text-xs text-foreground/40">Emergency & same-day repair</p>
+              <p className="text-xs text-foreground/40">Emergency repair service</p>
             </div>
           </Link>
           <Link

@@ -14,7 +14,7 @@ import { Wrench, Home, Zap, AlertTriangle, BookOpen, Shield, Star, Award, CheckC
 
 export const metadata = genMeta({
   title: 'Garage Door Troubleshooting, Repair & Installation',
-  description: 'Expert garage door troubleshooting and repair serving the Piedmont Triad from Statesville to Durham, NC. Same-day emergency service. Certified & insured — no service call fee.',
+  description: 'Expert garage door troubleshooting and repair serving the Piedmont Triad from Statesville to Durham, NC. Fast emergency response. Certified & insured — no service call fee.',
   path: '/',
 });
 
@@ -199,14 +199,14 @@ export default function HomePage() {
               Need Immediate Help?
             </h2>
             <p className="text-white/60 max-w-2xl mx-auto">
-              Broken spring? Door off track? Opener not responding? We offer same-day emergency repair across the Piedmont Triad.
+              Broken spring? Door off track? Opener not responding? We offer fast emergency response across the Piedmont Triad.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <FlipCard
               icon={<Wrench className="w-6 h-6" />}
               title="Emergency Repair"
-              description="Same-day response for broken springs, snapped cables, doors off-track, and opener failures."
+              description="Rapid response for broken springs, snapped cables, doors off-track, and opener failures."
               backImage="/images/blog/emergency-garage-door-repair-nc.webp"
               backImageAlt="Crashed garage door requiring emergency repair"
               backInsight="A door off its tracks is a safety hazard — don't try to force it back. Disconnect the opener, secure the area, and call us. We stock common springs and cables on our trucks for single-visit emergency repairs."
