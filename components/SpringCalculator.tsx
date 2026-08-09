@@ -2,924 +2,693 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Calculator,
-  AlertTriangle,
-  CheckCircle,
-  Info,
-  Calendar,
-  ChevronRight,
-  ArrowLeftRight,
-  Weight,
-  Zap,
-  Activity,
-  Shield,
-} from 'lucide-react';
-import Link from 'next/link';
+import { Calculator, Search, ArrowRightLeft, Ruler, AlertTriangle, CheckCircle, ChevronDown } from 'lucide-react';
 import {
   calculateSpring,
+  findSpringsForDoor,
+  lookupWireFromMeasurement,
+  calculateCableLength,
+  WIRE_GAUGE_CHART,
   WIRE_SIZES,
   INSIDE_DIAMETERS,
-  STANDARD_DOORS,
   DRUM_RADII,
-  WIRE_GAUGE_CHART,
-  type SpringCalcInput,
+  LIFT_TYPES,
+  STANDARD_DOORS,
+  CYCLE_TARGETS,
+  WIND_DIRECTION_INFO,
+  EXTENSION_SPRING_COLORS,
+  getDrumsForLiftType,
   type DrumType,
+  type LiftType,
+  type WindDirection,
+  type CycleTarget,
+  type SpringCalcResult,
 } from '@/lib/spring-calculator';
 
-/* ─────────── Shared Form Components ─────────── */
+type CalcTab = 'calculator' | 'weight-lookup' | 'conversion' | 'wire-finder' | 'cable-length';
 
-function SelectField({
-  label, value, onChange, options, hint,
-}: {
-  label: string; value: string; onChange: (v: string) => void;
-  options: { value: string; label: string }[]; hint?: string;
+const TAB_CONFIG: { id: CalcTab; label: string; icon: typeof Calculator; color: string }[] = [
+  { id: 'calculator', label: 'Spring Calculator', icon: Calculator, color: '#002868' },
+  { id: 'weight-lookup', label: 'Find by Door Weight', icon: Search, color: '#bf0a30' },
+  { id: 'conversion', label: '2↔1 Conversion', icon: ArrowRightLeft, color: '#d97706' },
+  { id: 'wire-finder', label: 'Wire Size Finder', icon: Ruler, color: '#059669' },
+  { id: 'cable-length', label: 'Cable Length', icon: Ruler, color: '#7c3aed' },
+];
+
+function SelectField({ label, value, onChange, children, helpText }: {
+  label: string; value: string; onChange: (v: string) => void; children: React.ReactNode; helpText?: string;
 }) {
   return (
     <div>
-      <label className="block text-xs font-display uppercase tracking-wider text-gray-500 mb-1.5">{label}</label>
-      <select
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors"
-      >
-        {options.map(o => (
-          <option key={o.value} value={o.value}>{o.label}</option>
-        ))}
-      </select>
-      {hint && <p className="text-[10px] text-gray-400 mt-1">{hint}</p>}
+      <label className="block text-xs font-medium text-gray-700 mb-1">{label}</label>
+      <div className="relative">
+        <select value={value} onChange={e => onChange(e.target.value)}
+          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue appearance-none pr-8">
+          {children}
+        </select>
+        <ChevronDown className="w-4 h-4 text-gray-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+      </div>
+      {helpText && <p className="text-[10px] text-gray-400 mt-0.5">{helpText}</p>}
     </div>
   );
 }
 
-function NumberField({
-  label, value, onChange, min, max, step, unit, hint,
-}: {
-  label: string; value: number; onChange: (v: number) => void;
-  min?: number; max?: number; step?: number; unit?: string; hint?: string;
+function NumberField({ label, value, onChange, min, max, step, unit, helpText }: {
+  label: string; value: number; onChange: (v: number) => void; min?: number; max?: number; step?: number; unit?: string; helpText?: string;
 }) {
   return (
     <div>
-      <label className="block text-xs font-display uppercase tracking-wider text-gray-500 mb-1.5">{label}</label>
+      <label className="block text-xs font-medium text-gray-700 mb-1">{label}</label>
       <div className="relative">
-        <input
-          type="number"
-          value={value || ''}
-          onChange={e => onChange(parseFloat(e.target.value) || 0)}
-          min={min} max={max} step={step}
-          className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors pr-12"
-        />
+        <input type="number" value={value || ''} onChange={e => onChange(parseFloat(e.target.value) || 0)}
+          min={min} max={max} step={step || 0.01}
+          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue" />
         {unit && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">{unit}</span>}
       </div>
-      {hint && <p className="text-[10px] text-gray-400 mt-1">{hint}</p>}
+      {helpText && <p className="text-[10px] text-gray-400 mt-0.5">{helpText}</p>}
     </div>
   );
 }
 
-function ResultRow({ label, value, unit, highlight }: { label: string; value: string | number; unit?: string; highlight?: boolean }) {
+function ResultRow({ label, value, unit, highlight, warn }: {
+  label: string; value: string | number; unit?: string; highlight?: boolean; warn?: boolean;
+}) {
   return (
-    <div className={`flex justify-between items-center py-2 px-3 rounded ${highlight ? 'bg-brand-blue/5' : ''}`}>
-      <span className="text-sm text-gray-600">{label}</span>
-      <span className={`text-sm font-mono ${highlight ? 'text-brand-blue font-bold' : 'text-gray-900'}`}>
-        {value}{unit && <span className="text-gray-400 ml-1">{unit}</span>}
+    <div className={`flex items-center justify-between py-1.5 px-2 rounded ${highlight ? 'bg-brand-blue/5' : ''} ${warn ? 'bg-red-50' : ''}`}>
+      <span className="text-xs text-gray-600">{label}</span>
+      <span className={`text-sm font-mono font-medium ${warn ? 'text-red-600' : highlight ? 'text-brand-blue' : 'text-gray-900'}`}>
+        {typeof value === 'number' ? value.toFixed(2) : value}{unit ? ` ${unit}` : ''}
       </span>
     </div>
   );
 }
 
-/* ─────────── Spring SVG Infographic ─────────── */
+// ═══════════════════════════════════════════════════════════════════════════
+// SPRING INFOGRAPHIC
+// ═══════════════════════════════════════════════════════════════════════════
 
-function SpringInfographic({
-  wireDiameter,
-  insideDiameter,
-  totalTurns,
-  stressIndex,
-  estimatedCycles,
-  cycleLifeCategory,
-  ippt,
-}: {
-  wireDiameter: number;
-  insideDiameter: number;
-  totalTurns: number;
-  stressIndex: number;
-  estimatedCycles: number;
-  cycleLifeCategory: string;
-  ippt: number;
-}) {
-  const stressColor = stressIndex > 60 ? '#C41E24' : stressIndex > 45 ? '#d97706' : '#059669';
-  const stressLabel = stressIndex > 60 ? 'High Stress' : stressIndex > 45 ? 'Moderate' : 'Optimal';
-  const stressAngle = Math.min(stressIndex / 80 * 180, 180);
+function SpringInfographic({ result }: { result: SpringCalcResult | null }) {
+  if (!result || !result.isValid) {
+    return (
+      <div className="flex items-center justify-center h-48 text-gray-300">
+        <p className="text-sm">Enter spring parameters to see visualization</p>
+      </div>
+    );
+  }
 
-  const coilCount = Math.min(Math.max(Math.round(totalTurns * 1.5), 8), 20);
-  const coilPath = generateCoilPath(coilCount);
-
-  const cycleColor = {
-    'standard': '#C41E24',
-    'extended': '#d97706',
-    'high-cycle': '#059669',
-    'max-cycle': '#002868',
-  }[cycleLifeCategory] || '#6b7280';
-
-  const arcAngle = Math.min(estimatedCycles / 100000 * 270, 270);
-  const arcStartAngle = 135;
-  const arcEndAngle = arcStartAngle + arcAngle;
+  const stressPercent = Math.min(result.stressIndex, 80);
+  const stressColor = stressPercent > 60 ? '#C41E24' : stressPercent > 45 ? '#d97706' : '#059669';
+  const cycleArc = Math.min(result.estimatedCycles / 100000, 1) * 240;
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-brand-blue/[0.04] rounded-2xl border border-gray-200 p-6 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/[0.03] rounded-full -translate-y-1/2 translate-x-1/2" />
-
-      <h4 className="font-display text-sm uppercase tracking-wider text-brand-blue mb-5 flex items-center gap-2">
-        <Activity className="w-4 h-4" />
-        Spring Analysis Visual
-      </h4>
-
-      <div className="grid grid-cols-2 gap-6">
-        {/* Spring illustration */}
-        <div className="flex flex-col items-center">
-          <svg viewBox="0 0 160 200" className="w-full max-w-[140px]" aria-label="Torsion spring illustration">
-            {/* Torsion tube */}
-            <rect x="72" y="10" width="16" height="180" rx="2" fill="#d1d5db" stroke="#9ca3af" strokeWidth="1" />
-
-            {/* Spring coils */}
-            <motion.path
-              d={coilPath}
-              fill="none"
-              stroke={stressColor}
-              strokeWidth={Math.max(2, wireDiameter * 12)}
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-            />
-
-            {/* Winding cone left */}
-            <rect x="40" y="18" width="32" height="14" rx="3" fill="#374151" />
-            <rect x="40" y="168" width="32" height="14" rx="3" fill="#374151" />
-
-            {/* Winding cone right */}
-            <rect x="88" y="18" width="32" height="14" rx="3" fill="#374151" />
-            <rect x="88" y="168" width="32" height="14" rx="3" fill="#374151" />
-
-            {/* Dimension annotations */}
-            <line x1="20" y1="32" x2="20" y2="168" stroke="#9ca3af" strokeWidth="0.5" strokeDasharray="3,2" />
-            <line x1="16" y1="32" x2="24" y2="32" stroke="#9ca3af" strokeWidth="0.5" />
-            <line x1="16" y1="168" x2="24" y2="168" stroke="#9ca3af" strokeWidth="0.5" />
-            <text x="20" y="104" textAnchor="middle" fontSize="7" fill="#9ca3af" fontFamily="monospace" transform="rotate(-90 20 104)">
-              LENGTH
-            </text>
-
-            <line x1="40" y1="195" x2="120" y2="195" stroke="#9ca3af" strokeWidth="0.5" strokeDasharray="3,2" />
-            <line x1="40" y1="191" x2="40" y2="199" stroke="#9ca3af" strokeWidth="0.5" />
-            <line x1="120" y1="191" x2="120" y2="199" stroke="#9ca3af" strokeWidth="0.5" />
-            <text x="80" y="193" textAnchor="middle" fontSize="7" fill="#9ca3af" fontFamily="monospace">
-              {insideDiameter}&quot; ID
-            </text>
-          </svg>
-          <div className="text-center mt-2">
-            <span className="text-xs text-gray-400 font-mono">Wire: {wireDiameter.toFixed(4)}&quot;</span>
-          </div>
-        </div>
-
-        {/* Stress gauge */}
-        <div className="flex flex-col items-center justify-center">
-          <svg viewBox="0 0 160 100" className="w-full max-w-[140px]">
-            {/* Gauge background arc */}
-            <path
-              d={describeArc(80, 80, 55, 180, 360)}
-              fill="none"
-              stroke="#e5e7eb"
-              strokeWidth="10"
-              strokeLinecap="round"
-            />
-            {/* Green zone */}
-            <path
-              d={describeArc(80, 80, 55, 180, 247)}
-              fill="none"
-              stroke="#059669"
-              strokeWidth="10"
-              strokeLinecap="round"
-              opacity="0.3"
-            />
-            {/* Yellow zone */}
-            <path
-              d={describeArc(80, 80, 55, 247, 315)}
-              fill="none"
-              stroke="#d97706"
-              strokeWidth="10"
-              strokeLinecap="round"
-              opacity="0.3"
-            />
-            {/* Red zone */}
-            <path
-              d={describeArc(80, 80, 55, 315, 360)}
-              fill="none"
-              stroke="#C41E24"
-              strokeWidth="10"
-              strokeLinecap="round"
-              opacity="0.3"
-            />
-
-            {/* Needle */}
-            <motion.line
-              x1="80"
-              y1="80"
-              x2="80"
-              y2="30"
-              stroke={stressColor}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              initial={{ rotate: -90 }}
-              animate={{ rotate: stressAngle - 90 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              style={{ transformOrigin: '80px 80px' }}
-            />
-            <circle cx="80" cy="80" r="5" fill={stressColor} />
-
-            <text x="80" y="72" textAnchor="middle" fontSize="9" fontWeight="600" fill={stressColor}>
-              {stressIndex.toFixed(0)}%
-            </text>
-          </svg>
-          <div className="text-center -mt-1">
-            <span className="text-xs font-display uppercase tracking-wider" style={{ color: stressColor }}>
-              {stressLabel}
-            </span>
-            <p className="text-[10px] text-gray-400 mt-0.5">Stress Index</p>
-          </div>
-        </div>
+    <div className="grid grid-cols-3 gap-4">
+      {/* IPPT gauge */}
+      <div className="text-center">
+        <svg viewBox="0 0 100 70" className="w-full max-w-[120px] mx-auto">
+          <path d="M 15 60 A 35 35 0 0 1 85 60" fill="none" stroke="#e5e7eb" strokeWidth="6" strokeLinecap="round" />
+          <path d="M 15 60 A 35 35 0 0 1 85 60" fill="none" stroke="#002868" strokeWidth="6" strokeLinecap="round"
+            strokeDasharray={`${(result.ippt / 40) * 110} 200`} />
+          <text x="50" y="52" textAnchor="middle" fill="#002868" fontSize="14" fontWeight="700" fontFamily="system-ui">
+            {result.ippt.toFixed(1)}
+          </text>
+          <text x="50" y="64" textAnchor="middle" fill="#6b7280" fontSize="7" fontFamily="system-ui">IPPT</text>
+        </svg>
+        <p className="text-[10px] text-gray-500 mt-1">Inch-Pounds/Turn</p>
       </div>
 
-      {/* Cycle life arc */}
-      <div className="mt-5 flex items-center gap-4 bg-white rounded-xl p-4 border border-gray-100">
-        <svg viewBox="0 0 80 50" className="w-16 flex-shrink-0">
-          <path
-            d={describeArc(40, 40, 30, 135, 405)}
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth="6"
-            strokeLinecap="round"
-          />
-          <motion.path
-            d={describeArc(40, 40, 30, arcStartAngle, arcEndAngle)}
-            fill="none"
-            stroke={cycleColor}
-            strokeWidth="6"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
-          />
+      {/* Stress gauge */}
+      <div className="text-center">
+        <svg viewBox="0 0 100 70" className="w-full max-w-[120px] mx-auto">
+          <path d="M 15 60 A 35 35 0 0 1 85 60" fill="none" stroke="#e5e7eb" strokeWidth="6" strokeLinecap="round" />
+          <path d="M 15 60 A 35 35 0 0 1 85 60" fill="none" stroke={stressColor} strokeWidth="6" strokeLinecap="round"
+            strokeDasharray={`${(stressPercent / 80) * 110} 200`} />
+          <text x="50" y="52" textAnchor="middle" fill={stressColor} fontSize="14" fontWeight="700" fontFamily="system-ui">
+            {result.stressIndex.toFixed(0)}%
+          </text>
+          <text x="50" y="64" textAnchor="middle" fill="#6b7280" fontSize="7" fontFamily="system-ui">STRESS</text>
         </svg>
-        <div>
-          <p className="text-xl font-display" style={{ color: cycleColor }}>
-            ~{estimatedCycles.toLocaleString()}
-          </p>
-          <p className="text-[10px] text-gray-400">estimated cycles</p>
-        </div>
-        <div className="ml-auto text-right">
-          <p className="text-sm font-display text-brand-blue">{ippt.toFixed(3)}</p>
-          <p className="text-[10px] text-gray-400">IPPT</p>
-        </div>
+        <p className="text-[10px] text-gray-500 mt-1">Wahl-Corrected</p>
+      </div>
+
+      {/* Cycle life */}
+      <div className="text-center">
+        <svg viewBox="0 0 100 70" className="w-full max-w-[120px] mx-auto">
+          <path d="M 15 60 A 35 35 0 0 1 85 60" fill="none" stroke="#e5e7eb" strokeWidth="6" strokeLinecap="round" />
+          <path d="M 15 60 A 35 35 0 0 1 85 60" fill="none" stroke="#059669" strokeWidth="6" strokeLinecap="round"
+            strokeDasharray={`${(cycleArc / 240) * 110} 200`} />
+          <text x="50" y="48" textAnchor="middle" fill="#059669" fontSize="11" fontWeight="700" fontFamily="system-ui">
+            {result.estimatedCycles >= 1000 ? `${(result.estimatedCycles / 1000).toFixed(0)}K` : result.estimatedCycles}
+          </text>
+          <text x="50" y="58" textAnchor="middle" fill="#6b7280" fontSize="6.5" fontFamily="system-ui">
+            ~{result.yearsAtFourCyclesPerDay.toFixed(0)} yrs
+          </text>
+          <text x="50" y="66" textAnchor="middle" fill="#6b7280" fontSize="7" fontFamily="system-ui">CYCLES</text>
+        </svg>
+        <p className="text-[10px] text-gray-500 mt-1">@ 4 cycles/day</p>
       </div>
     </div>
   );
 }
 
-function generateCoilPath(coils: number): string {
-  const startY = 35;
-  const endY = 165;
-  const coilHeight = (endY - startY) / coils;
-  const leftX = 42;
-  const rightX = 118;
-  const centerX = 80;
+// ═══════════════════════════════════════════════════════════════════════════
+// TAB 1: SPRING CALCULATOR
+// ═══════════════════════════════════════════════════════════════════════════
 
-  let path = `M ${leftX} ${startY}`;
-  for (let i = 0; i < coils; i++) {
-    const y1 = startY + i * coilHeight;
-    const y2 = y1 + coilHeight * 0.5;
-    const y3 = y1 + coilHeight;
-    path += ` C ${leftX - 10} ${y2}, ${rightX + 10} ${y2}, ${rightX} ${y3}`;
-    if (i < coils - 1) {
-      const y4 = y3 + coilHeight * 0.5;
-      const y5 = y3 + coilHeight;
-      path += ` C ${rightX + 10} ${y4}, ${leftX - 10} ${y4}, ${leftX} ${y5}`;
-      i++;
-    }
-  }
-  return path;
-}
+function CalculatorTab() {
+  const [wireIdx, setWireIdx] = useState(10);
+  const [idIdx, setIdIdx] = useState(2);
+  const [springLength, setSpringLength] = useState(24);
+  const [doorWeight, setDoorWeight] = useState(150);
+  const [doorHeight, setDoorHeight] = useState(7);
+  const [numSprings, setNumSprings] = useState<1 | 2>(2);
+  const [liftType, setLiftType] = useState<LiftType>('standard');
+  const [drumType, setDrumType] = useState<DrumType>('standard-400');
+  const [windDir, setWindDir] = useState<WindDirection>('left');
 
-function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number): string {
-  const startRad = (startAngle * Math.PI) / 180;
-  const endRad = (endAngle * Math.PI) / 180;
-  const x1 = cx + r * Math.cos(startRad);
-  const y1 = cy + r * Math.sin(startRad);
-  const x2 = cx + r * Math.cos(endRad);
-  const y2 = cy + r * Math.sin(endRad);
-  const largeArc = endAngle - startAngle > 180 ? 1 : 0;
-  return `M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2}`;
-}
+  const availableDrums = getDrumsForLiftType(liftType);
 
-/* ─────────── 2-Spring ↔ 1-Spring Conversion ─────────── */
-
-function SpringConversion() {
-  const [mode, setMode] = useState<'2to1' | '1to2'>('2to1');
-  const [sourceIppt, setSourceIppt] = useState(2.5);
-
-  const resultIppt = mode === '2to1' ? sourceIppt * 2 : sourceIppt / 2;
-
-  const findClosestWire = (targetIppt: number, id: number): { wire: number; ippt: number; label: string } | null => {
-    let best: { wire: number; ippt: number; label: string } | null = null;
-    let bestDiff = Infinity;
-
-    for (const w of WIRE_SIZES) {
-      const D = id + w;
-      const totalCoils = 24 / w;
-      const Na = totalCoils - 1;
-      if (Na < 3) continue;
-      const ippt = (Math.pow(w, 4) * 11500000) / (10.18 * D * Na);
-      const diff = Math.abs(ippt - targetIppt);
-      if (diff < bestDiff) {
-        bestDiff = diff;
-        const gauge = WIRE_GAUGE_CHART.find(g => g.diameter === w);
-        best = { wire: w, ippt, label: gauge?.label || `${w.toFixed(4)}"` };
-      }
-    }
-    return best;
-  };
-
-  const suggestion2 = findClosestWire(resultIppt, 2.0);
-  const suggestion375 = findClosestWire(resultIppt, 3.375);
+  const result = useMemo(() => {
+    if (!WIRE_SIZES[wireIdx] || !INSIDE_DIAMETERS[idIdx] || !springLength || !doorWeight || !doorHeight) return null;
+    return calculateSpring({
+      wireDiameter: WIRE_SIZES[wireIdx],
+      insideDiameter: INSIDE_DIAMETERS[idIdx],
+      springLength,
+      doorWeight,
+      doorHeight,
+      drumType: availableDrums.includes(drumType) ? drumType : availableDrums[0],
+      numberOfSprings: numSprings,
+      liftType,
+      windDirection: windDir,
+    });
+  }, [wireIdx, idIdx, springLength, doorWeight, doorHeight, drumType, numSprings, liftType, windDir, availableDrums]);
 
   return (
-    <div className="bg-white border-2 border-brand-gold/30 rounded-2xl p-6">
-      <h4 className="font-display text-base text-brand-blue mb-4 flex items-center gap-2">
-        <ArrowLeftRight className="w-5 h-5 text-brand-gold" />
-        Spring Conversion Tool
-      </h4>
-      <p className="text-xs text-gray-500 mb-4">
-        Converting between single and dual spring setups? Enter the IPPT of your source spring(s) to find the equivalent.
-      </p>
+    <div className="grid lg:grid-cols-2 gap-6">
+      <div className="space-y-4">
+        <h4 className="text-sm font-display text-gray-900 uppercase tracking-wider">Spring Parameters</h4>
+        <div className="grid grid-cols-2 gap-3">
+          <SelectField label="Wire Diameter" value={wireIdx.toString()} onChange={v => setWireIdx(parseInt(v))}>
+            {WIRE_SIZES.map((ws, i) => {
+              const g = WIRE_GAUGE_CHART.find(gc => Math.abs(gc.diameter - ws) < 0.001);
+              return <option key={i} value={i}>{g?.label || `${ws.toFixed(4)}″`}</option>;
+            })}
+          </SelectField>
+          <SelectField label="Inside Diameter (ID)" value={idIdx.toString()} onChange={v => setIdIdx(parseInt(v))}>
+            {INSIDE_DIAMETERS.map((id, i) => <option key={i} value={i}>{id}″</option>)}
+          </SelectField>
+        </div>
+        <NumberField label="Spring Length (coil body)" value={springLength} onChange={setSpringLength} min={6} max={60} step={0.5} unit="in" helpText="Measure coil body only — exclude cones" />
 
-      {/* Mode toggle */}
-      <div className="flex rounded-lg bg-gray-100 p-0.5 mb-4">
-        <button
-          onClick={() => setMode('2to1')}
-          className={`flex-1 px-3 py-2 rounded-md text-xs font-display uppercase tracking-wider transition-all ${
-            mode === '2to1' ? 'bg-brand-blue text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          2 Springs → 1 Spring
-        </button>
-        <button
-          onClick={() => setMode('1to2')}
-          className={`flex-1 px-3 py-2 rounded-md text-xs font-display uppercase tracking-wider transition-all ${
-            mode === '1to2' ? 'bg-brand-blue text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          1 Spring → 2 Springs
-        </button>
+        <h4 className="text-sm font-display text-gray-900 uppercase tracking-wider pt-2">Door Parameters</h4>
+        <div className="grid grid-cols-2 gap-3">
+          <NumberField label="Door Weight" value={doorWeight} onChange={setDoorWeight} min={50} max={500} step={1} unit="lbs" />
+          <NumberField label="Door Height" value={doorHeight} onChange={setDoorHeight} min={6} max={20} step={0.5} unit="ft" />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <SelectField label="Number of Springs" value={numSprings.toString()} onChange={v => setNumSprings(parseInt(v) as 1 | 2)}>
+            <option value="1">1 Spring (Single)</option>
+            <option value="2">2 Springs (Pair)</option>
+          </SelectField>
+          <SelectField label="Wind Direction" value={windDir} onChange={v => setWindDir(v as WindDirection)}
+            helpText={WIND_DIRECTION_INFO[windDir].coneColor + ' cone'}>
+            <option value="left">Left-Hand Wound</option>
+            <option value="right">Right-Hand Wound</option>
+          </SelectField>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <SelectField label="Lift Type" value={liftType} onChange={v => { setLiftType(v as LiftType); setDrumType(getDrumsForLiftType(v as LiftType)[0]); }}>
+            {Object.entries(LIFT_TYPES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+          </SelectField>
+          <SelectField label="Cable Drum" value={drumType} onChange={v => setDrumType(v as DrumType)}>
+            {availableDrums.map(dt => <option key={dt} value={dt}>{DRUM_RADII[dt].label}</option>)}
+          </SelectField>
+        </div>
+
+        <details className="text-xs text-gray-500 border border-gray-200 rounded-lg p-2">
+          <summary className="cursor-pointer font-medium text-gray-600">Door Weight Reference</summary>
+          <div className="mt-2 space-y-0.5 max-h-36 overflow-y-auto">
+            {STANDARD_DOORS.map((d, i) => (
+              <div key={i} className="flex justify-between py-0.5 hover:bg-gray-50 px-1 rounded cursor-pointer"
+                onClick={() => { setDoorWeight(Math.round((d.weightRange[0] + d.weightRange[1]) / 2)); setDoorHeight(d.height); }}>
+                <span>{d.label}</span>
+                <span className="text-gray-400">{d.weightRange[0]}–{d.weightRange[1]} lbs</span>
+              </div>
+            ))}
+          </div>
+        </details>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <label className="block text-xs font-display uppercase tracking-wider text-gray-500 mb-1.5">
-            {mode === '2to1' ? 'Each Spring IPPT' : 'Single Spring IPPT'}
-          </label>
-          <input
-            type="number"
-            value={sourceIppt || ''}
-            onChange={e => setSourceIppt(parseFloat(e.target.value) || 0)}
-            step={0.1}
-            min={0.1}
-            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-display uppercase tracking-wider text-gray-500 mb-1.5">
-            {mode === '2to1' ? 'Required Single IPPT' : 'Required Each IPPT'}
-          </label>
-          <div className="px-3 py-2.5 border border-brand-blue/20 rounded-lg text-sm bg-brand-blue/5 font-mono text-brand-blue font-bold">
-            {resultIppt.toFixed(3)}
+      <div className="space-y-4">
+        <h4 className="text-sm font-display text-gray-900 uppercase tracking-wider">Results</h4>
+        <SpringInfographic result={result} />
+
+        {result && result.isValid && (
+          <div className="border border-gray-200 rounded-lg divide-y divide-gray-100">
+            <div className="px-3 py-2 bg-gray-50 rounded-t-lg">
+              <p className="text-xs font-medium text-gray-600 uppercase tracking-wider">Spring Properties</p>
+            </div>
+            <div className="p-2 space-y-0.5">
+              <ResultRow label="IPPT (Inch-Pounds Per Turn)" value={result.ippt} highlight />
+              <ResultRow label="Mean Coil Diameter" value={`${result.meanDiameter.toFixed(3)}″`} />
+              <ResultRow label="Spring Index (D/d)" value={result.springIndex.toFixed(1)} />
+              <ResultRow label="Total Coils" value={result.totalCoils.toFixed(1)} />
+              <ResultRow label="Active Coils (Nₐ)" value={result.activeCoils.toFixed(1)} />
+            </div>
+            <div className="px-3 py-2 bg-gray-50">
+              <p className="text-xs font-medium text-gray-600 uppercase tracking-wider">Application</p>
+            </div>
+            <div className="p-2 space-y-0.5">
+              <ResultRow label="Torque Required (per spring)" value={`${result.torqueRequired.toFixed(1)} in-lbs`} />
+              <ResultRow label="Turns Required" value={result.turnsRequired.toFixed(1)} highlight />
+              <ResultRow label="Preload Turns" value={result.preloadTurns.toFixed(1)} />
+              <ResultRow label="Total Turns" value={result.totalTurns.toFixed(1)} highlight />
+              <ResultRow label="Max Safe Turns" value={result.maxSafeTurns.toFixed(1)} warn={result.totalTurns > result.maxSafeTurns} />
+              <ResultRow label="Drum Turns" value={result.drumTurns.toFixed(1)} />
+              <ResultRow label="Wind Direction" value={WIND_DIRECTION_INFO[result.windDirection].label} />
+            </div>
+            <div className="px-3 py-2 bg-gray-50">
+              <p className="text-xs font-medium text-gray-600 uppercase tracking-wider">Stress & Life</p>
+            </div>
+            <div className="p-2 space-y-0.5">
+              <ResultRow label="Torsional Stress" value={`${result.torsionalStress.toFixed(0)} psi`} />
+              <ResultRow label="Wahl Factor (K)" value={result.wahlFactor.toFixed(3)} />
+              <ResultRow label="Corrected Stress" value={`${result.correctedStress.toFixed(0)} psi`} />
+              <ResultRow label="UTS (ASTM A229)" value={`${result.ultimateTensileStrength.toFixed(0)} psi`} />
+              <ResultRow label="Stress Index" value={`${result.stressIndex.toFixed(1)}%`} warn={result.stressIndex > 60} />
+              <ResultRow label="Estimated Cycles" value={`${result.estimatedCycles.toLocaleString()}`} highlight />
+              <ResultRow label="Years (@ 4/day)" value={`~${result.yearsAtFourCyclesPerDay.toFixed(1)} yrs`} />
+              <ResultRow label="Stored Energy" value={`${result.storedEnergy.toFixed(0)} in-lbs`} />
+              <ResultRow label="Cable Length" value={`${result.cableLength}″`} />
+            </div>
           </div>
-        </div>
+        )}
+
+        {result && result.warnings.length > 0 && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+            <p className="text-xs font-semibold text-amber-700 mb-1 flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> Warnings</p>
+            {result.warnings.map((w, i) => <p key={i} className="text-xs text-amber-800">{w}</p>)}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TAB 2: WEIGHT-TO-SPRING LOOKUP
+// ═══════════════════════════════════════════════════════════════════════════
+
+function WeightLookupTab() {
+  const [doorWeight, setDoorWeight] = useState(150);
+  const [doorHeight, setDoorHeight] = useState(7);
+  const [numSprings, setNumSprings] = useState<1 | 2>(2);
+  const [targetCycles, setTargetCycles] = useState<CycleTarget>(10000);
+
+  const matches = useMemo(() => {
+    if (!doorWeight || !doorHeight) return [];
+    return findSpringsForDoor(doorWeight, doorHeight, numSprings, 'standard-400', targetCycles);
+  }, [doorWeight, doorHeight, numSprings, targetCycles]);
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <NumberField label="Door Weight" value={doorWeight} onChange={setDoorWeight} min={50} max={500} unit="lbs" />
+        <NumberField label="Door Height" value={doorHeight} onChange={setDoorHeight} min={6} max={20} step={0.5} unit="ft" />
+        <SelectField label="Springs" value={numSprings.toString()} onChange={v => setNumSprings(parseInt(v) as 1 | 2)}>
+          <option value="2">2 Springs</option>
+          <option value="1">1 Spring</option>
+        </SelectField>
+        <SelectField label="Min. Cycle Target" value={targetCycles.toString()} onChange={v => setTargetCycles(parseInt(v) as CycleTarget)}>
+          {CYCLE_TARGETS.map(ct => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
+        </SelectField>
       </div>
 
-      {/* Closest match suggestions */}
-      {sourceIppt > 0 && (
-        <div className="bg-gray-50 rounded-lg p-3">
-          <p className="text-[10px] font-display uppercase tracking-wider text-gray-400 mb-2">Closest Wire Match (24&quot; spring)</p>
-          <div className="space-y-1.5">
-            {suggestion2 && (
-              <div className="flex justify-between items-center text-xs">
-                <span className="text-gray-600">2&quot; ID → {suggestion2.label}</span>
-                <span className="font-mono text-gray-900">{suggestion2.ippt.toFixed(3)} IPPT</span>
-              </div>
-            )}
-            {suggestion375 && (
-              <div className="flex justify-between items-center text-xs">
-                <span className="text-gray-600">3.375&quot; ID → {suggestion375.label}</span>
-                <span className="font-mono text-gray-900">{suggestion375.ippt.toFixed(3)} IPPT</span>
-              </div>
-            )}
-          </div>
+      {matches.length > 0 ? (
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="px-2 py-2 font-medium text-gray-600">Wire Size</th>
+                <th className="px-2 py-2 font-medium text-gray-600">ID</th>
+                <th className="px-2 py-2 font-medium text-gray-600">Length</th>
+                <th className="px-2 py-2 font-medium text-gray-600">IPPT</th>
+                <th className="px-2 py-2 font-medium text-gray-600">Turns</th>
+                <th className="px-2 py-2 font-medium text-gray-600">Stress</th>
+                <th className="px-2 py-2 font-medium text-gray-600">Cycles</th>
+                <th className="px-2 py-2 font-medium text-gray-600">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              {matches.slice(0, 25).map((m, i) => (
+                <tr key={i} className={`border-b border-gray-100 ${i < 3 ? 'bg-green-50/50' : ''}`}>
+                  <td className="px-2 py-1.5 font-mono">{m.wireLabel}</td>
+                  <td className="px-2 py-1.5">{m.insideDiameter}″</td>
+                  <td className="px-2 py-1.5">{m.springLength}″</td>
+                  <td className="px-2 py-1.5 font-mono font-medium">{m.ippt.toFixed(2)}</td>
+                  <td className="px-2 py-1.5">{m.totalTurns.toFixed(1)}</td>
+                  <td className="px-2 py-1.5">
+                    <span className={`px-1 py-0.5 rounded text-[10px] font-medium ${
+                      m.stressIndex > 55 ? 'bg-red-100 text-red-700' : m.stressIndex > 45 ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
+                    }`}>{m.stressIndex.toFixed(0)}%</span>
+                  </td>
+                  <td className="px-2 py-1.5">{m.estimatedCycles.toLocaleString()}</td>
+                  <td className="px-2 py-1.5 text-gray-500">{m.cycleCategory}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="text-[10px] text-gray-400 mt-2 text-right">Top {Math.min(matches.length, 25)} of {matches.length} matches (lowest stress first)</p>
+        </div>
+      ) : (
+        <div className="text-center py-10 text-gray-400">
+          <p className="text-sm">No matching springs found. Try adjusting parameters.</p>
         </div>
       )}
     </div>
   );
 }
 
-/* ─────────── Weight → Spring ID Lookup ─────────── */
+// ═══════════════════════════════════════════════════════════════════════════
+// TAB 3: 2↔1 SPRING CONVERSION
+// ═══════════════════════════════════════════════════════════════════════════
 
-function WeightToSpringLookup() {
-  const [doorWeight, setDoorWeight] = useState(155);
-  const [doorHeight, setDoorHeight] = useState(7);
-  const [numSprings, setNumSprings] = useState<1 | 2>(2);
+function ConversionTab() {
+  const [mode, setMode] = useState<'2to1' | '1to2'>('2to1');
+  const [srcWireIdx, setSrcWireIdx] = useState(10);
+  const [srcIdIdx, setSrcIdIdx] = useState(2);
+  const [srcLength, setSrcLength] = useState(24);
 
-  const suggestions = useMemo(() => {
-    const drumRadius = 2.0;
-    const torquePerSpring = (doorWeight * drumRadius) / numSprings;
-    const cableTravel = doorHeight * 12;
-    const drumTurns = cableTravel / (2 * Math.PI * drumRadius);
-    const preload = 1.0;
-    const totalTurns = drumTurns + preload;
+  const srcWire = WIRE_SIZES[srcWireIdx];
+  const srcId = INSIDE_DIAMETERS[srcIdIdx];
 
-    const results: { wire: number; id: number; ippt: number; turns: number; stress: number; label: string; lifeCategory: string }[] = [];
+  const result = useMemo(() => {
+    if (!srcWire || !srcId || !srcLength) return null;
+    const D = srcId + srcWire;
+    const totalCoils = srcLength / srcWire;
+    const activeCoils = totalCoils - 1;
+    if (activeCoils < 1) return null;
+    const srcIppt = (Math.pow(srcWire, 4) * 11_500_000) / (10.18 * D * activeCoils);
+    const targetIppt = mode === '2to1' ? srcIppt * 2 : srcIppt / 2;
+
+    const matches: { wire: number; wireLabel: string; id: number; length: number; ippt: number; diff: number }[] = [];
 
     for (const w of WIRE_SIZES) {
-      for (const id of [2.0, 2.625, 3.375]) {
-        const D = id + w;
-        const Na = (24 / w) - 1;
-        if (Na < 3) continue;
-        const ippt = (Math.pow(w, 4) * 11500000) / (10.18 * D * Na);
-        const turnsFromTorque = torquePerSpring / ippt + preload;
-
-        const maxTurns = (24 / w) * 0.75;
-        if (turnsFromTorque > maxTurns) continue;
-
-        const operatingTorque = ippt * turnsFromTorque;
-        const torsionalStress = (operatingTorque * 10.18) / (Math.pow(w, 3) * Na);
-        const c = D / w;
-        const wahlFactor = ((4 * c - 1) / (4 * c - 4)) + (0.615 / c);
-        const correctedStress = torsionalStress * wahlFactor;
-        const uts = 190000 / Math.pow(w, 0.155);
-        const stressRatio = (correctedStress / uts) * 100;
-
-        let lifeCategory = 'standard';
-        if (stressRatio <= 35) lifeCategory = 'max-cycle';
-        else if (stressRatio <= 45) lifeCategory = 'high-cycle';
-        else if (stressRatio <= 55) lifeCategory = 'extended';
-
-        if (stressRatio < 65) {
-          const gauge = WIRE_GAUGE_CHART.find(g => g.diameter === w);
-          results.push({
-            wire: w,
-            id,
-            ippt,
-            turns: turnsFromTorque,
-            stress: stressRatio,
-            label: gauge?.label || `${w.toFixed(4)}"`,
-            lifeCategory,
-          });
+      for (const id of INSIDE_DIAMETERS) {
+        for (const len of [18, 20, 22, 24, 26, 28, 30, 32, 34, 36]) {
+          const md = id + w;
+          const si = md / w;
+          if (si < 4 || si > 14) continue;
+          const tc = len / w;
+          const ac = tc - 1;
+          if (ac < 3) continue;
+          const ippt = (Math.pow(w, 4) * 11_500_000) / (10.18 * md * ac);
+          const diff = Math.abs(ippt - targetIppt) / targetIppt * 100;
+          if (diff < 5) {
+            const g = WIRE_GAUGE_CHART.find(gc => Math.abs(gc.diameter - w) < 0.001);
+            matches.push({ wire: w, wireLabel: g?.label || `${w.toFixed(4)}″`, id, length: len, ippt, diff });
+          }
         }
       }
     }
 
-    results.sort((a, b) => a.stress - b.stress);
-    return results.slice(0, 8);
-  }, [doorWeight, doorHeight, numSprings]);
-
-  const lifeCategoryColors: Record<string, string> = {
-    'standard': '#C41E24',
-    'extended': '#d97706',
-    'high-cycle': '#059669',
-    'max-cycle': '#002868',
-  };
+    matches.sort((a, b) => a.diff - b.diff);
+    return { srcIppt, targetIppt, matches: matches.slice(0, 15) };
+  }, [srcWire, srcId, srcLength, mode]);
 
   return (
-    <div className="bg-white border-2 border-brand-blue/20 rounded-2xl p-6">
-      <h4 className="font-display text-base text-brand-blue mb-4 flex items-center gap-2">
-        <Weight className="w-5 h-5 text-brand-red" />
-        Weight → Spring Finder
-      </h4>
-      <p className="text-xs text-gray-500 mb-4">
-        Enter your door weight and height to find compatible spring sizes. Results sorted by lowest stress (longest life).
-      </p>
-
-      <div className="grid grid-cols-3 gap-3 mb-4">
-        <NumberField label="Door Weight" value={doorWeight} onChange={setDoorWeight} min={50} max={500} step={5} unit="lbs" />
-        <NumberField label="Height" value={doorHeight} onChange={v => setDoorHeight(v)} min={6} max={18} step={0.5} unit="ft" />
-        <SelectField
-          label="Springs"
-          value={String(numSprings)}
-          onChange={v => setNumSprings(parseInt(v) as 1 | 2)}
-          options={[{ value: '1', label: 'Single' }, { value: '2', label: 'Duplex' }]}
-        />
+    <div>
+      <div className="flex items-center gap-3 mb-4">
+        <button onClick={() => setMode('2to1')}
+          className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${mode === '2to1' ? 'bg-brand-red text-white' : 'bg-gray-100 text-gray-600'}`}>
+          2 Springs → 1 Spring
+        </button>
+        <button onClick={() => setMode('1to2')}
+          className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${mode === '1to2' ? 'bg-brand-blue text-white' : 'bg-gray-100 text-gray-600'}`}>
+          1 Spring → 2 Springs
+        </button>
       </div>
 
-      {suggestions.length > 0 ? (
-        <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <div className="grid grid-cols-3 gap-3 mb-6">
+        <SelectField label="Source Wire Size" value={srcWireIdx.toString()} onChange={v => setSrcWireIdx(parseInt(v))}>
+          {WIRE_SIZES.map((ws, i) => {
+            const g = WIRE_GAUGE_CHART.find(gc => Math.abs(gc.diameter - ws) < 0.001);
+            return <option key={i} value={i}>{g?.label || `${ws.toFixed(4)}″`}</option>;
+          })}
+        </SelectField>
+        <SelectField label="Source ID" value={srcIdIdx.toString()} onChange={v => setSrcIdIdx(parseInt(v))}>
+          {INSIDE_DIAMETERS.map((id, i) => <option key={i} value={i}>{id}″</option>)}
+        </SelectField>
+        <NumberField label="Source Length" value={srcLength} onChange={setSrcLength} min={6} max={60} step={0.5} unit="in" />
+      </div>
+
+      {result && (
+        <>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="bg-gray-50 rounded-lg p-3 text-center">
+              <p className="text-xs text-gray-500">Source IPPT ({mode === '2to1' ? 'per spring' : 'single'})</p>
+              <p className="text-xl font-mono font-bold text-gray-900">{result.srcIppt.toFixed(2)}</p>
+            </div>
+            <div className="bg-brand-blue/5 rounded-lg p-3 text-center">
+              <p className="text-xs text-brand-blue">Target IPPT ({mode === '2to1' ? 'single' : 'per spring'})</p>
+              <p className="text-xl font-mono font-bold text-brand-blue">{result.targetIppt.toFixed(2)}</p>
+            </div>
+          </div>
+
+          {result.matches.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-gray-50 text-left">
+                    <th className="px-2 py-2 font-medium text-gray-600">Wire</th>
+                    <th className="px-2 py-2 font-medium text-gray-600">ID</th>
+                    <th className="px-2 py-2 font-medium text-gray-600">Length</th>
+                    <th className="px-2 py-2 font-medium text-gray-600">IPPT</th>
+                    <th className="px-2 py-2 font-medium text-gray-600">Match</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.matches.map((m, i) => (
+                    <tr key={i} className={`border-b border-gray-100 ${i === 0 ? 'bg-green-50' : ''}`}>
+                      <td className="px-2 py-1.5 font-mono">{m.wireLabel}</td>
+                      <td className="px-2 py-1.5">{m.id}″</td>
+                      <td className="px-2 py-1.5">{m.length}″</td>
+                      <td className="px-2 py-1.5 font-mono font-medium">{m.ippt.toFixed(2)}</td>
+                      <td className="px-2 py-1.5">
+                        <span className={`px-1 py-0.5 rounded text-[10px] font-medium ${
+                          m.diff < 1 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                        }`}>{m.diff < 1 ? 'Exact' : `${m.diff.toFixed(1)}% off`}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-center py-8 text-gray-400 text-sm">No close matches within 5% tolerance.</p>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TAB 4: WIRE SIZE FINDER
+// ═══════════════════════════════════════════════════════════════════════════
+
+function WireFinderTab() {
+  const [coilCount, setCoilCount] = useState<10 | 20>(10);
+  const [measurement, setMeasurement] = useState(2.625);
+
+  const result = useMemo(() => {
+    if (!measurement) return null;
+    return lookupWireFromMeasurement(measurement, coilCount);
+  }, [measurement, coilCount]);
+
+  return (
+    <div>
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <h4 className="text-sm font-semibold text-blue-900 mb-2">How to Measure Wire Size (Service Spring Method)</h4>
+        <ol className="text-xs text-blue-800 space-y-1 list-decimal list-inside">
+          <li>Place a ruler across the tightly wound coils of the spring body</li>
+          <li>Count exactly 10 or 20 consecutive coils (more = more accuracy)</li>
+          <li>Measure the total length of those coils in inches</li>
+          <li>Enter the measurement below to find the nearest standard wire size</li>
+        </ol>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <SelectField label="Coils Counted" value={coilCount.toString()} onChange={v => setCoilCount(parseInt(v) as 10 | 20)}>
+          <option value="10">10 Coils</option>
+          <option value="20">20 Coils (more accurate)</option>
+        </SelectField>
+        <NumberField label="Total Measured Length" value={measurement} onChange={setMeasurement} min={0.5} max={15} step={0.001} unit="in" />
+      </div>
+
+      {result && (
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <div className="bg-gray-50 px-4 py-3">
+            <p className="text-xs text-gray-500">Calculated diameter: <span className="font-mono font-bold text-gray-900">{result.exactDiameter.toFixed(4)}″</span></p>
+          </div>
+          <div className="p-4 space-y-3">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-green-900">Closest: {result.closestWire.label}</p>
+                <p className="text-xs text-green-700">Difference: {Math.abs(result.closestWire.diameter - result.exactDiameter).toFixed(4)}″</p>
+              </div>
+            </div>
+            {result.nextSmaller && (
+              <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-lg">
+                <span className="text-xs text-gray-500">Next smaller:</span>
+                <span className="text-sm font-mono text-gray-700">{result.nextSmaller.label}</span>
+              </div>
+            )}
+            {result.nextLarger && (
+              <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-lg">
+                <span className="text-xs text-gray-500">Next larger:</span>
+                <span className="text-sm font-mono text-gray-700">{result.nextLarger.label}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <details className="mt-6 text-xs border border-gray-200 rounded-lg">
+        <summary className="cursor-pointer font-medium text-gray-600 px-3 py-2 bg-gray-50 rounded-t-lg">Full Wire Gauge Chart</summary>
+        <div className="max-h-60 overflow-y-auto">
           <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-gray-50 border-b">
-                <th className="px-3 py-2 text-left font-display uppercase tracking-wider text-gray-500">Wire</th>
-                <th className="px-3 py-2 text-left font-display uppercase tracking-wider text-gray-500">ID</th>
-                <th className="px-3 py-2 text-right font-display uppercase tracking-wider text-gray-500">IPPT</th>
-                <th className="px-3 py-2 text-right font-display uppercase tracking-wider text-gray-500">Turns</th>
-                <th className="px-3 py-2 text-right font-display uppercase tracking-wider text-gray-500">Life</th>
+            <thead className="bg-gray-50 sticky top-0">
+              <tr>
+                <th className="px-2 py-1.5 text-left font-medium text-gray-600">Gauge</th>
+                <th className="px-2 py-1.5 text-left font-medium text-gray-600">Diameter</th>
+                <th className="px-2 py-1.5 text-left font-medium text-gray-600">10-Coil</th>
+                <th className="px-2 py-1.5 text-left font-medium text-gray-600">20-Coil</th>
               </tr>
             </thead>
             <tbody>
-              {suggestions.map((s, i) => (
-                <tr key={i} className="border-b border-gray-50 hover:bg-brand-blue/[0.02]">
-                  <td className="px-3 py-2 font-mono">{s.label.split('—')[0].trim()}</td>
-                  <td className="px-3 py-2 font-mono">{s.id}&quot;</td>
-                  <td className="px-3 py-2 text-right font-mono">{s.ippt.toFixed(3)}</td>
-                  <td className="px-3 py-2 text-right font-mono">{s.turns.toFixed(1)}</td>
-                  <td className="px-3 py-2 text-right">
-                    <span
-                      className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                      style={{
-                        backgroundColor: `${lifeCategoryColors[s.lifeCategory]}15`,
-                        color: lifeCategoryColors[s.lifeCategory],
-                      }}
-                    >
-                      {s.lifeCategory.replace('-', ' ')}
-                    </span>
-                  </td>
+              {WIRE_GAUGE_CHART.map((wg, i) => (
+                <tr key={i} className="border-b border-gray-100">
+                  <td className="px-2 py-1">{wg.gauge}</td>
+                  <td className="px-2 py-1 font-mono">{wg.diameter.toFixed(4)}″</td>
+                  <td className="px-2 py-1 font-mono text-gray-500">{(wg.diameter * 10).toFixed(3)}″</td>
+                  <td className="px-2 py-1 font-mono text-gray-500">{(wg.diameter * 20).toFixed(3)}″</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      ) : (
-        <div className="text-center py-6 text-gray-400 text-xs">
-          No compatible springs found at 24&quot; length for this configuration. Try adjusting weight or height.
-        </div>
-      )}
+      </details>
     </div>
   );
 }
 
-/* ─────────── Main Calculator Component ─────────── */
+// ═══════════════════════════════════════════════════════════════════════════
+// TAB 5: CABLE LENGTH CALCULATOR
+// ═══════════════════════════════════════════════════════════════════════════
 
-type CalcTab = 'calculator' | 'weight-lookup' | 'conversion';
+function CableLengthTab() {
+  const [doorHeight, setDoorHeight] = useState(7);
+  const [liftType, setLiftType] = useState<LiftType>('standard');
+  const [drumType, setDrumType] = useState<DrumType>('standard-400');
+
+  const availableDrums = getDrumsForLiftType(liftType);
+  const cableLength = calculateCableLength(doorHeight, availableDrums.includes(drumType) ? drumType : availableDrums[0], liftType);
+
+  return (
+    <div className="max-w-lg mx-auto">
+      <div className="space-y-3 mb-6">
+        <NumberField label="Door Height" value={doorHeight} onChange={setDoorHeight} min={6} max={20} step={0.5} unit="ft" />
+        <SelectField label="Lift Type" value={liftType} onChange={v => { setLiftType(v as LiftType); setDrumType(getDrumsForLiftType(v as LiftType)[0]); }}>
+          {Object.entries(LIFT_TYPES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+        </SelectField>
+        <SelectField label="Cable Drum" value={drumType} onChange={v => setDrumType(v as DrumType)}>
+          {availableDrums.map(dt => <option key={dt} value={dt}>{DRUM_RADII[dt].label}</option>)}
+        </SelectField>
+      </div>
+
+      <div className="bg-brand-blue/5 border border-brand-blue/20 rounded-xl p-6 text-center">
+        <p className="text-xs text-brand-blue uppercase tracking-wider mb-1">Recommended Cable Length</p>
+        <p className="text-4xl font-mono font-bold text-brand-blue">{cableLength}″</p>
+        <p className="text-lg text-gray-600 font-mono">{(cableLength / 12).toFixed(1)} ft</p>
+        <p className="text-xs text-gray-400 mt-2">Per side — order 2 cables total</p>
+      </div>
+
+      <div className="mt-6">
+        <h4 className="text-xs font-display text-gray-700 uppercase tracking-wider mb-2">Extension Spring Color Codes</h4>
+        <div className="grid grid-cols-2 gap-1.5">
+          {EXTENSION_SPRING_COLORS.map((sc, i) => (
+            <div key={i} className="flex items-center gap-2 px-2 py-1 rounded bg-gray-50 text-xs">
+              <span className="w-4 h-4 rounded-full border border-gray-300 flex-shrink-0" style={{ backgroundColor: sc.hex }} />
+              <span className="text-gray-700 font-medium">{sc.color}</span>
+              <span className="text-gray-400 ml-auto">{sc.weightRange}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// MAIN EXPORT
+// ═══════════════════════════════════════════════════════════════════════════
 
 export default function SpringCalculator() {
   const [activeTab, setActiveTab] = useState<CalcTab>('calculator');
-  const [input, setInput] = useState<SpringCalcInput>({
-    wireDiameter: 0.2500,
-    insideDiameter: 2.0,
-    springLength: 24,
-    doorWeight: 155,
-    doorHeight: 7,
-    drumType: 'standard',
-    numberOfSprings: 2,
-  });
-
-  const [showGaugeChart, setShowGaugeChart] = useState(false);
-
-  const update = <K extends keyof SpringCalcInput>(key: K, value: SpringCalcInput[K]) => {
-    setInput(prev => ({ ...prev, [key]: value }));
-  };
-
-  const result = useMemo(() => {
-    if (input.wireDiameter <= 0 || input.insideDiameter <= 0 || input.springLength <= 0 || input.doorWeight <= 0 || input.doorHeight <= 0) {
-      return null;
-    }
-    return calculateSpring(input);
-  }, [input]);
-
-  const cycleLifeColor = result ? {
-    standard: '#C41E24',
-    extended: '#d97706',
-    'high-cycle': '#059669',
-    'max-cycle': '#002868',
-  }[result.cycleLifeCategory] : '#6b7280';
-
-  const TABS: { id: CalcTab; label: string; icon: React.ReactNode; color: string }[] = [
-    { id: 'calculator', label: 'DASMA Calculator', icon: <Calculator className="w-4 h-4" />, color: '#002868' },
-    { id: 'weight-lookup', label: 'Weight → Spring', icon: <Weight className="w-4 h-4" />, color: '#bf0a30' },
-    { id: 'conversion', label: '2↔1 Conversion', icon: <ArrowLeftRight className="w-4 h-4" />, color: '#d97706' },
-  ];
 
   return (
     <section id="spring-calculator" className="scroll-mt-24">
-      <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-display uppercase tracking-widest mb-4">
-          <Zap className="w-3.5 h-3.5" />
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 text-xs font-display uppercase tracking-widest text-brand-red mb-2">
+          <Calculator className="w-4 h-4" />
           Professional Tool
         </div>
         <h2 className="font-display text-3xl md:text-4xl text-brand-blue mb-3">
-          Torsion Spring <span className="text-brand-red">Calculator</span>
+          DASMA Spring <span className="text-brand-red">Calculator</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          DASMA-standard calculations for torsion spring sizing, cycle life estimation, and stress analysis.
-          Three tools in one: calculate from specs, find springs by door weight, or convert between setups.
+          Industry-standard torsion spring sizing using the DASMA formula: IPPT = (d⁴ × G) / (10.18 × D × Nₐ).
+          Five integrated tools for complete spring system analysis.
         </p>
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-6 flex items-start gap-3 max-w-4xl mx-auto">
-        <Shield className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-        <div className="text-sm text-amber-800">
-          <strong>Professional Use Only.</strong> Torsion springs store lethal amounts of energy.
-          This calculator is a reference tool for trained technicians.
-        </div>
+      <div className="flex flex-wrap justify-center gap-1.5 mb-8">
+        {TAB_CONFIG.map(tab => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                isActive ? 'text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
+              }`}
+              style={isActive ? { backgroundColor: tab.color } : undefined}>
+              <Icon className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Tab selector */}
-      <div className="flex flex-wrap gap-2 mb-8 justify-center">
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-display uppercase tracking-wider transition-all duration-200 ${
-              activeTab === tab.id
-                ? 'text-white shadow-lg'
-                : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300 hover:shadow-sm'
-            }`}
-            style={activeTab === tab.id ? { backgroundColor: tab.color } : undefined}
-          >
-            {tab.icon}
-            {tab.label}
-          </button>
-        ))}
+      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <AnimatePresence mode="wait">
+          <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+            {activeTab === 'calculator' && <CalculatorTab />}
+            {activeTab === 'weight-lookup' && <WeightLookupTab />}
+            {activeTab === 'conversion' && <ConversionTab />}
+            {activeTab === 'wire-finder' && <WireFinderTab />}
+            {activeTab === 'cable-length' && <CableLengthTab />}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      <AnimatePresence mode="wait">
-        {activeTab === 'calculator' && (
-          <motion.div
-            key="calculator"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Input Form */}
-              <div className="space-y-6">
-                <div className="bg-white border border-gray-200 rounded-xl p-6">
-                  <h3 className="font-display text-lg text-gray-900 mb-4 flex items-center gap-2">
-                    <Calculator className="w-5 h-5 text-brand-blue" />
-                    Spring Specifications
-                  </h3>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <SelectField
-                      label="Wire Diameter"
-                      value={String(input.wireDiameter)}
-                      onChange={v => update('wireDiameter', parseFloat(v))}
-                      options={WIRE_SIZES.map(w => {
-                        const gauge = WIRE_GAUGE_CHART.find(g => g.diameter === w);
-                        return { value: String(w), label: gauge ? gauge.label : `${w.toFixed(4)}"` };
-                      })}
-                      hint="Measure with calipers or match gauge chart"
-                    />
-                    <SelectField
-                      label="Inside Diameter"
-                      value={String(input.insideDiameter)}
-                      onChange={v => update('insideDiameter', parseFloat(v))}
-                      options={INSIDE_DIAMETERS.map(id => ({
-                        value: String(id),
-                        label: `${id}" ID`,
-                      }))}
-                      hint="Measure the inner opening of the coil"
-                    />
-                    <NumberField
-                      label="Spring Length"
-                      value={input.springLength}
-                      onChange={v => update('springLength', v)}
-                      min={6} max={60} step={0.5} unit="inches"
-                      hint="Relaxed coil length, excluding cones"
-                    />
-                    <SelectField
-                      label="Number of Springs"
-                      value={String(input.numberOfSprings)}
-                      onChange={v => update('numberOfSprings', parseInt(v) as 1 | 2)}
-                      options={[
-                        { value: '1', label: '1 Spring (Single)' },
-                        { value: '2', label: '2 Springs (Duplex)' },
-                      ]}
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-white border border-gray-200 rounded-xl p-6">
-                  <h3 className="font-display text-lg text-gray-900 mb-4">Door Specifications</h3>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <NumberField
-                      label="Door Weight" value={input.doorWeight}
-                      onChange={v => update('doorWeight', v)}
-                      min={50} max={500} step={5} unit="lbs"
-                      hint="Weigh with bathroom scale + 2×4"
-                    />
-                    <NumberField
-                      label="Door Height" value={input.doorHeight}
-                      onChange={v => update('doorHeight', v)}
-                      min={6} max={18} step={0.5} unit="feet"
-                    />
-                    <SelectField
-                      label="Cable Drum"
-                      value={input.drumType}
-                      onChange={v => update('drumType', v as DrumType)}
-                      options={Object.entries(DRUM_RADII).map(([key, val]) => ({
-                        value: key,
-                        label: val.label,
-                      }))}
-                    />
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-[10px] font-display uppercase tracking-wider text-gray-400 mb-2">Quick Fill — Standard Doors</p>
-                    <div className="flex flex-wrap gap-2">
-                      {STANDARD_DOORS.slice(0, 6).map(door => (
-                        <button
-                          key={door.label}
-                          onClick={() => {
-                            update('doorWeight', Math.round((door.weightRange[0] + door.weightRange[1]) / 2));
-                            update('doorHeight', door.height);
-                          }}
-                          className="px-2.5 py-1 text-xs bg-gray-100 hover:bg-brand-blue/10 text-gray-600 hover:text-brand-blue rounded-md transition-colors font-mono"
-                        >
-                          {door.width}×{door.height}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Wire Gauge Reference */}
-                <button
-                  onClick={() => setShowGaugeChart(!showGaugeChart)}
-                  className="text-sm text-brand-blue hover:underline flex items-center gap-1"
-                >
-                  <Info className="w-4 h-4" />
-                  {showGaugeChart ? 'Hide' : 'Show'} Wire Gauge Reference
-                </button>
-
-                <AnimatePresence>
-                  {showGaugeChart && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="bg-white border border-gray-200 rounded-xl overflow-hidden"
-                    >
-                      <div className="p-3 bg-gray-50 border-b">
-                        <p className="text-xs font-display uppercase tracking-wider text-gray-500">
-                          Wire Gauge → Diameter Reference
-                        </p>
-                        <p className="text-[10px] text-gray-400 mt-0.5">Measure by counting 10 coils and dividing by 10</p>
-                      </div>
-                      <div className="overflow-x-auto">
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-gray-100">
-                          {WIRE_GAUGE_CHART.map(g => (
-                            <div
-                              key={g.gauge}
-                              className={`flex justify-between items-center px-3 py-1.5 text-xs bg-white ${
-                                g.diameter === input.wireDiameter ? 'bg-brand-blue/5 font-bold' : ''
-                              }`}
-                            >
-                              <span className="text-gray-600">{g.gauge >= 0 ? `${g.gauge} ga` : `${g.gauge} ga`}</span>
-                              <span className="font-mono text-gray-900">{g.diameter.toFixed(4)}&quot;</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Results + Infographic */}
-              <div className="space-y-6">
-                {result ? (
-                  <>
-                    {/* Infographic */}
-                    <SpringInfographic
-                      wireDiameter={input.wireDiameter}
-                      insideDiameter={input.insideDiameter}
-                      totalTurns={result.totalTurns}
-                      stressIndex={result.stressIndex}
-                      estimatedCycles={result.estimatedCycles}
-                      cycleLifeCategory={result.cycleLifeCategory}
-                      ippt={result.ippt}
-                    />
-
-                    {/* Warnings */}
-                    {result.warnings.length > 0 && (
-                      <div className="bg-red-50 border border-red-200 rounded-xl p-4 space-y-2">
-                        {result.warnings.map((w, i) => (
-                          <div key={i} className="flex items-start gap-2 text-sm text-red-700">
-                            <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                            {w}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Numerical results */}
-                    <div className="bg-white border border-gray-200 rounded-xl p-5">
-                      <h3 className="font-display text-base text-gray-900 mb-3">Spring Properties</h3>
-                      <div className="divide-y divide-gray-100">
-                        <ResultRow label="Mean Diameter (D)" value={result.meanDiameter.toFixed(4)} unit="in" />
-                        <ResultRow label="Active Coils (Nₐ)" value={result.activeCoils.toFixed(1)} />
-                        <ResultRow label="IPPT" value={result.ippt.toFixed(3)} unit="in·lb/turn" highlight />
-                        <ResultRow label="Spring Index (D/d)" value={(result.meanDiameter / input.wireDiameter).toFixed(1)} />
-                      </div>
-                    </div>
-
-                    <div className="bg-white border border-gray-200 rounded-xl p-5">
-                      <h3 className="font-display text-base text-gray-900 mb-3">Application</h3>
-                      <div className="divide-y divide-gray-100">
-                        <ResultRow label="Torque / Spring" value={result.torqueRequired.toFixed(2)} unit="in·lb" highlight />
-                        <ResultRow label="Turns Required" value={result.turnsRequired.toFixed(2)} />
-                        <ResultRow label="Preload" value={result.preloadTurns.toFixed(1)} unit="turns" />
-                        <ResultRow label="Total Turns" value={result.totalTurns.toFixed(2)} />
-                        <ResultRow label="Safe Max" value={result.maxTurns.toFixed(1)} unit="turns" />
-                      </div>
-                    </div>
-
-                    <div className="bg-white border border-gray-200 rounded-xl p-5">
-                      <h3 className="font-display text-base text-gray-900 mb-3">Stress & Cycle Life</h3>
-                      <div className="divide-y divide-gray-100">
-                        <ResultRow label="Torsional Stress" value={result.torsionalStress.toFixed(0)} unit="psi" />
-                        <ResultRow label="Wahl-Corrected" value={result.correctedStress.toFixed(0)} unit="psi" />
-                        <ResultRow label="Stress Index" value={result.stressIndex.toFixed(1)} unit="%" />
-                      </div>
-
-                      <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: `${cycleLifeColor}08`, borderLeft: `3px solid ${cycleLifeColor}` }}>
-                        <div className="flex items-center gap-2 mb-1">
-                          <CheckCircle className="w-4 h-4" style={{ color: cycleLifeColor }} />
-                          <span className="text-sm font-medium" style={{ color: cycleLifeColor }}>
-                            {result.cycleLifeCategory.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} Life
-                          </span>
-                        </div>
-                        <p className="text-2xl font-display" style={{ color: cycleLifeColor }}>
-                          ~{result.estimatedCycles.toLocaleString()} cycles
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          ≈ {result.yearsAtFourCyclesPerDay.toFixed(1)} years at 4 cycles/day
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="bg-brand-blue/5 border border-brand-blue/20 rounded-xl px-5 py-4">
-                      <p className="text-xs text-brand-blue">
-                        <strong>Formula:</strong> IPPT = (d⁴ × G) / (10.18 × D × Nₐ) · G = 11,500,000 psi (ASTM A229) ·
-                        Wahl: K = ((4c−1)/(4c−4)) + (0.615/c)
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-8 text-center">
-                    <Calculator className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                    <p className="text-sm text-gray-500">Enter specifications to see results</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {activeTab === 'weight-lookup' && (
-          <motion.div
-            key="weight-lookup"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="max-w-3xl mx-auto"
-          >
-            <WeightToSpringLookup />
-          </motion.div>
-        )}
-
-        {activeTab === 'conversion' && (
-          <motion.div
-            key="conversion"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="max-w-3xl mx-auto"
-          >
-            <SpringConversion />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* CTA */}
-      <div className="max-w-3xl mx-auto mt-8 bg-white border border-gray-200 rounded-2xl p-6 text-center">
-        <p className="text-sm text-gray-600 mb-3">
-          Need a professional spring assessment? Our DASMA-trained technicians calculate every replacement to exact specifications.
+      <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
+        <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+        <p className="text-xs text-red-700 leading-relaxed">
+          <strong>Professional Use Advisory:</strong> Torsion springs store lethal amounts of energy. These calculations are reference tools
+          for qualified technicians. Never attempt spring replacement without proper winding bars, safety equipment, and professional training.
+          Always verify against manufacturer specifications.
         </p>
-        <Link
-          href="/book"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-brand-red text-white text-sm font-display uppercase tracking-wider rounded-xl hover:bg-red-700 transition-colors shadow-md"
-        >
-          <Calendar className="w-4 h-4" />
-          Schedule Free Estimate
-          <ChevronRight className="w-3 h-3" />
-        </Link>
       </div>
     </section>
   );
