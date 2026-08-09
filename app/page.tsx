@@ -7,6 +7,7 @@ import ReviewCarousel from '@/components/ReviewCarousel';
 import LocalTownsGrid from '@/components/LocalTownsGrid';
 import FeaturedPortfolio from '@/components/FeaturedPortfolio';
 import CallbackForm from '@/components/CallbackForm';
+import PromoFlipCard from '@/components/PromoFlipCard';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -362,25 +363,8 @@ export default function HomePage() {
       {/* CALLBACK FORM */}
       <CallbackForm />
 
-      {/* PROMOTIONS */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="surface-elevated border border-brand-gold/30 rounded-lg p-8 gleam">
-            <h2 className="font-display text-2xl text-brand-blue uppercase mb-2">Lube &amp; Tune Special</h2>
-            <p className="font-accent text-xl text-brand-gold mb-3">Garage Door Tune-Up — $79 <span className="text-foreground/40 text-base line-through">$129</span></p>
-            <p className="text-sm text-foreground/60 mb-6">
-              Complete 21-point inspection, lubrication, balance check, and hardware tightening.
-              Use code <span className="font-mono font-bold text-brand-blue">TNGD-TUNE79</span> at booking. Expires July 22, 2027.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <CTAButton text="Book Tune-Up" variant="secondary" />
-              <Link href="/coupons" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-display text-sm uppercase tracking-wider font-semibold transition-all duration-200 border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white">
-                View All Coupons
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* PROMOTIONS — FLIP COUPON */}
+      <PromoFlipCard />
 
       {/* FINAL CTA */}
       <section className="py-20 bg-gradient-to-br from-brand-blue to-blue-900 text-white">
