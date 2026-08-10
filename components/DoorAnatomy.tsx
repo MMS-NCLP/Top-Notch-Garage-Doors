@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, AlertTriangle, Wrench, CheckCircle, Calendar, ChevronRight, Info } from 'lucide-react';
+import { X, AlertTriangle, Wrench, CheckCircle, Calendar, ChevronRight, ChevronLeft, Info } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -30,7 +30,7 @@ interface LabeledPoint {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SHARED SVG HELPERS
+// SVG HELPERS
 // ═══════════════════════════════════════════════════════════════════════════
 
 function springCoilPath(startX: number, y: number, width: number, amplitude: number, tight = false): string {
@@ -48,512 +48,539 @@ function springCoilPath(startX: number, y: number, width: number, amplitude: num
   return d;
 }
 
-function RaisedPanel({ x, y, w, h }: { x: number; y: number; w: number; h: number }) {
-  const inset = 8;
-  return (
-    <g>
-      <rect x={x} y={y} width={w} height={h} fill="#e8eaed" stroke="#b8bcc2" strokeWidth="1" />
-      <rect x={x + inset} y={y + 4} width={w - inset * 2} height={h - 8}
-        fill="#dfe2e6" stroke="#c5c9ce" strokeWidth="0.5" rx="1" />
-    </g>
-  );
-}
+// Door layout constants for the 1400×620 viewBox
+const D = {
+  vbW: 1400, vbH: 620,
+  doorL: 250, doorW: 900, // double-wide 16' door
+  doorT: 170, panelH: 68, panelGap: 2, panels: 5,
+  get doorR() { return this.doorL + this.doorW; },
+  get doorB() { return this.doorT + this.panels * this.panelH + (this.panels - 1) * this.panelGap; },
+  jambW: 20,
+  trackW: 12,
+  floorY: 548,
+} as const;
 
-function WindowPane({ x, y, w, h, panes = 4 }: { x: number; y: number; w: number; h: number; panes?: number }) {
-  const paneWidth = (w - (panes - 1) * 3) / panes;
-  return (
-    <g>
-      <rect x={x} y={y} width={w} height={h} fill="#a8c8e8" stroke="#7ca0c4" strokeWidth="1" rx="1" />
-      {Array.from({ length: panes }).map((_, i) => (
-        <rect key={i} x={x + i * (paneWidth + 3) + 2} y={y + 2} width={paneWidth - 1} height={h - 4}
-          fill="#c0daf0" stroke="#8eb4d4" strokeWidth="0.5" rx="1" />
-      ))}
-      <line x1={x} y1={y + h / 2} x2={x + w} y2={y + h / 2} stroke="#8eb4d4" strokeWidth="0.5" />
-    </g>
-  );
-}
+const panelY = (i: number) => D.doorT + i * (D.panelH + D.panelGap);
+const panelMidY = (i: number) => panelY(i) + D.panelH / 2;
+const jointY = (i: number) => panelY(i + 1) - 1;
 
-function Roller({ cx, cy, r = 7 }: { cx: number; cy: number; r?: number }) {
-  return (
-    <g>
-      <circle cx={cx} cy={cy} r={r} fill="#c0c4ca" stroke="#6b7280" strokeWidth="1.5" />
-      <circle cx={cx} cy={cy} r={r * 0.4} fill="#6b7280" />
-      <circle cx={cx} cy={cy} r={r * 0.15} fill="#4b5563" />
-    </g>
-  );
-}
+// ═══════════════════════════════════════════════════════════════════════════
+// BASE DOOR (shared by all three views)
+// ═══════════════════════════════════════════════════════════════════════════
 
-function Hinge({ x, y, width = 22, height = 14, numbered }: { x: number; y: number; width?: number; height?: number; numbered?: string }) {
+function BaseDoorSVG({ dimSprings }: { dimSprings?: boolean }) {
+  const halfW = D.doorW / 2;
+
   return (
-    <g>
-      <rect x={x} y={y} width={width} height={height} fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1.5" />
-      <circle cx={x + width / 2} cy={y + height / 2} r={2.5} fill="#4b5563" />
-      <circle cx={x + 5} cy={y + height / 2} r={1.5} fill="#374151" />
-      <circle cx={x + width - 5} cy={y + height / 2} r={1.5} fill="#374151" />
-      {numbered && (
-        <text x={x + width / 2} y={y - 3} textAnchor="middle" fill="#6b7280" fontSize="6.5" fontFamily="system-ui" fontWeight="600">#{numbered}</text>
-      )}
+    <g opacity={dimSprings ? 0.35 : 1}>
+      {/* ── Wall / Header ── */}
+      <rect x={D.doorL - D.jambW} y={60} width={D.doorW + D.jambW * 2} height={50}
+        fill="url(#headerGrad)" stroke="#8a9199" strokeWidth="1" />
+      <text x={D.doorL + halfW} y={88} textAnchor="middle" fill="#9ca3af"
+        fontSize="10" fontFamily="system-ui" fontWeight="500" letterSpacing="3">HEADER</text>
+
+      {/* ── Side Jambs ── */}
+      <rect x={D.doorL - D.jambW} y={60} width={D.jambW} height={D.floorY - 60}
+        fill="url(#jambGrad)" stroke="#8a9199" strokeWidth="0.8" />
+      <rect x={D.doorR} y={60} width={D.jambW} height={D.floorY - 60}
+        fill="url(#jambGrad)" stroke="#8a9199" strokeWidth="0.8" />
+
+      {/* ── Vertical Tracks ── */}
+      <rect x={D.doorL - 6} y={D.doorT - 2} width={D.trackW} height={D.doorB - D.doorT + 4}
+        fill="none" stroke="#4b5563" strokeWidth="2.5" />
+      <rect x={D.doorR - 6} y={D.doorT - 2} width={D.trackW} height={D.doorB - D.doorT + 4}
+        fill="none" stroke="#4b5563" strokeWidth="2.5" />
+
+      {/* ── Panels ── */}
+      {Array.from({ length: D.panels }).map((_, i) => {
+        const py = panelY(i);
+        const isWindow = i === 1;
+        return (
+          <g key={`panel-${i}`}>
+            {/* Panel body */}
+            <rect x={D.doorL} y={py} width={D.doorW} height={D.panelH}
+              fill="url(#panelGrad)" stroke="#b0b5bb" strokeWidth="1" />
+            {isWindow ? (
+              // Window row — 8 panes across
+              <>
+                {Array.from({ length: 8 }).map((_, pi) => {
+                  const pw = (D.doorW - 60) / 8;
+                  const px = D.doorL + 30 + pi * pw;
+                  return (
+                    <g key={`win-${pi}`}>
+                      <rect x={px + 2} y={py + 8} width={pw - 4} height={D.panelH - 16}
+                        fill="#b8d4f0" stroke="#7ca0c4" strokeWidth="1" rx="1" />
+                      <line x1={px + 2} y1={py + 8 + (D.panelH - 16) / 2}
+                        x2={px + pw - 2} y2={py + 8 + (D.panelH - 16) / 2}
+                        stroke="#8eb4d4" strokeWidth="0.5" />
+                    </g>
+                  );
+                })}
+              </>
+            ) : (
+              // Raised panel insets — two columns for double-wide
+              <>
+                {[0, 1].map(col => {
+                  const colW = (D.doorW - 20) / 2;
+                  const cx = D.doorL + 10 + col * colW;
+                  return (
+                    <rect key={`raised-${i}-${col}`} x={cx + 6} y={py + 6}
+                      width={colW - 12} height={D.panelH - 12}
+                      fill="url(#raisedGrad)" stroke="#c5c9ce" strokeWidth="0.5" rx="2" />
+                  );
+                })}
+              </>
+            )}
+          </g>
+        );
+      })}
+
+      {/* ── Center Hinges (at each joint, middle of door) ── */}
+      {Array.from({ length: D.panels - 1 }).map((_, i) => {
+        const hy = jointY(i) - 6;
+        const cx = D.doorL + halfW;
+        return (
+          <g key={`chinge-${i}`}>
+            <rect x={cx - 12} y={hy} width={24} height={14}
+              fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1.5" />
+            <circle cx={cx} cy={hy + 7} r={2.5} fill="#4b5563" />
+          </g>
+        );
+      })}
+
+      {/* ── Side Hinges (at each joint, both sides) ── */}
+      {Array.from({ length: D.panels - 1 }).map((_, i) => {
+        const hy = jointY(i) - 6;
+        const hingeNum = i === 0 ? '3' : i === D.panels - 2 ? '1' : '2';
+        return (
+          <g key={`shinge-${i}`}>
+            {/* Left side */}
+            <rect x={D.doorL + 60} y={hy} width={24} height={14}
+              fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1.5" />
+            <circle cx={D.doorL + 72} cy={hy + 7} r={2.5} fill="#4b5563" />
+            <text x={D.doorL + 72} y={hy - 3} textAnchor="middle" fill="#6b7280"
+              fontSize="7" fontFamily="system-ui" fontWeight="600">#{hingeNum}</text>
+            {/* Right side */}
+            <rect x={D.doorR - 84} y={hy} width={24} height={14}
+              fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1.5" />
+            <circle cx={D.doorR - 72} cy={hy + 7} r={2.5} fill="#4b5563" />
+          </g>
+        );
+      })}
+
+      {/* ── Rollers ── */}
+      {Array.from({ length: D.panels }).map((_, i) => {
+        const ry = panelMidY(i);
+        return (
+          <g key={`roller-${i}`}>
+            {/* Left */}
+            <circle cx={D.doorL - 1} cy={ry} r={7} fill="#c0c4ca" stroke="#6b7280" strokeWidth="1.5" />
+            <circle cx={D.doorL - 1} cy={ry} r={3} fill="#6b7280" />
+            {/* Right */}
+            <circle cx={D.doorR + 1} cy={ry} r={7} fill="#c0c4ca" stroke="#6b7280" strokeWidth="1.5" />
+            <circle cx={D.doorR + 1} cy={ry} r={3} fill="#6b7280" />
+          </g>
+        );
+      })}
+
+      {/* ── Reinforcement Struts ── */}
+      <line x1={D.doorL + 4} y1={D.doorT + 10} x2={D.doorR - 4} y2={D.doorT + 10}
+        stroke="#4b5563" strokeWidth="3.5" />
+      <line x1={D.doorL + 4} y1={panelY(2) + D.panelH / 2}
+        x2={D.doorR - 4} y2={panelY(2) + D.panelH / 2}
+        stroke="#4b5563" strokeWidth="2.5" />
+
+      {/* ── Bottom Rubber Seal ── */}
+      <rect x={D.doorL} y={D.doorB} width={D.doorW} height={7}
+        fill="#2d3238" rx="3" />
+
+      {/* ── Bottom Brackets ── */}
+      <polygon points={`${D.doorL - 2},${D.doorB - 10} ${D.doorL - 2},${D.doorB + 7} ${D.doorL + 18},${D.doorB + 7} ${D.doorL + 18},${D.doorB} ${D.doorL + 8},${D.doorB - 10}`}
+        fill="#6b7280" stroke="#374151" strokeWidth="1" />
+      <polygon points={`${D.doorR + 2},${D.doorB - 10} ${D.doorR + 2},${D.doorB + 7} ${D.doorR - 18},${D.doorB + 7} ${D.doorR - 18},${D.doorB} ${D.doorR - 8},${D.doorB - 10}`}
+        fill="#6b7280" stroke="#374151" strokeWidth="1" />
+
+      {/* ── Slide Lock ── */}
+      <rect x={D.doorR - 28} y={panelY(3) + 10} width={8} height={28}
+        fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
+      <rect x={D.doorR - 20} y={panelY(3) + 18} width={14} height={6}
+        fill="#4b5563" stroke="#374151" strokeWidth="0.5" />
+
+      {/* ── Floor ── */}
+      <rect x={D.doorL - D.jambW - 40} y={D.floorY} width={D.doorW + D.jambW * 2 + 80} height={14}
+        fill="#a0a4aa" stroke="#7c8085" strokeWidth="1" />
     </g>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TORSION SPRING SYSTEM DIAGRAM
+// TRACK SYSTEM (shared by torsion + extension)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function TrackSystemSVG({ dim }: { dim?: boolean }) {
+  return (
+    <g opacity={dim ? 0.25 : 1}>
+      {/* Horizontal tracks */}
+      <line x1={D.doorL + 30} y1={115} x2={D.doorR - 30} y2={115} stroke="#4b5563" strokeWidth="2.5" />
+      <line x1={D.doorL + 30} y1={123} x2={D.doorR - 30} y2={123} stroke="#4b5563" strokeWidth="1.5" />
+
+      {/* Radius curves (left) */}
+      <path d={`M ${D.doorL} ${D.doorT} Q ${D.doorL} ${123} ${D.doorL + 30} ${117}`}
+        fill="none" stroke="#4b5563" strokeWidth="2.5" />
+      {/* Radius curves (right) */}
+      <path d={`M ${D.doorR} ${D.doorT} Q ${D.doorR} ${123} ${D.doorR - 30} ${117}`}
+        fill="none" stroke="#4b5563" strokeWidth="2.5" />
+
+      {/* Flag brackets at curve */}
+      <rect x={D.doorL + 8} y={D.doorT - 16} width={18} height={18}
+        fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
+      <rect x={D.doorR - 26} y={D.doorT - 16} width={18} height={18}
+        fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
+
+      {/* Top brackets */}
+      <rect x={D.doorL - 4} y={D.doorT} width={16} height={20}
+        fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
+      <rect x={D.doorR - 12} y={D.doorT} width={16} height={20}
+        fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
+
+      {/* Rear track hangers */}
+      {[0.25, 0.5, 0.75].map(pct => {
+        const hx = D.doorL + D.doorW * pct;
+        return (
+          <g key={`hang-${pct}`}>
+            <line x1={hx} y1={60} x2={hx} y2={115} stroke="#6b7280" strokeWidth="1.8" />
+            <path d={`M ${hx - 7} 60 L ${hx - 7} 72 L ${hx + 7} 72 L ${hx + 7} 60`}
+              fill="none" stroke="#6b7280" strokeWidth="1" />
+          </g>
+        );
+      })}
+
+      {/* Jamb brackets */}
+      {[0.3, 0.6].map(pct => {
+        const jy = D.doorT + (D.doorB - D.doorT) * pct;
+        return (
+          <g key={`jb-${pct}`}>
+            <rect x={D.doorL - D.jambW - 2} y={jy} width={14} height={18}
+              fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
+            <rect x={D.doorR + D.jambW - 12} y={jy} width={14} height={18}
+              fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TORSION SPRING SYSTEM
 // ═══════════════════════════════════════════════════════════════════════════
 
 const TORSION_POINTS: LabeledPoint[] = [
-  { id: 'torsion-spring', x: 340, y: 88, labelX: 340, labelY: 35, anchor: 'middle' },
-  { id: 'torsion-shaft', x: 450, y: 80, labelX: 450, labelY: 22, anchor: 'middle' },
-  { id: 'winding-cone', x: 198, y: 88, labelX: 50, labelY: 42, anchor: 'start' },
-  { id: 'stationary-cone', x: 472, y: 88, labelX: 472, labelY: 55, anchor: 'middle' },
-  { id: 'cable-drum', x: 108, y: 88, labelX: 25, labelY: 68, anchor: 'start' },
-  { id: 'end-bearing', x: 95, y: 98, labelX: 25, labelY: 110, anchor: 'start' },
-  { id: 'center-bearing', x: 490, y: 98, labelX: 660, labelY: 68, anchor: 'start' },
-  { id: 'lift-cable', x: 97, y: 320, labelX: 25, labelY: 305, anchor: 'start' },
-  { id: 'panel-section', x: 450, y: 280, labelX: 800, labelY: 280, anchor: 'end' },
-  { id: 'glass-section', x: 430, y: 210, labelX: 800, labelY: 210, anchor: 'end' },
-  { id: 'hinge-3', x: 290, y: 172, labelX: 800, labelY: 168, anchor: 'end' },
-  { id: 'hinge-2', x: 290, y: 258, labelX: 800, labelY: 250, anchor: 'end' },
-  { id: 'hinge-1', x: 290, y: 345, labelX: 800, labelY: 340, anchor: 'end' },
-  { id: 'roller', x: 97, y: 235, labelX: 25, labelY: 225, anchor: 'start' },
-  { id: 'top-bracket', x: 97, y: 140, labelX: 25, labelY: 145, anchor: 'start' },
-  { id: 'strut', x: 450, y: 155, labelX: 800, labelY: 145, anchor: 'end' },
-  { id: 'bottom-bracket', x: 97, y: 430, labelX: 25, labelY: 430, anchor: 'start' },
-  { id: 'bottom-seal', x: 420, y: 450, labelX: 800, labelY: 452, anchor: 'end' },
-  { id: 'slide-lock', x: 705, y: 340, labelX: 800, labelY: 370, anchor: 'end' },
-  { id: 'vertical-track', x: 88, y: 300, labelX: 25, labelY: 345, anchor: 'start' },
-  { id: 'horizontal-track', x: 400, y: 104, labelX: 800, labelY: 108, anchor: 'end' },
-  { id: 'radius-track', x: 118, y: 125, labelX: 25, labelY: 180, anchor: 'start' },
-  { id: 'flag-bracket', x: 110, y: 118, labelX: 25, labelY: 135, anchor: 'start' },
-  { id: 'jamb-bracket', x: 82, y: 380, labelX: 25, labelY: 385, anchor: 'start' },
-  { id: 'rear-hang', x: 550, y: 80, labelX: 660, labelY: 40, anchor: 'start' },
+  { id: 'torsion-spring', x: 500, y: 130, labelX: 500, labelY: 38, anchor: 'middle' },
+  { id: 'torsion-shaft', x: 700, y: 122, labelX: 700, labelY: 38, anchor: 'middle' },
+  { id: 'winding-cone', x: 350, y: 130, labelX: 120, labelY: 52, anchor: 'start' },
+  { id: 'stationary-cone', x: 680, y: 130, labelX: 680, labelY: 55, anchor: 'middle' },
+  { id: 'cable-drum', x: 260, y: 130, labelX: 80, labelY: 82, anchor: 'start' },
+  { id: 'end-bearing', x: 245, y: 140, labelX: 80, labelY: 110, anchor: 'start' },
+  { id: 'center-bearing', x: 700, y: 140, labelX: 1320, labelY: 82, anchor: 'end' },
+  { id: 'lift-cable', x: 255, y: 380, labelX: 80, labelY: 380, anchor: 'start' },
+  { id: 'panel-section', x: 700, y: 310, labelX: 1320, labelY: 310, anchor: 'end' },
+  { id: 'glass-section', x: 700, y: 250, labelX: 1320, labelY: 250, anchor: 'end' },
+  { id: 'hinge-3', x: 540, y: jointY(0), labelX: 1320, labelY: 175, anchor: 'end' },
+  { id: 'hinge-2', x: 540, y: jointY(1), labelX: 1320, labelY: 210, anchor: 'end' },
+  { id: 'hinge-1', x: 540, y: jointY(3), labelX: 1320, labelY: 440, anchor: 'end' },
+  { id: 'roller', x: 249, y: panelMidY(2), labelX: 80, labelY: 310, anchor: 'start' },
+  { id: 'top-bracket', x: 255, y: D.doorT + 5, labelX: 80, labelY: 180, anchor: 'start' },
+  { id: 'strut', x: 700, y: D.doorT + 10, labelX: 1320, labelY: 140, anchor: 'end' },
+  { id: 'bottom-bracket', x: 255, y: D.doorB - 5, labelX: 80, labelY: D.doorB, anchor: 'start' },
+  { id: 'bottom-seal', x: 700, y: D.doorB + 3, labelX: 1320, labelY: D.doorB + 5, anchor: 'end' },
+  { id: 'slide-lock', x: D.doorR - 24, y: panelY(3) + 24, labelX: 1320, labelY: 400, anchor: 'end' },
+  { id: 'vertical-track', x: 248, y: panelMidY(3), labelX: 80, labelY: 430, anchor: 'start' },
+  { id: 'horizontal-track', x: 600, y: 119, labelX: 1320, labelY: 115, anchor: 'end' },
+  { id: 'radius-track', x: D.doorL + 15, y: D.doorT - 10, labelX: 80, labelY: 150, anchor: 'start' },
+  { id: 'flag-bracket', x: D.doorL + 17, y: D.doorT - 10, labelX: 80, labelY: 150, anchor: 'start' },
+  { id: 'jamb-bracket', x: D.doorL - D.jambW + 5, y: D.doorT + (D.doorB - D.doorT) * 0.6 + 9, labelX: 80, labelY: 460, anchor: 'start' },
+  { id: 'rear-hang', x: D.doorL + D.doorW * 0.5, y: 90, labelX: 1320, labelY: 60, anchor: 'end' },
 ];
 
-function TorsionDiagramSVG() {
-  const panelH = 58;
-  const panelGap = 2;
-  const doorTop = 130;
-  const doorLeft = 100;
-  const doorW = 620;
-  const panels = 5;
+function TorsionSystemSVG() {
+  const shaftY = 130;
+  const springGap = 680; // center bearing
+  const brokenMid = 920; // where the right spring "breaks"
 
   return (
     <g>
-      {/* Wall / Header */}
-      <rect x="70" y="55" width="680" height="40" fill="#d1d5db" stroke="#9ca3af" strokeWidth="1" />
-      <text x="410" y="73" textAnchor="middle" fill="#9ca3af" fontSize="9" fontFamily="system-ui" fontWeight="500" letterSpacing="2">HEADER WALL</text>
-
-      {/* Side jambs */}
-      <rect x="70" y="55" width="18" height="410" fill="#c9cdd2" stroke="#9ca3af" strokeWidth="0.8" />
-      <rect x="732" y="55" width="18" height="410" fill="#c9cdd2" stroke="#9ca3af" strokeWidth="0.8" />
-
       {/* Torsion shaft */}
-      <line x1="92" y1="88" x2="728" y2="88" stroke="#374151" strokeWidth="4" />
+      <line x1={245} y1={shaftY} x2={D.doorR + 10} y2={shaftY}
+        stroke="#374151" strokeWidth="5" />
 
       {/* End bearing plates */}
-      <rect x="88" y="78" width="10" height="22" fill="#7c8590" stroke="#4b5563" strokeWidth="1.5" rx="1" />
-      <rect x="722" y="78" width="10" height="22" fill="#7c8590" stroke="#4b5563" strokeWidth="1.5" rx="1" />
+      <rect x={238} y={118} width={12} height={26} fill="#7c8590" stroke="#4b5563" strokeWidth="1.5" rx="1" />
+      <rect x={D.doorR + 2} y={118} width={12} height={26} fill="#7c8590" stroke="#4b5563" strokeWidth="1.5" rx="1" />
 
       {/* Center bearing plate */}
-      <rect x="484" y="72" width="16" height="34" fill="#7c8590" stroke="#374151" strokeWidth="1.5" rx="1" />
-      <line x1="492" y1="72" x2="492" y2="55" stroke="#6b7280" strokeWidth="1.5" />
+      <rect x={springGap - 8} y={110} width={18} height={42} fill="#7c8590" stroke="#374151" strokeWidth="1.5" rx="1" />
+      <line x1={springGap + 1} y1={110} x2={springGap + 1} y2={60} stroke="#6b7280" strokeWidth="2" />
 
-      {/* Left torsion spring (right-hand wound — black cone) */}
-      <rect x="195" y="82" width="12" height="12" fill="#C41E24" stroke="#991b1b" strokeWidth="1" rx="1" />
-      <path d={springCoilPath(210, 88, 270, 8, true)} fill="none" stroke="#C41E24" strokeWidth="3" />
-      <rect x="478" y="83" width="8" height="10" fill="#374151" stroke="#1f2937" strokeWidth="1" rx="0.5" />
+      {/* ═══ LEFT SPRING — INTACT ═══ */}
+      <rect x={348} y={123} width={14} height={14} fill="#C41E24" stroke="#991b1b" strokeWidth="1" rx="1" />
+      <path d={springCoilPath(365, shaftY, 300, 9, true)} fill="none" stroke="#C41E24" strokeWidth="3.5" />
+      <rect x={springGap - 14} y={124} width={10} height={12} fill="#374151" stroke="#1f2937" strokeWidth="1" rx="0.5" />
 
-      {/* Right torsion spring (left-hand wound — red cone) */}
-      <rect x="500" y="83" width="8" height="10" fill="#374151" stroke="#1f2937" strokeWidth="1" rx="0.5" />
-      <path d={springCoilPath(510, 88, 210, 8, true)} fill="none" stroke="#C41E24" strokeWidth="3" />
-      <rect x="718" y="82" width="12" height="12" fill="#C41E24" stroke="#991b1b" strokeWidth="1" rx="1" />
+      {/* ═══ RIGHT SPRING — BROKEN ═══ */}
+      <rect x={springGap + 8} y={124} width={10} height={12} fill="#374151" stroke="#1f2937" strokeWidth="1" rx="0.5" />
+      {/* Left portion of broken spring */}
+      <path d={springCoilPath(springGap + 20, shaftY, brokenMid - springGap - 20, 9, true)}
+        fill="none" stroke="#C41E24" strokeWidth="3.5" />
+      {/* GAP — the break point */}
+      {/* Right portion — slightly drooped */}
+      <path d={springCoilPath(brokenMid + 16, shaftY + 2, D.doorR - 20 - brokenMid - 16, 7, true)}
+        fill="none" stroke="#C41E24" strokeWidth="3" opacity="0.7" />
+      <rect x={D.doorR - 8} y={123} width={14} height={14} fill="#C41E24" stroke="#991b1b" strokeWidth="1" rx="1" />
+
+      {/* BROKEN label */}
+      <g>
+        <rect x={brokenMid - 52} y={88} width={120} height={26} rx="4"
+          fill="#C41E24" stroke="#991b1b" strokeWidth="1.5" />
+        <text x={brokenMid + 8} y={105} textAnchor="middle" fill="white"
+          fontSize="12" fontFamily="system-ui" fontWeight="800" letterSpacing="1">
+          ⚠ BROKEN
+        </text>
+        <line x1={brokenMid + 8} y1={114} x2={brokenMid + 8} y2={shaftY - 4}
+          stroke="#C41E24" strokeWidth="2" />
+        {/* Break indicator lines */}
+        <line x1={brokenMid - 2} y1={shaftY - 8} x2={brokenMid + 6} y2={shaftY + 8}
+          stroke="#C41E24" strokeWidth="3" />
+        <line x1={brokenMid + 10} y1={shaftY - 8} x2={brokenMid + 18} y2={shaftY + 8}
+          stroke="#C41E24" strokeWidth="3" />
+      </g>
 
       {/* Cable drums */}
-      <circle cx="104" cy="88" r="12" fill="#b0b4ba" stroke="#4b5563" strokeWidth="1.5" />
-      <circle cx="104" cy="88" r="5" fill="#6b7280" />
-      <circle cx="104" cy="88" r="2" fill="#374151" />
-      <circle cx="716" cy="88" r="12" fill="#b0b4ba" stroke="#4b5563" strokeWidth="1.5" />
-      <circle cx="716" cy="88" r="5" fill="#6b7280" />
-      <circle cx="716" cy="88" r="2" fill="#374151" />
-
-      {/* Horizontal tracks */}
-      <line x1="140" y1="100" x2="710" y2="100" stroke="#4b5563" strokeWidth="2" />
-      <line x1="140" y1="108" x2="710" y2="108" stroke="#4b5563" strokeWidth="1.5" />
-
-      {/* Radius curves */}
-      <path d="M 97 130 Q 97 108 140 102" fill="none" stroke="#4b5563" strokeWidth="2" />
-      <path d="M 723 130 Q 723 108 710 102" fill="none" stroke="#4b5563" strokeWidth="2" />
-
-      {/* Vertical tracks */}
-      <rect x="88" y="130" width="12" height="330" fill="none" stroke="#4b5563" strokeWidth="2" />
-      <rect x="720" y="130" width="12" height="330" fill="none" stroke="#4b5563" strokeWidth="2" />
-
-      {/* Flag brackets at curve */}
-      <rect x="100" y="112" width="16" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-      <rect x="706" y="112" width="16" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-
-      {/* Rear track hangers */}
-      {[300, 450, 600].map(hx => (
-        <g key={hx}>
-          <line x1={hx} y1="55" x2={hx} y2="100" stroke="#6b7280" strokeWidth="1.5" />
-          <path d={`M ${hx - 6} 55 L ${hx - 6} 65 L ${hx + 6} 65 L ${hx + 6} 55`} fill="none" stroke="#6b7280" strokeWidth="1" />
-        </g>
-      ))}
+      <circle cx={258} cy={shaftY} r={14} fill="#b0b4ba" stroke="#4b5563" strokeWidth="2" />
+      <circle cx={258} cy={shaftY} r={6} fill="#6b7280" />
+      <circle cx={258} cy={shaftY} r={2.5} fill="#374151" />
+      <circle cx={D.doorR + 6} cy={shaftY} r={14} fill="#b0b4ba" stroke="#4b5563" strokeWidth="2" />
+      <circle cx={D.doorR + 6} cy={shaftY} r={6} fill="#6b7280" />
+      <circle cx={D.doorR + 6} cy={shaftY} r={2.5} fill="#374151" />
 
       {/* Lift cables */}
-      <line x1="100" y1="100" x2="94" y2="435" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="none" />
-      <line x1="720" y1="100" x2="726" y2="435" stroke="#9ca3af" strokeWidth="1.5" />
-
-      {/* Jamb brackets */}
-      {[220, 340].map(jy => (
-        <g key={`jl-${jy}`}>
-          <rect x="75" y={jy} width="12" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-          <rect x="733" y={jy} width="12" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-        </g>
-      ))}
-
-      {/* Top bracket / fixture */}
-      <rect x="90" y="130" width="14" height="18" fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
-      <rect x="718" y="130" width="14" height="18" fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
-
-      {/* Door panels — 5 sections with raised detail */}
-      {Array.from({ length: panels }).map((_, i) => {
-        const py = doorTop + i * (panelH + panelGap);
-        if (i === 1) {
-          return (
-            <g key={i}>
-              <rect x={doorLeft} y={py} width={doorW} height={panelH} fill="#e8eaed" stroke="#b8bcc2" strokeWidth="1" />
-              <WindowPane x={doorLeft + 30} y={py + 6} w={doorW - 60} h={panelH - 12} panes={6} />
-            </g>
-          );
-        }
-        return <RaisedPanel key={i} x={doorLeft} y={py} w={doorW} h={panelH} />;
-      })}
-
-      {/* Top strut */}
-      <line x1={doorLeft + 2} y1={doorTop + 8} x2={doorLeft + doorW - 2} y2={doorTop + 8} stroke="#4b5563" strokeWidth="3" />
-
-      {/* Middle strut */}
-      <line x1={doorLeft + 2} y1={doorTop + 2.5 * (panelH + panelGap)} x2={doorLeft + doorW - 2} y2={doorTop + 2.5 * (panelH + panelGap)} stroke="#4b5563" strokeWidth="2" />
-
-      {/* Hinges at panel joints */}
-      {[0, 1, 2, 3].map(i => {
-        const hy = doorTop + (i + 1) * (panelH + panelGap) - 8;
-        return (
-          <g key={`hinge-${i}`}>
-            <Hinge x={doorLeft + 80} y={hy} numbered={i === 0 ? '3' : i === 1 ? '2' : i === 2 ? '2' : '1'} />
-            <Hinge x={doorLeft + doorW - 102} y={hy} />
-          </g>
-        );
-      })}
-
-      {/* Rollers in tracks */}
-      {Array.from({ length: panels }).map((_, i) => {
-        const ry = doorTop + i * (panelH + panelGap) + panelH / 2;
-        return (
-          <g key={`roller-${i}`}>
-            <Roller cx={94} cy={ry} />
-            <Roller cx={726} cy={ry} />
-          </g>
-        );
-      })}
-
-      {/* Bottom brackets */}
-      <polygon points="92,428 92,448 110,448 110,440 100,428" fill="#6b7280" stroke="#374151" strokeWidth="1" />
-      <polygon points="728,428 728,448 710,448 710,440 720,428" fill="#6b7280" stroke="#374151" strokeWidth="1" />
-
-      {/* Bottom seal */}
-      <rect x={doorLeft} y={doorTop + panels * (panelH + panelGap) - 2} width={doorW} height="6" fill="#374151" rx="2" />
-
-      {/* Slide lock */}
-      <rect x="700" y="330" width="8" height="28" fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
-      <rect x="708" y="338" width="14" height="6" fill="#4b5563" stroke="#374151" strokeWidth="0.5" />
-
-      {/* Floor */}
-      <rect x="70" y="458" width="680" height="12" fill="#a0a4aa" stroke="#7c8085" strokeWidth="1" />
-      <line x1="70" y1="458" x2="750" y2="458" stroke="#6b7280" strokeWidth="1.5" />
+      <line x1={255} y1={shaftY + 14} x2={252} y2={D.doorB} stroke="#9ca3af" strokeWidth="2" />
+      <line x1={D.doorR + 8} y1={shaftY + 14} x2={D.doorR + 5} y2={D.doorB} stroke="#9ca3af" strokeWidth="2" />
     </g>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// EXTENSION SPRING SYSTEM DIAGRAM
+// EXTENSION SPRING SYSTEM
 // ═══════════════════════════════════════════════════════════════════════════
 
 const EXTENSION_POINTS: LabeledPoint[] = [
-  { id: 'extension-spring', x: 380, y: 82, labelX: 380, labelY: 30, anchor: 'middle' },
-  { id: 'safety-cable', x: 380, y: 90, labelX: 570, labelY: 30, anchor: 'middle' },
-  { id: 'ext-pulley', x: 122, y: 108, labelX: 25, labelY: 60, anchor: 'start' },
-  { id: 'ext-lift-cable', x: 97, y: 280, labelX: 25, labelY: 270, anchor: 'start' },
-  { id: 's-hook', x: 210, y: 78, labelX: 25, labelY: 42, anchor: 'start' },
-  { id: 'ext-rear-bracket', x: 680, y: 78, labelX: 800, labelY: 50, anchor: 'end' },
-  { id: 'panel-section', x: 450, y: 280, labelX: 800, labelY: 280, anchor: 'end' },
-  { id: 'glass-section', x: 430, y: 210, labelX: 800, labelY: 210, anchor: 'end' },
-  { id: 'hinge-3', x: 290, y: 172, labelX: 800, labelY: 168, anchor: 'end' },
-  { id: 'hinge-2', x: 290, y: 258, labelX: 800, labelY: 250, anchor: 'end' },
-  { id: 'hinge-1', x: 290, y: 345, labelX: 800, labelY: 340, anchor: 'end' },
-  { id: 'roller', x: 97, y: 235, labelX: 25, labelY: 225, anchor: 'start' },
-  { id: 'top-bracket', x: 97, y: 140, labelX: 25, labelY: 145, anchor: 'start' },
-  { id: 'strut', x: 450, y: 155, labelX: 800, labelY: 145, anchor: 'end' },
-  { id: 'bottom-bracket', x: 97, y: 430, labelX: 25, labelY: 430, anchor: 'start' },
-  { id: 'bottom-seal', x: 420, y: 450, labelX: 800, labelY: 452, anchor: 'end' },
-  { id: 'slide-lock', x: 705, y: 340, labelX: 800, labelY: 370, anchor: 'end' },
-  { id: 'vertical-track', x: 88, y: 300, labelX: 25, labelY: 345, anchor: 'start' },
-  { id: 'horizontal-track', x: 400, y: 96, labelX: 800, labelY: 108, anchor: 'end' },
-  { id: 'radius-track', x: 118, y: 125, labelX: 25, labelY: 180, anchor: 'start' },
-  { id: 'flag-bracket', x: 110, y: 118, labelX: 25, labelY: 135, anchor: 'start' },
-  { id: 'jamb-bracket', x: 82, y: 380, labelX: 25, labelY: 385, anchor: 'start' },
-  { id: 'rear-hang', x: 550, y: 68, labelX: 660, labelY: 40, anchor: 'start' },
+  { id: 'extension-spring', x: 550, y: 100, labelX: 550, labelY: 38, anchor: 'middle' },
+  { id: 'safety-cable', x: 550, y: 108, labelX: 750, labelY: 38, anchor: 'middle' },
+  { id: 'ext-pulley', x: D.doorL + 25, y: 128, labelX: 80, labelY: 82, anchor: 'start' },
+  { id: 'ext-lift-cable', x: 252, y: 350, labelX: 80, labelY: 350, anchor: 'start' },
+  { id: 's-hook', x: 380, y: 96, labelX: 80, labelY: 52, anchor: 'start' },
+  { id: 'ext-rear-bracket', x: D.doorR - 60, y: 96, labelX: 1320, labelY: 52, anchor: 'end' },
+  { id: 'panel-section', x: 700, y: 310, labelX: 1320, labelY: 310, anchor: 'end' },
+  { id: 'glass-section', x: 700, y: 250, labelX: 1320, labelY: 250, anchor: 'end' },
+  { id: 'hinge-3', x: 540, y: jointY(0), labelX: 1320, labelY: 175, anchor: 'end' },
+  { id: 'hinge-2', x: 540, y: jointY(1), labelX: 1320, labelY: 210, anchor: 'end' },
+  { id: 'hinge-1', x: 540, y: jointY(3), labelX: 1320, labelY: 440, anchor: 'end' },
+  { id: 'roller', x: 249, y: panelMidY(2), labelX: 80, labelY: 310, anchor: 'start' },
+  { id: 'top-bracket', x: 255, y: D.doorT + 5, labelX: 80, labelY: 180, anchor: 'start' },
+  { id: 'strut', x: 700, y: D.doorT + 10, labelX: 1320, labelY: 140, anchor: 'end' },
+  { id: 'bottom-bracket', x: 255, y: D.doorB - 5, labelX: 80, labelY: D.doorB, anchor: 'start' },
+  { id: 'bottom-seal', x: 700, y: D.doorB + 3, labelX: 1320, labelY: D.doorB + 5, anchor: 'end' },
+  { id: 'slide-lock', x: D.doorR - 24, y: panelY(3) + 24, labelX: 1320, labelY: 400, anchor: 'end' },
+  { id: 'vertical-track', x: 248, y: panelMidY(3), labelX: 80, labelY: 430, anchor: 'start' },
+  { id: 'horizontal-track', x: 600, y: 119, labelX: 1320, labelY: 115, anchor: 'end' },
+  { id: 'radius-track', x: D.doorL + 15, y: D.doorT - 10, labelX: 80, labelY: 150, anchor: 'start' },
+  { id: 'flag-bracket', x: D.doorL + 17, y: D.doorT - 10, labelX: 80, labelY: 150, anchor: 'start' },
+  { id: 'jamb-bracket', x: D.doorL - D.jambW + 5, y: D.doorT + (D.doorB - D.doorT) * 0.6 + 9, labelX: 80, labelY: 460, anchor: 'start' },
+  { id: 'rear-hang', x: D.doorL + D.doorW * 0.5, y: 90, labelX: 1320, labelY: 60, anchor: 'end' },
 ];
 
-function ExtensionDiagramSVG() {
-  const panelH = 58;
-  const panelGap = 2;
-  const doorTop = 130;
-  const doorLeft = 100;
-  const doorW = 620;
-  const panels = 5;
+function ExtensionSystemSVG() {
+  const springY = 100;
 
   return (
     <g>
-      {/* Ceiling */}
-      <rect x="70" y="55" width="680" height="18" fill="#d1d5db" stroke="#9ca3af" strokeWidth="1" />
-      <text x="410" y="67" textAnchor="middle" fill="#9ca3af" fontSize="9" fontFamily="system-ui" fontWeight="500" letterSpacing="2">CEILING / HEADER</text>
+      {/* ── Left Extension Spring ── */}
+      <path d="M 370 90 Q 370 84 376 84 Q 382 84 382 90" fill="none" stroke="#4b5563" strokeWidth="2" />
+      <path d={springCoilPath(385, springY, 280, 8)} fill="none" stroke="#D97706" strokeWidth="3" />
+      {/* Safety cable */}
+      <line x1={370} y1={springY} x2={670} y2={springY} stroke="#d97706" strokeWidth="1.5" strokeDasharray="5 3" />
 
-      {/* Side jambs */}
-      <rect x="70" y="55" width="18" height="410" fill="#c9cdd2" stroke="#9ca3af" strokeWidth="0.8" />
-      <rect x="732" y="55" width="18" height="410" fill="#c9cdd2" stroke="#9ca3af" strokeWidth="0.8" />
-
-      {/* Horizontal tracks */}
-      <line x1="140" y1="92" x2="710" y2="92" stroke="#4b5563" strokeWidth="2" />
-      <line x1="140" y1="100" x2="710" y2="100" stroke="#4b5563" strokeWidth="1.5" />
-
-      {/* Left extension spring along horizontal track */}
-      <path d="M 210 75 Q 210 70 215 70 Q 220 70 220 75" fill="none" stroke="#4b5563" strokeWidth="2" />
-      <path d={springCoilPath(225, 82, 240, 7)} fill="none" stroke="#C41E24" strokeWidth="2.5" />
-
-      {/* Safety cable through left spring */}
-      <line x1="210" y1="82" x2="470" y2="82" stroke="#d97706" strokeWidth="1.2" strokeDasharray="4 2" />
-
-      {/* Right extension spring */}
-      <path d="M 530 75 Q 530 70 535 70 Q 540 70 540 75" fill="none" stroke="#4b5563" strokeWidth="2" />
-      <path d={springCoilPath(545, 82, 140, 7)} fill="none" stroke="#C41E24" strokeWidth="2.5" />
-      <line x1="530" y1="82" x2="690" y2="82" stroke="#d97706" strokeWidth="1.2" strokeDasharray="4 2" />
+      {/* ── Right Extension Spring ── */}
+      <path d="M 740 90 Q 740 84 746 84 Q 752 84 752 90" fill="none" stroke="#4b5563" strokeWidth="2" />
+      <path d={springCoilPath(755, springY, 280, 8)} fill="none" stroke="#D97706" strokeWidth="3" />
+      <line x1={740} y1={springY} x2={1040} y2={springY} stroke="#d97706" strokeWidth="1.5" strokeDasharray="5 3" />
 
       {/* Pulleys */}
-      <circle cx="122" cy="108" r="10" fill="#c0c4ca" stroke="#4b5563" strokeWidth="1.5" />
-      <circle cx="122" cy="108" r="4" fill="#6b7280" />
-      <circle cx="698" cy="108" r="10" fill="#c0c4ca" stroke="#4b5563" strokeWidth="1.5" />
-      <circle cx="698" cy="108" r="4" fill="#6b7280" />
+      <circle cx={D.doorL + 25} cy={128} r={12} fill="#c0c4ca" stroke="#4b5563" strokeWidth="2" />
+      <circle cx={D.doorL + 25} cy={128} r={5} fill="#6b7280" />
+      <circle cx={D.doorR - 25} cy={128} r={12} fill="#c0c4ca" stroke="#4b5563" strokeWidth="2" />
+      <circle cx={D.doorR - 25} cy={128} r={5} fill="#6b7280" />
 
       {/* Rear brackets */}
-      <rect x="675" y="73" width="18" height="14" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-
-      {/* Rear track hangers */}
-      {[300, 450, 600].map(hx => (
-        <g key={hx}>
-          <line x1={hx} y1="55" x2={hx} y2="92" stroke="#6b7280" strokeWidth="1.5" />
-        </g>
-      ))}
+      <rect x={D.doorR - 68} y={88} width={20} height={16} fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
+      <rect x={D.doorL + 40} y={88} width={20} height={16} fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
 
       {/* Lift cables routing through pulleys */}
-      <line x1="94" y1="435" x2="94" y2="120" stroke="#9ca3af" strokeWidth="1.5" />
-      <path d="M 94 120 Q 94 108 122 108" fill="none" stroke="#9ca3af" strokeWidth="1.5" />
-      <line x1="726" y1="435" x2="726" y2="120" stroke="#9ca3af" strokeWidth="1.5" />
-      <path d="M 726 120 Q 726 108 698 108" fill="none" stroke="#9ca3af" strokeWidth="1.5" />
+      <line x1={252} y1={D.doorB} x2={252} y2={140} stroke="#9ca3af" strokeWidth="2" />
+      <path d={`M 252 140 Q 252 128 ${D.doorL + 25} 128`} fill="none" stroke="#9ca3af" strokeWidth="2" />
+      <line x1={D.doorR + 5} y1={D.doorB} x2={D.doorR + 5} y2={140} stroke="#9ca3af" strokeWidth="2" />
+      <path d={`M ${D.doorR + 5} 140 Q ${D.doorR + 5} 128 ${D.doorR - 25} 128`}
+        fill="none" stroke="#9ca3af" strokeWidth="2" />
 
-      {/* Radius curves */}
-      <path d="M 97 130 Q 97 100 140 94" fill="none" stroke="#4b5563" strokeWidth="2" />
-      <path d="M 723 130 Q 723 100 710 94" fill="none" stroke="#4b5563" strokeWidth="2" />
-
-      {/* Vertical tracks */}
-      <rect x="88" y="130" width="12" height="330" fill="none" stroke="#4b5563" strokeWidth="2" />
-      <rect x="720" y="130" width="12" height="330" fill="none" stroke="#4b5563" strokeWidth="2" />
-
-      {/* Flag brackets */}
-      <rect x="100" y="112" width="16" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-      <rect x="706" y="112" width="16" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-
-      {/* Jamb brackets */}
-      {[220, 340].map(jy => (
-        <g key={`jl-${jy}`}>
-          <rect x="75" y={jy} width="12" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
-          <rect x="733" y={jy} width="12" height="16" fill="#8a9199" stroke="#4b5563" strokeWidth="1" rx="1" />
+      {/* S-hooks */}
+      {[370, 665, 740, 1035].map((sx, i) => (
+        <g key={`shook-${i}`}>
+          <path d={`M ${sx} ${springY - 6} Q ${sx + 4} ${springY - 10} ${sx + 4} ${springY - 4} Q ${sx + 4} ${springY + 2} ${sx} ${springY + 2}`}
+            fill="none" stroke="#4b5563" strokeWidth="2" />
         </g>
       ))}
-
-      {/* Top bracket */}
-      <rect x="90" y="130" width="14" height="18" fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
-
-      {/* Door panels */}
-      {Array.from({ length: panels }).map((_, i) => {
-        const py = doorTop + i * (panelH + panelGap);
-        if (i === 1) {
-          return (
-            <g key={i}>
-              <rect x={doorLeft} y={py} width={doorW} height={panelH} fill="#e8eaed" stroke="#b8bcc2" strokeWidth="1" />
-              <WindowPane x={doorLeft + 30} y={py + 6} w={doorW - 60} h={panelH - 12} panes={6} />
-            </g>
-          );
-        }
-        return <RaisedPanel key={i} x={doorLeft} y={py} w={doorW} h={panelH} />;
-      })}
-
-      {/* Strut */}
-      <line x1={doorLeft + 2} y1={doorTop + 8} x2={doorLeft + doorW - 2} y2={doorTop + 8} stroke="#4b5563" strokeWidth="3" />
-
-      {/* Hinges */}
-      {[0, 1, 2, 3].map(i => {
-        const hy = doorTop + (i + 1) * (panelH + panelGap) - 8;
-        return (
-          <g key={`hinge-${i}`}>
-            <Hinge x={doorLeft + 80} y={hy} numbered={i === 0 ? '3' : i === 1 ? '2' : i === 2 ? '2' : '1'} />
-            <Hinge x={doorLeft + doorW - 102} y={hy} />
-          </g>
-        );
-      })}
-
-      {/* Rollers */}
-      {Array.from({ length: panels }).map((_, i) => {
-        const ry = doorTop + i * (panelH + panelGap) + panelH / 2;
-        return (
-          <g key={`roller-${i}`}>
-            <Roller cx={94} cy={ry} />
-            <Roller cx={726} cy={ry} />
-          </g>
-        );
-      })}
-
-      {/* Bottom brackets */}
-      <polygon points="92,428 92,448 110,448 110,440 100,428" fill="#6b7280" stroke="#374151" strokeWidth="1" />
-      <polygon points="728,428 728,448 710,448 710,440 720,428" fill="#6b7280" stroke="#374151" strokeWidth="1" />
-
-      {/* Bottom seal */}
-      <rect x={doorLeft} y={doorTop + panels * (panelH + panelGap) - 2} width={doorW} height="6" fill="#374151" rx="2" />
-
-      {/* Slide lock */}
-      <rect x="700" y="330" width="8" height="28" fill="#6b7280" stroke="#374151" strokeWidth="1" rx="1" />
-      <rect x="708" y="338" width="14" height="6" fill="#4b5563" stroke="#374151" strokeWidth="0.5" />
-
-      {/* Floor */}
-      <rect x="70" y="458" width="680" height="12" fill="#a0a4aa" stroke="#7c8085" strokeWidth="1" />
-      <line x1="70" y1="458" x2="750" y2="458" stroke="#6b7280" strokeWidth="1.5" />
     </g>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// OPENER / OPERATOR SYSTEM DIAGRAM
+// OPENER / OPERATOR SYSTEM
 // ═══════════════════════════════════════════════════════════════════════════
 
 const OPENER_POINTS: LabeledPoint[] = [
-  { id: 'opener-motor', x: 660, y: 78, labelX: 800, labelY: 58, anchor: 'end' },
-  { id: 'opener-rail', x: 420, y: 105, labelX: 800, labelY: 108, anchor: 'end' },
-  { id: 'trolley', x: 340, y: 108, labelX: 800, labelY: 128, anchor: 'end' },
-  { id: 'door-arm', x: 310, y: 148, labelX: 800, labelY: 168, anchor: 'end' },
-  { id: 'emergency-release', x: 340, y: 145, labelX: 800, labelY: 148, anchor: 'end' },
-  { id: 'opener-bracket', x: 200, y: 108, labelX: 25, labelY: 88, anchor: 'start' },
-  { id: 'orb', x: 400, y: 178, labelX: 800, labelY: 188, anchor: 'end' },
-  { id: 'photo-eye', x: 112, y: 430, labelX: 25, labelY: 430, anchor: 'start' },
-  { id: 'wall-control', x: 752, y: 300, labelX: 800, labelY: 310, anchor: 'end' },
-  { id: 'panel-section', x: 420, y: 280, labelX: 800, labelY: 280, anchor: 'end' },
-  { id: 'strut', x: 420, y: 195, labelX: 25, labelY: 200, anchor: 'start' },
+  { id: 'opener-motor', x: 950, y: 80, labelX: 1320, labelY: 60, anchor: 'end' },
+  { id: 'opener-rail', x: 600, y: 120, labelX: 1320, labelY: 120, anchor: 'end' },
+  { id: 'trolley', x: 500, y: 123, labelX: 1320, labelY: 150, anchor: 'end' },
+  { id: 'door-arm', x: 470, y: 155, labelX: 1320, labelY: 180, anchor: 'end' },
+  { id: 'emergency-release', x: 500, y: 165, labelX: 80, labelY: 130, anchor: 'start' },
+  { id: 'opener-bracket', x: 340, y: 120, labelX: 80, labelY: 100, anchor: 'start' },
+  { id: 'orb', x: 600, y: D.doorT + D.panelH - 5, labelX: 1320, labelY: 210, anchor: 'end' },
+  { id: 'photo-eye', x: 268, y: D.floorY - 24, labelX: 80, labelY: D.floorY - 20, anchor: 'start' },
+  { id: 'wall-control', x: D.doorR + D.jambW + 10, y: 360, labelX: 1320, labelY: 360, anchor: 'end' },
+  { id: 'panel-section', x: 700, y: 310, labelX: 1320, labelY: 310, anchor: 'end' },
+  { id: 'strut', x: 700, y: D.doorT + 10, labelX: 80, labelY: 180, anchor: 'start' },
 ];
 
-function OpenerDiagramSVG() {
-  const panelH = 58;
-  const panelGap = 2;
-  const doorTop = 130;
-  const doorLeft = 105;
-  const doorW = 610;
-  const panels = 5;
+function OpenerSystemSVG() {
+  const motorX = 900;
+  const motorW = 120;
+  const motorY = 62;
+  const motorH = 46;
+  const railFrontX = 330;
 
   return (
     <g>
-      {/* Ceiling */}
-      <rect x="70" y="45" width="690" height="20" fill="#d1d5db" stroke="#9ca3af" strokeWidth="1" />
-      <text x="410" y="58" textAnchor="middle" fill="#9ca3af" fontSize="9" fontFamily="system-ui" fontWeight="500" letterSpacing="2">CEILING</text>
-
-      {/* Wall framing — left */}
-      <rect x="70" y="65" width="30" height="400" fill="#c9cdd2" stroke="#9ca3af" strokeWidth="0.8" />
-      {/* Wall framing — right */}
-      <rect x="730" y="65" width="30" height="400" fill="#c9cdd2" stroke="#9ca3af" strokeWidth="0.8" />
-
-      {/* Motor unit */}
-      <rect x="630" y="63" width="100" height="42" fill="#4b5563" stroke="#374151" strokeWidth="1.5" rx="3" />
-      <text x="680" y="88" textAnchor="middle" fill="#d1d5db" fontSize="10" fontFamily="system-ui" fontWeight="600">MOTOR</text>
+      {/* ── Motor Unit ── */}
+      <rect x={motorX} y={motorY} width={motorW} height={motorH}
+        fill="#3b4252" stroke="#2e3440" strokeWidth="2" rx="4" />
+      <text x={motorX + motorW / 2} y={motorY + motorH / 2 + 4} textAnchor="middle"
+        fill="#d8dee9" fontSize="12" fontFamily="system-ui" fontWeight="700">MOTOR</text>
       {/* Light bulbs */}
-      <circle cx="622" cy="80" r="6" fill="#fbbf24" stroke="#d97706" strokeWidth="1" opacity="0.8" />
-      <circle cx="738" cy="80" r="6" fill="#fbbf24" stroke="#d97706" strokeWidth="1" opacity="0.8" />
+      <circle cx={motorX - 10} cy={motorY + motorH / 2} r={7} fill="#fbbf24" stroke="#d97706" strokeWidth="1" opacity="0.85" />
+      <circle cx={motorX + motorW + 10} cy={motorY + motorH / 2} r={7} fill="#fbbf24" stroke="#d97706" strokeWidth="1" opacity="0.85" />
       {/* Ceiling mounts */}
-      <line x1="655" y1="63" x2="655" y2="45" stroke="#6b7280" strokeWidth="2.5" />
-      <line x1="710" y1="63" x2="710" y2="45" stroke="#6b7280" strokeWidth="2.5" />
+      <line x1={motorX + 25} y1={motorY} x2={motorX + 25} y2={40} stroke="#6b7280" strokeWidth="3" />
+      <line x1={motorX + motorW - 25} y1={motorY} x2={motorX + motorW - 25} y2={40} stroke="#6b7280" strokeWidth="3" />
 
-      {/* Opener rail */}
-      <line x1="196" y1="112" x2="630" y2="83" stroke="#6b7280" strokeWidth="4" />
-      {/* Chain/belt inside rail */}
-      <line x1="198" y1="115" x2="630" y2="86" stroke="#9ca3af" strokeWidth="1" strokeDasharray="3 3" />
+      {/* ── Ceiling line ── */}
+      <rect x={D.doorL - D.jambW - 40} y={38} width={D.doorW + D.jambW * 2 + 80} height={22}
+        fill="#d1d5db" stroke="#9ca3af" strokeWidth="1" />
+      <text x={D.doorL + D.doorW / 2} y={52} textAnchor="middle" fill="#9ca3af"
+        fontSize="10" fontFamily="system-ui" fontWeight="500" letterSpacing="3">CEILING</text>
 
-      {/* Header bracket */}
-      <rect x="186" y="95" width="22" height="32" fill="#8a9199" stroke="#4b5563" strokeWidth="1.5" rx="2" />
-      <line x1="197" y1="95" x2="197" y2="65" stroke="#6b7280" strokeWidth="2" />
+      {/* ── Opener Rail ── */}
+      <line x1={railFrontX} y1={128} x2={motorX} y2={motorY + motorH - 2}
+        stroke="#6b7280" strokeWidth="5" />
+      {/* Chain/belt */}
+      <line x1={railFrontX + 2} y1={131} x2={motorX} y2={motorY + motorH + 1}
+        stroke="#9ca3af" strokeWidth="1.2" strokeDasharray="4 4" />
 
-      {/* Trolley */}
-      <rect x="320" y="103" width="42" height="14" fill="#9ca3af" stroke="#4b5563" strokeWidth="1.5" rx="2" />
+      {/* ── Header Bracket ── */}
+      <rect x={railFrontX - 12} y={108} width={26} height={36}
+        fill="#8a9199" stroke="#4b5563" strokeWidth="1.5" rx="2" />
+      <line x1={railFrontX + 1} y1={108} x2={railFrontX + 1} y2={60}
+        stroke="#6b7280" strokeWidth="2.5" />
 
-      {/* Emergency release rope + handle */}
-      <line x1="341" y1="117" x2="341" y2="155" stroke="#dc2626" strokeWidth="2" />
-      <circle cx="341" cy="158" r="6" fill="#dc2626" stroke="#b91c1c" strokeWidth="1" />
-      <line x1="337" y1="155" x2="345" y2="155" stroke="#b91c1c" strokeWidth="1.5" />
+      {/* ── Trolley ── */}
+      <rect x={478} y={118} width={48} height={16}
+        fill="#9ca3af" stroke="#4b5563" strokeWidth="1.5" rx="2" />
 
-      {/* Door arm (J-arm) */}
-      <path d="M 341 117 Q 341 150 380 172" fill="none" stroke="#6b7280" strokeWidth="3" />
+      {/* ── Emergency Release ── */}
+      <line x1={502} y1={134} x2={502} y2={175} stroke="#dc2626" strokeWidth="2.5" />
+      <circle cx={502} cy={180} r={7} fill="#dc2626" stroke="#b91c1c" strokeWidth="1.5" />
+      <line x1={497} y1={176} x2={507} y2={176} stroke="#b91c1c" strokeWidth="2" />
 
-      {/* ORB (Operator Reinforcement Bracket) */}
-      <rect x={doorLeft + 180} y={doorTop + panelH - 12} width={100} height={22}
+      {/* ── Door Arm (J-arm) ── */}
+      <path d="M 502 134 Q 502 165 550 185" fill="none" stroke="#6b7280" strokeWidth="3.5" />
+
+      {/* ── ORB ── */}
+      <rect x={D.doorL + D.doorW / 2 - 60} y={D.doorT + D.panelH - 15} width={120} height={24}
         fill="#8a9199" stroke="#4b5563" strokeWidth="1.5" rx="1" />
-      <text x={doorLeft + 230} y={doorTop + panelH + 4} textAnchor="middle" fill="#374151" fontSize="8" fontFamily="system-ui" fontWeight="600">ORB</text>
+      <text x={D.doorL + D.doorW / 2} y={D.doorT + D.panelH + 2} textAnchor="middle"
+        fill="#374151" fontSize="9" fontFamily="system-ui" fontWeight="700">ORB</text>
 
-      {/* Door panels */}
-      {Array.from({ length: panels }).map((_, i) => {
-        const py = doorTop + i * (panelH + panelGap);
-        if (i === 1) {
-          return (
-            <g key={i}>
-              <rect x={doorLeft} y={py} width={doorW} height={panelH} fill="#e8eaed" stroke="#b8bcc2" strokeWidth="1" />
-              <WindowPane x={doorLeft + 30} y={py + 6} w={doorW - 60} h={panelH - 12} panes={6} />
-            </g>
-          );
-        }
-        return <RaisedPanel key={i} x={doorLeft} y={py} w={doorW} h={panelH} />;
-      })}
-
-      {/* Top strut */}
-      <line x1={doorLeft + 2} y1={doorTop + 8} x2={doorLeft + doorW - 2} y2={doorTop + 8} stroke="#4b5563" strokeWidth="3" />
-
-      {/* Photo-eye safety sensors */}
-      <rect x="105" y="425" width="12" height="18" fill="#059669" stroke="#047857" strokeWidth="1" rx="2" />
-      <text x="111" y="450" textAnchor="middle" fill="#059669" fontSize="6" fontFamily="system-ui">TX</text>
-      <rect x="713" y="425" width="12" height="18" fill="#dc2626" stroke="#b91c1c" strokeWidth="1" rx="2" />
-      <text x="719" y="450" textAnchor="middle" fill="#dc2626" fontSize="6" fontFamily="system-ui">RX</text>
+      {/* ── Photo-Eye Sensors ── */}
+      <rect x={D.doorL + 10} y={D.floorY - 28} width={14} height={20}
+        fill="#059669" stroke="#047857" strokeWidth="1.5" rx="2" />
+      <text x={D.doorL + 17} y={D.floorY - 4} textAnchor="middle" fill="#059669"
+        fontSize="7" fontFamily="system-ui" fontWeight="600">TX</text>
+      <rect x={D.doorR - 24} y={D.floorY - 28} width={14} height={20}
+        fill="#dc2626" stroke="#b91c1c" strokeWidth="1.5" rx="2" />
+      <text x={D.doorR - 17} y={D.floorY - 4} textAnchor="middle" fill="#dc2626"
+        fontSize="7" fontFamily="system-ui" fontWeight="600">RX</text>
       {/* IR beam */}
-      <line x1="117" y1="434" x2="713" y2="434" stroke="#059669" strokeWidth="0.6" strokeDasharray="6 4" opacity="0.5" />
-      <text x="415" y="432" textAnchor="middle" fill="#059669" fontSize="7" fontFamily="system-ui" opacity="0.6">INFRARED SAFETY BEAM</text>
+      <line x1={D.doorL + 24} y1={D.floorY - 18} x2={D.doorR - 24} y2={D.floorY - 18}
+        stroke="#059669" strokeWidth="0.8" strokeDasharray="8 5" opacity="0.5" />
+      <text x={D.doorL + D.doorW / 2} y={D.floorY - 22} textAnchor="middle"
+        fill="#059669" fontSize="8" fontFamily="system-ui" opacity="0.6">INFRARED SAFETY BEAM</text>
 
-      {/* Wall control panel */}
-      <rect x="740" y="290" width="18" height="30" fill="#4b5563" stroke="#374151" strokeWidth="1" rx="2" />
-      <circle cx="749" cy="300" r="3.5" fill="#059669" />
-      <rect x="744" y="308" width="10" height="5" fill="#6b7280" rx="1" />
-
-      {/* Floor */}
-      <rect x="70" y="458" width="690" height="12" fill="#a0a4aa" stroke="#7c8085" strokeWidth="1" />
-      <line x1="70" y1="458" x2="760" y2="458" stroke="#6b7280" strokeWidth="1.5" />
+      {/* ── Wall Control Panel ── */}
+      <rect x={D.doorR + D.jambW + 4} y={345} width={20} height={34}
+        fill="#3b4252" stroke="#2e3440" strokeWidth="1.5" rx="3" />
+      <circle cx={D.doorR + D.jambW + 14} cy={355} r={4} fill="#059669" />
+      <rect x={D.doorR + D.jambW + 8} y={365} width={12} height={6} fill="#6b7280" rx="1" />
     </g>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// DIAGRAM RENDERER WITH LABELS + HOTSPOTS
+// SVG DEFS (gradients)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function DiagramDefs() {
+  return (
+    <defs>
+      <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#eef0f3" />
+        <stop offset="100%" stopColor="#dce0e5" />
+      </linearGradient>
+      <linearGradient id="raisedGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#e4e7ec" />
+        <stop offset="50%" stopColor="#d8dce2" />
+        <stop offset="100%" stopColor="#e0e3e8" />
+      </linearGradient>
+      <linearGradient id="headerGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#c9cdd2" />
+        <stop offset="100%" stopColor="#b8bcc2" />
+      </linearGradient>
+      <linearGradient id="jambGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="#bfc3c8" />
+        <stop offset="100%" stopColor="#cdd1d6" />
+      </linearGradient>
+      <filter id="glow-active">
+        <feGaussianBlur stdDeviation="3" result="b" />
+        <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+      <filter id="label-shadow">
+        <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodOpacity="0.18" />
+      </filter>
+    </defs>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// DIAGRAM SVG (labels + hotspots)
 // ═══════════════════════════════════════════════════════════════════════════
 
 function DiagramSVG({
@@ -569,27 +596,28 @@ function DiagramSVG({
 }) {
   const points = view === 'torsion' ? TORSION_POINTS : view === 'extension' ? EXTENSION_POINTS : OPENER_POINTS;
   const componentMap = new Map(components.map(c => [c.id, c]));
+  const isOpener = view === 'opener';
 
   return (
-    <svg viewBox="0 0 830 480" className="w-full h-auto" style={{ maxHeight: '520px' }}
+    <svg viewBox={`0 0 ${D.vbW} ${D.vbH}`} className="w-full h-auto"
+      style={{ minWidth: '900px' }}
       role="img" aria-label={`Garage door ${VIEW_LABELS[view].label} diagram — interactive component reference`}>
-      <defs>
-        <filter id="glow-active">
-          <feGaussianBlur stdDeviation="3" result="b" />
-          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-        <filter id="label-shadow">
-          <feDropShadow dx="0" dy="1" stdDeviation="1" floodOpacity="0.15" />
-        </filter>
-      </defs>
+      <DiagramDefs />
 
       {/* Background */}
-      <rect width="830" height="480" fill="#f8f9fa" rx="8" />
+      <rect width={D.vbW} height={D.vbH} fill="#f8f9fa" rx="8" />
 
-      {/* Diagram content */}
-      {view === 'torsion' && <TorsionDiagramSVG />}
-      {view === 'extension' && <ExtensionDiagramSVG />}
-      {view === 'opener' && <OpenerDiagramSVG />}
+      {/* Base door */}
+      <BaseDoorSVG dimSprings={false} />
+
+      {/* Track system */}
+      {!isOpener && <TrackSystemSVG />}
+      {isOpener && <TrackSystemSVG dim />}
+
+      {/* System-specific overlay */}
+      {view === 'torsion' && <TorsionSystemSVG />}
+      {view === 'extension' && <ExtensionSystemSVG />}
+      {view === 'opener' && <OpenerSystemSVG />}
 
       {/* Labels and hotspots */}
       {points.map(pt => {
@@ -603,44 +631,48 @@ function DiagramSVG({
             onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(pt.id); } }}
             aria-label={comp.name}
           >
+            {/* Invisible hit area for easier clicking */}
+            <circle cx={pt.x} cy={pt.y} r={18} fill="transparent" />
+
             {/* Leader line */}
-            <line x1={pt.labelX} y1={pt.labelY - 2} x2={pt.x} y2={pt.y}
-              stroke={isActive ? urgColor : '#9ca3af'} strokeWidth={isActive ? 1.5 : 0.7}
+            <line x1={pt.labelX + (pt.anchor === 'end' ? -4 : pt.anchor === 'start' ? 4 : 0)} y1={pt.labelY}
+              x2={pt.x} y2={pt.y}
+              stroke={isActive ? urgColor : '#9ca3af'} strokeWidth={isActive ? 1.8 : 0.8}
               strokeDasharray={isActive ? 'none' : '3 2'} opacity={isActive ? 1 : 0.5} />
 
-            {/* Pulse ring when active */}
+            {/* Pulse ring */}
             {isActive && (
               <circle cx={pt.x} cy={pt.y} r="16" fill="none" stroke={urgColor} strokeWidth="1.5" opacity="0.3">
-                <animate attributeName="r" from="10" to="20" dur="1.2s" repeatCount="indefinite" />
+                <animate attributeName="r" from="10" to="22" dur="1.2s" repeatCount="indefinite" />
                 <animate attributeName="opacity" from="0.5" to="0" dur="1.2s" repeatCount="indefinite" />
               </circle>
             )}
 
             {/* Hotspot dot */}
-            <circle cx={pt.x} cy={pt.y} r={isActive ? 6 : 4.5} fill={isActive ? urgColor : 'white'}
+            <circle cx={pt.x} cy={pt.y} r={isActive ? 7 : 5} fill={isActive ? urgColor : 'white'}
               stroke={urgColor} strokeWidth={isActive ? 2.5 : 1.5}
               filter={isActive ? 'url(#glow-active)' : undefined} />
 
-            {/* Label background for readability */}
+            {/* Label bg */}
             {isActive && (
-              <rect x={pt.anchor === 'end' ? pt.labelX - (comp.name.length * 5.5 + 8) : pt.labelX - 4}
-                y={pt.labelY - 14} width={comp.name.length * 5.5 + 8} height="16"
-                fill="white" stroke={urgColor} strokeWidth="0.5" rx="3" opacity="0.95"
+              <rect x={pt.anchor === 'end' ? pt.labelX - (comp.name.length * 5.8 + 10) : pt.labelX - 5}
+                y={pt.labelY - 14} width={comp.name.length * 5.8 + 10} height="18"
+                fill="white" stroke={urgColor} strokeWidth="0.5" rx="4" opacity="0.95"
                 filter="url(#label-shadow)" />
             )}
 
             {/* Label text */}
             <text
-              x={pt.anchor === 'end' ? pt.labelX - 4 : pt.labelX + 4}
-              y={pt.labelY - 3}
+              x={pt.anchor === 'end' ? pt.labelX - 5 : pt.labelX + 5}
+              y={pt.labelY}
               textAnchor={pt.anchor}
               fill={isActive ? urgColor : '#4b5563'}
-              fontSize={isActive ? '9' : '7.5'}
+              fontSize={isActive ? '10' : '8.5'}
               fontFamily="system-ui"
               fontWeight={isActive ? '700' : '500'}
-              className="pointer-events-none select-none"
+              className="select-none"
             >
-              {comp.name.length > 30 ? comp.name.slice(0, 28) + '…' : comp.name}
+              {comp.name.length > 32 ? comp.name.slice(0, 30) + '…' : comp.name}
             </text>
           </g>
         );
@@ -650,16 +682,34 @@ function DiagramSVG({
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// INFO PANEL (component detail popout)
+// INFO PANEL (with product image)
 // ═══════════════════════════════════════════════════════════════════════════
 
 function InfoPanel({ component, onClose }: { component: DoorComponent; onClose: () => void }) {
   const urgency = URGENCY_LABELS[component.urgency];
   const Icon = URGENCY_ICONS[component.urgency];
+  const imgSrc = component.imageUrl || '/images/logos/tngd-logo-badge.png';
 
   return (
     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
       className="bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden max-w-md w-full">
+      {/* Product Image */}
+      <div className="relative h-36 bg-gray-50 flex items-center justify-center border-b border-gray-100">
+        <Image
+          src={imgSrc}
+          alt={component.name}
+          width={component.imageUrl ? 200 : 80}
+          height={component.imageUrl ? 120 : 80}
+          className="object-contain max-h-32"
+          style={{ opacity: component.imageUrl ? 1 : 0.3 }}
+        />
+        {!component.imageUrl && (
+          <span className="absolute bottom-2 text-[10px] text-gray-300 font-display uppercase tracking-wider">
+            Product image coming soon
+          </span>
+        )}
+      </div>
+
       {/* Header */}
       <div className="px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
@@ -672,7 +722,9 @@ function InfoPanel({ component, onClose }: { component: DoorComponent; onClose: 
             <span className="text-xs text-gray-400 font-mono">{component.partNumber}</span>
           </div>
         </div>
-        <button onClick={onClose} className="p-1 rounded-md hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Close">
+        <button onClick={onClose}
+          className="p-1 rounded-md hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+          aria-label="Close">
           <X className="w-5 h-5" />
         </button>
       </div>
@@ -719,12 +771,17 @@ function InfoPanel({ component, onClose }: { component: DoorComponent; onClose: 
 export default function DoorAnatomy() {
   const [view, setView] = useState<DiagramView>('torsion');
   const [activeId, setActiveId] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const components = getComponentsForView(view);
   const selected = activeId ? components.find(c => c.id === activeId) ?? null : null;
 
   const handleSelect = useCallback((id: string) => {
     setActiveId(prev => prev === id ? null : id);
+  }, []);
+
+  const scroll = useCallback((dir: 'left' | 'right') => {
+    scrollRef.current?.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
   }, []);
 
   return (
@@ -740,9 +797,10 @@ export default function DoorAnatomy() {
             Garage Door <span className="text-brand-red">Anatomy</span>
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Explore every component of a residential garage door system. Three dedicated diagrams show how
-            torsion springs, extension springs, and automatic openers integrate with the door, track, and hardware.
-            Click any labeled part to see what it does, its urgency classification, and TNGD part number.
+            Identify every component of a residential garage door system. Three dedicated diagrams
+            isolate the <strong>torsion spring</strong>, <strong>extension spring</strong>, and{' '}
+            <strong>automatic opener</strong> systems so you can tell our office exactly what you&apos;re
+            looking at — or confirm what needs attention before we arrive.
           </p>
         </div>
         <div className="relative rounded-xl overflow-hidden shadow-lg aspect-[16/10]">
@@ -789,9 +847,31 @@ export default function DoorAnatomy() {
 
       {/* Diagram + Panel */}
       <div className="relative flex flex-col lg:flex-row gap-6 items-start">
-        <div className="flex-1 min-w-0 bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-          <DiagramSVG view={view} activeId={activeId} onSelect={handleSelect} components={components} />
+        {/* Scrollable diagram */}
+        <div className="flex-1 min-w-0 relative">
+          {/* Scroll hint arrows */}
+          <button onClick={() => scroll('left')}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/80 border border-gray-200 shadow-md flex items-center justify-center text-gray-500 hover:bg-white hover:text-gray-800 transition-colors lg:hidden"
+            aria-label="Scroll left">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button onClick={() => scroll('right')}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/80 border border-gray-200 shadow-md flex items-center justify-center text-gray-500 hover:bg-white hover:text-gray-800 transition-colors lg:hidden"
+            aria-label="Scroll right">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          <div ref={scrollRef}
+            className="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-sm scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+            <DiagramSVG view={view} activeId={activeId} onSelect={handleSelect} components={components} />
+          </div>
+
+          <p className="text-center text-xs text-gray-400 mt-2 lg:hidden">
+            ← Scroll to explore the full diagram →
+          </p>
         </div>
+
+        {/* Info panel */}
         <div className="w-full lg:w-96 lg:sticky lg:top-24">
           <AnimatePresence mode="wait">
             {selected ? (

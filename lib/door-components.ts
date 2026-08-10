@@ -11,6 +11,7 @@ export interface DoorComponent {
   description: string;
   friendlyTip?: string;
   views: DiagramView[];
+  imageUrl?: string;
 }
 
 // --- DOOR HARDWARE (shared across all views) ---
@@ -193,6 +194,7 @@ const TORSION_COMPONENTS: DoorComponent[] = [
     description: 'Heavy-gauge oil-tempered steel coil mounted on the torsion shaft above the door. Stores energy by twisting (torque). Counterbalances the full door weight. Rated by cycle life: standard (10,000), high-cycle (25,000–50,000+). Under extreme tension — professional replacement only.',
     friendlyTip: '⚠️ This coil above your door holds enough force to seriously hurt someone. If it breaks, call a pro — never try to fix it yourself.',
     views: ['torsion'],
+    imageUrl: '/images/portfolio/springs/broken-torsion-spring-piedmont-triad.jpg',
   },
   {
     id: 'torsion-shaft',
@@ -271,6 +273,7 @@ const EXTENSION_COMPONENTS: DoorComponent[] = [
     description: 'Open-coil spring mounted parallel to horizontal track on each side. Stretches when the door closes, storing energy. Color-coded by weight rating. Less balanced lift than torsion, shorter lifespan.',
     friendlyTip: '⚠️ These long springs along your ceiling stretch like a rubber band. If one breaks without a safety cable, it becomes a flying projectile. Always ensure safety cables are installed.',
     views: ['extension'],
+    imageUrl: '/images/portfolio/springs/extension-spring-repair-nc-before.jpg',
   },
   {
     id: 'safety-cable',
@@ -331,6 +334,7 @@ const OPENER_COMPONENTS: DoorComponent[] = [
     description: 'Power unit mounted to the ceiling. Contains motor, drive mechanism (belt, chain, or screw), logic board, and light sockets. Residential units: ½ HP or ¾ HP. Controlled by wall button, remote, or myQ app.',
     friendlyTip: 'This is the "brain" of your garage door — it\'s the box hanging from your ceiling with the lights on it.',
     views: ['opener'],
+    imageUrl: '/images/parts/liftmaster-opener-unit.webp',
   },
   {
     id: 'opener-rail',
@@ -389,6 +393,7 @@ const OPENER_COMPONENTS: DoorComponent[] = [
     description: 'Hardwired button panel inside the garage. Provides open/close/stop, light switch, and on smart units: lock mode, timer-to-close, Wi-Fi status. Must be 5\'+ from floor.',
     friendlyTip: 'The button on your wall near the door to the house. On newer openers, it has extra features like a lock button and timer.',
     views: ['opener'],
+    imageUrl: '/images/parts/liftmaster-wall-button.webp',
   },
   {
     id: 'opener-bracket',
