@@ -423,26 +423,33 @@ export function calculateCableLength(
   doorHeightFt: number,
   drumType: DrumType,
   liftType: LiftType,
+  springSystem: 'torsion' | 'extension' = 'torsion',
 ): number {
   const doorHeightIn = doorHeightFt * 12;
-  const drumRadius = DRUM_RADII[drumType].radius;
-  const drumCircumference = 2 * Math.PI * drumRadius;
 
-  // Cable must wrap around drum enough times to lift the door fully
-  const drumWraps = doorHeightIn / drumCircumference;
-  const cableOnDrum = drumWraps * drumCircumference;
-
-  // Bottom bracket to drum: approximately door height + 18" for routing and attachment
-  let routingLength = doorHeightIn + 18;
-
-  if (liftType === 'high-lift') {
-    routingLength += 24;
-  } else if (liftType === 'vertical') {
-    routingLength += 36;
+  if (springSystem === 'extension') {
+    // Extension spring cables run through pulleys — typically 12 to 13.5 feet
+    // Rule of thumb: door height × 1.5 + 24″ for pulley routing
+    return Math.ceil(doorHeightIn * 1.5 + 24);
   }
 
-  // Total: cable on drum + routing
-  return Math.ceil(cableOnDrum + routingLength);
+  // Torsion spring cable: door height + 18″ for drum wrap and bottom bracket attachment
+  // Industry standard for 4″ drums with standard lift:
+  //   7' door = 102″, 8' door = 114″
+  let cableLength = doorHeightIn + 18;
+
+  if (liftType === 'high-lift') {
+    // High-lift adds extra vertical travel before the horizontal transition
+    // Additional cable proportional to the extra lift height
+    const drumRadius = DRUM_RADII[drumType].radius;
+    const standardDrumRadius = 2.0;
+    const extraWrap = (drumRadius - standardDrumRadius) * 2 * Math.PI;
+    cableLength += Math.ceil(extraWrap + 12);
+  } else if (liftType === 'vertical') {
+    cableLength += 24;
+  }
+
+  return Math.ceil(cableLength);
 }
 
 // ---------------------------------------------------------------------------

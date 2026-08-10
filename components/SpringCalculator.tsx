@@ -589,22 +589,55 @@ function WireFinderTab() {
 
 function CableLengthTab() {
   const [doorHeight, setDoorHeight] = useState(7);
+  const [springSystem, setSpringSystem] = useState<'torsion' | 'extension'>('torsion');
   const [liftType, setLiftType] = useState<LiftType>('standard');
   const [drumType, setDrumType] = useState<DrumType>('standard-400');
 
   const availableDrums = getDrumsForLiftType(liftType);
-  const cableLength = calculateCableLength(doorHeight, availableDrums.includes(drumType) ? drumType : availableDrums[0], liftType);
+  const activeDrum = availableDrums.includes(drumType) ? drumType : availableDrums[0];
+  const cableLength = calculateCableLength(doorHeight, activeDrum, liftType, springSystem);
+
+  const quickRef = springSystem === 'torsion'
+    ? [
+        { height: '7 ft', length: '102″ (8′ 6″)' },
+        { height: '8 ft', length: '114″ (9′ 6″)' },
+        { height: '9 ft', length: '126″ (10′ 6″)' },
+        { height: '10 ft', length: '138″ (11′ 6″)' },
+      ]
+    : [
+        { height: '7 ft', length: '~150″ (12′ 6″)' },
+        { height: '8 ft', length: '~168″ (14′)' },
+      ];
 
   return (
     <div className="max-w-lg mx-auto">
       <div className="space-y-3 mb-6">
+        <div>
+          <label className="block text-xs font-medium text-gray-700 mb-1">Spring System</label>
+          <div className="flex gap-2">
+            {(['torsion', 'extension'] as const).map(sys => (
+              <button key={sys} onClick={() => setSpringSystem(sys)}
+                className={`flex-1 px-3 py-2 rounded-lg text-sm font-display uppercase tracking-wider transition-colors ${
+                  springSystem === sys
+                    ? 'bg-brand-blue text-white'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}>
+                {sys === 'torsion' ? 'Torsion' : 'Extension'}
+              </button>
+            ))}
+          </div>
+        </div>
         <NumberField label="Door Height" value={doorHeight} onChange={setDoorHeight} min={6} max={20} step={0.5} unit="ft" />
-        <SelectField label="Lift Type" value={liftType} onChange={v => { setLiftType(v as LiftType); setDrumType(getDrumsForLiftType(v as LiftType)[0]); }}>
-          {Object.entries(LIFT_TYPES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-        </SelectField>
-        <SelectField label="Cable Drum" value={drumType} onChange={v => setDrumType(v as DrumType)}>
-          {availableDrums.map(dt => <option key={dt} value={dt}>{DRUM_RADII[dt].label}</option>)}
-        </SelectField>
+        {springSystem === 'torsion' && (
+          <>
+            <SelectField label="Lift Type" value={liftType} onChange={v => { setLiftType(v as LiftType); setDrumType(getDrumsForLiftType(v as LiftType)[0]); }}>
+              {Object.entries(LIFT_TYPES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+            </SelectField>
+            <SelectField label="Cable Drum" value={drumType} onChange={v => setDrumType(v as DrumType)}>
+              {availableDrums.map(dt => <option key={dt} value={dt}>{DRUM_RADII[dt].label}</option>)}
+            </SelectField>
+          </>
+        )}
       </div>
 
       <div className="bg-brand-blue/5 border border-brand-blue/20 rounded-xl p-6 text-center">
@@ -612,6 +645,23 @@ function CableLengthTab() {
         <p className="text-4xl font-mono font-bold text-brand-blue">{cableLength}″</p>
         <p className="text-lg text-gray-600 font-mono">{(cableLength / 12).toFixed(1)} ft</p>
         <p className="text-xs text-gray-400 mt-2">Per side — order 2 cables total</p>
+      </div>
+
+      <div className="mt-4 bg-gray-50 rounded-lg p-4">
+        <h4 className="text-xs font-display text-gray-700 uppercase tracking-wider mb-2">
+          Quick Reference — {springSystem === 'torsion' ? 'Standard Lift (4″ Drum)' : 'Extension Spring'}
+        </h4>
+        <div className="grid grid-cols-2 gap-1.5">
+          {quickRef.map((r, i) => (
+            <div key={i} className="flex items-center justify-between px-2 py-1 rounded bg-white text-xs">
+              <span className="text-gray-600 font-medium">{r.height}</span>
+              <span className="text-brand-blue font-mono">{r.length}</span>
+            </div>
+          ))}
+        </div>
+        {springSystem === 'torsion' && (
+          <p className="text-xs text-gray-400 mt-2">Rule of thumb: door height + 18″</p>
+        )}
       </div>
 
       <div className="mt-6">
