@@ -430,22 +430,34 @@ export default function MaintenanceChecklist() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="max-w-3xl mx-auto mt-8 bg-gradient-to-r from-brand-blue/5 to-brand-red/5 border border-brand-blue/20 rounded-2xl p-6 md:p-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
-          <div className="text-center sm:text-left">
-            <p className="font-display text-lg text-brand-blue">Prefer to leave it to the pros?</p>
-            <p className="text-sm text-gray-500 mt-1">
-              Our technicians complete this entire 21-point protocol during every tune-up — plus the items you can&apos;t safely do yourself.
-            </p>
+      <div className="max-w-3xl mx-auto mt-8 relative overflow-hidden rounded-2xl border-2 border-emerald-500/30 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900" />
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '30px 30px',
+        }} />
+        <div className="absolute top-0 left-1/4 w-48 h-48 bg-brand-gold/10 rounded-full blur-[80px]" />
+        <div className="relative z-10 p-6 md:p-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div className="text-center sm:text-left">
+              <div className="inline-flex items-center gap-2 text-[10px] font-display uppercase tracking-[0.25em] text-brand-gold mb-1">
+                <Wrench className="w-3 h-3" />
+                Professional Service
+              </div>
+              <p className="font-display text-xl text-white uppercase">Prefer to Leave It to the Pros?</p>
+              <p className="text-sm text-emerald-200/70 mt-1">
+                Our technicians complete this entire 21-point protocol during every tune-up — plus the items you can&apos;t safely do yourself.
+              </p>
+            </div>
+            <Link
+              href="/book"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-red text-white text-sm font-display uppercase tracking-wider rounded-xl hover:bg-red-700 transition-all whitespace-nowrap shadow-lg hover:shadow-red-500/25 hover:scale-[1.02]"
+            >
+              <Calendar className="w-4 h-4" />
+              Book a Tune-Up
+              <ChevronRight className="w-3 h-3" />
+            </Link>
           </div>
-          <Link
-            href="/book"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-brand-blue text-white text-sm font-display uppercase tracking-wider rounded-xl hover:bg-blue-900 transition-colors whitespace-nowrap shadow-md hover:shadow-lg"
-          >
-            <Calendar className="w-4 h-4" />
-            Book a Tune-Up
-            <ChevronRight className="w-3 h-3" />
-          </Link>
         </div>
       </div>
     </section>

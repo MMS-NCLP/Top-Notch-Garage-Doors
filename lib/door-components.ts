@@ -1,6 +1,6 @@
 export type ComponentSystem = 'door' | 'torsion' | 'extension' | 'track' | 'opener';
 export type UrgencyLevel = 'danger' | 'wear' | 'serviceable';
-export type DiagramView = 'torsion' | 'extension' | 'opener';
+export type DiagramView = 'torsion' | 'extension';
 
 export interface DoorComponent {
   id: string;
@@ -24,7 +24,7 @@ const DOOR_HARDWARE: DoorComponent[] = [
     urgency: 'wear',
     description: 'Individual horizontal panel that makes up the door face. Residential doors typically have 4–5 sections. Steel, wood, or composite construction with optional insulation (R-0 to R-18).',
     friendlyTip: 'Your door is made of stacked panels — like building blocks. If one gets dented, you can often replace just that one panel instead of the whole door!',
-    views: ['torsion', 'extension', 'opener'],
+    views: ['torsion', 'extension'],
   },
   {
     id: 'hinge-1',
@@ -84,7 +84,7 @@ const DOOR_HARDWARE: DoorComponent[] = [
     urgency: 'wear',
     description: 'Horizontal steel channel bolted across the back of a panel to prevent bowing. Required on 16\'+ doors and opener-equipped doors. Top strut carries the opener bracket.',
     friendlyTip: 'Struts are steel bars bolted across the back of your door panels — they keep wide doors from bending like a banana.',
-    views: ['torsion', 'extension', 'opener'],
+    views: ['torsion', 'extension'],
   },
   {
     id: 'bottom-bracket',
@@ -323,37 +323,18 @@ const EXTENSION_COMPONENTS: DoorComponent[] = [
   },
 ];
 
-// --- OPENER SYSTEM ---
+// --- OPENER SYSTEM (visible on torsion diagram as operator/door arm) ---
 const OPENER_COMPONENTS: DoorComponent[] = [
   {
     id: 'opener-motor',
-    name: 'Opener Motor Unit',
+    name: 'Operator (Motor Unit)',
     partNumber: 'TNGD-OPN-3001',
     system: 'opener',
     urgency: 'wear',
-    description: 'Power unit mounted to the ceiling. Contains motor, drive mechanism (belt, chain, or screw), logic board, and light sockets. Residential units: ½ HP or ¾ HP. Controlled by wall button, remote, or myQ app.',
+    description: 'Power unit mounted to the ceiling or wall. Contains motor, drive mechanism (belt, chain, or screw), logic board, and light sockets. Residential units: ½ HP or ¾ HP. Controlled by wall button, remote, or myQ app.',
     friendlyTip: 'This is the "brain" of your garage door — it\'s the box hanging from your ceiling with the lights on it.',
-    views: ['opener'],
+    views: ['torsion'],
     imageUrl: '/images/parts/liftmaster-opener-unit.webp',
-  },
-  {
-    id: 'opener-rail',
-    name: 'Opener Rail (T-Rail)',
-    partNumber: 'TNGD-OPN-3002',
-    system: 'opener',
-    urgency: 'wear',
-    description: 'Track extending from motor unit to header bracket. Houses the belt or chain drive. The trolley rides along this rail.',
-    friendlyTip: 'The rail is the long bar connecting the motor to the wall above your door. A belt or chain runs inside it.',
-    views: ['opener'],
-  },
-  {
-    id: 'trolley',
-    name: 'Trolley (Carriage)',
-    partNumber: 'TNGD-OPN-3003',
-    system: 'opener',
-    urgency: 'wear',
-    description: 'Sliding mechanism on the opener rail connecting to the door arm. Driven by belt or chain. Contains the emergency release mechanism.',
-    views: ['opener'],
   },
   {
     id: 'door-arm',
@@ -362,57 +343,25 @@ const OPENER_COMPONENTS: DoorComponent[] = [
     system: 'opener',
     urgency: 'wear',
     description: 'Curved steel arm connecting trolley to the door\'s top bracket. J-shape follows the door\'s arc from vertical to horizontal travel.',
-    views: ['opener'],
+    views: ['torsion'],
   },
   {
-    id: 'emergency-release',
-    name: 'Emergency Release (Red Handle)',
-    partNumber: 'TNGD-OPN-3005',
-    system: 'opener',
-    urgency: 'serviceable',
-    description: 'Red handle with cord hanging from trolley. Pulling it disconnects the trolley from the drive for manual operation during power outages. Always disengage with door CLOSED.',
-    friendlyTip: 'This is your "emergency cord." Pull it straight down to manually open/close your door during a power outage. Always do this with the door CLOSED first!',
-    views: ['opener'],
-  },
-  {
-    id: 'photo-eye',
-    name: 'Photo-Eye Safety Sensors',
-    partNumber: 'TNGD-OPN-3006',
-    system: 'opener',
-    urgency: 'serviceable',
-    description: 'Infrared beam sensors mounted on both sides of the opening, no higher than 6" from floor. If beam is broken while closing, door reverses immediately. Required by federal law since 1993 (UL 325).',
-    friendlyTip: 'These little sensors at the bottom of your door opening stop the door if something is in the way — like a pet, a kid, or your car bumper. Keep them clean and aligned!',
-    views: ['opener'],
-  },
-  {
-    id: 'wall-control',
-    name: 'Wall Control Panel',
-    partNumber: 'TNGD-OPN-3007',
-    system: 'opener',
-    urgency: 'serviceable',
-    description: 'Hardwired button panel inside the garage. Provides open/close/stop, light switch, and on smart units: lock mode, timer-to-close, Wi-Fi status. Must be 5\'+ from floor.',
-    friendlyTip: 'The button on your wall near the door to the house. On newer openers, it has extra features like a lock button and timer.',
-    views: ['opener'],
-    imageUrl: '/images/parts/liftmaster-wall-button.webp',
-  },
-  {
-    id: 'opener-bracket',
-    name: 'Header Bracket (Opener)',
-    partNumber: 'TNGD-OPN-3008',
+    id: 'operator-support',
+    name: 'Operator Support Bracket',
+    partNumber: 'TNGD-OPN-3010',
     system: 'opener',
     urgency: 'wear',
-    description: 'Steel bracket mounted to header wall above door opening. Anchors the front end of the opener rail. Must be lag-bolted into solid framing.',
-    views: ['opener'],
+    description: 'Steel support bracket mounted to the wall or ceiling framing that carries the weight and vibration of the operator unit. Distributes motor load across structural members.',
+    views: ['torsion'],
   },
   {
-    id: 'orb',
-    name: 'Operator Reinforcement Bracket (ORB)',
-    partNumber: 'TNGD-OPN-3009',
+    id: 'back-hang',
+    name: 'Back Hang (Angle Iron)',
+    partNumber: 'TNGD-OPN-3011',
     system: 'opener',
     urgency: 'wear',
-    description: 'Heavy-gauge steel bracket bolted to the top section of the door where the J-arm connects. Distributes the opener\'s push/pull force across the panel to prevent bending or cracking. Required on insulated and wide doors.',
-    friendlyTip: 'This strong metal plate on the back of your top panel spreads the force from the opener so it doesn\'t dent or crack the door.',
-    views: ['opener'],
+    description: 'Angle iron bracket at the rear of the horizontal track assembly that supports the track and operator mounting hardware. Provides structural connection between the track system and the building framing.',
+    views: ['torsion'],
   },
 ];
 
@@ -442,7 +391,6 @@ export const URGENCY_LABELS: Record<UrgencyLevel, { label: string; color: string
 };
 
 export const VIEW_LABELS: Record<DiagramView, { label: string; description: string; color: string }> = {
-  torsion: { label: 'Torsion Spring System', description: 'Spring, shaft, drums, cables, and bearing plates', color: '#C41E24' },
+  torsion: { label: 'Torsion Spring System', description: 'Springs, shaft, drums, cables, operator, and hardware', color: '#C41E24' },
   extension: { label: 'Extension Spring System', description: 'Springs, pulleys, safety cables, and S-hooks', color: '#D97706' },
-  opener: { label: 'Operator System', description: 'Motor, rail, trolley, sensors, and controls', color: '#002868' },
 };

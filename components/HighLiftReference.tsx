@@ -42,7 +42,7 @@ const CONVERSION_TYPES: ConversionType[] = [
   },
   {
     id: 'standard-to-follow-roof',
-    name: 'Standard to Follow-the-Roof',
+    name: 'High-Lift with Roof Pitch',
     description: 'The horizontal track follows the pitch of the roof instead of running level. Used when the garage ceiling follows the roof slope and there is no flat ceiling to run horizontal track along.',
     trackConfig: 'Angled horizontal track that matches the roof pitch. The radius section transitions from vertical to the angled run. Track hangers are progressively shorter as the track climbs toward the peak.',
     bestFor: 'Garages with vaulted or cathedral ceilings where the ceiling follows the roofline. Common in newer construction and converted barns.',
@@ -114,6 +114,87 @@ export default function HighLiftReference() {
   const active = CONVERSION_TYPES.find(t => t.id === activeType)!;
   const diff = DIFFICULTY_CONFIG[active.proDifficulty];
 
+  function renderTrackDiagram(configType: string, isActive: boolean) {
+    const strokeColor = isActive ? '#002868' : '#9ca3af';
+    const fillColor = isActive ? '#002868' : '#d1d5db';
+    const doorColor = isActive ? '#bf0a30' : '#b0b5bb';
+    const accentColor = isActive ? '#ffbd59' : '#d1d5db';
+
+    const shared = (
+      <>
+        <line x1="20" y1="120" x2="180" y2="120" stroke={strokeColor} strokeWidth="2" />
+        <line x1="60" y1="20" x2="60" y2="120" stroke={strokeColor} strokeWidth="2" />
+        <rect x="62" y="50" width="8" height="70" fill={doorColor} rx="1" />
+      </>
+    );
+
+    if (configType === 'standard-to-highlift') {
+      return (
+        <svg viewBox="0 0 200 140" className="w-full h-20">
+          {shared}
+          <line x1="72" y1="50" x2="72" y2="28" stroke={accentColor} strokeWidth="2.5" />
+          <path d="M 72 28 Q 72 18 82 18" fill="none" stroke={accentColor} strokeWidth="2.5" />
+          <line x1="82" y1="18" x2="170" y2="18" stroke={accentColor} strokeWidth="2.5" />
+          <path d="M 72 50 Q 72 42 82 42" fill="none" stroke={strokeColor} strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+          <line x1="82" y1="42" x2="170" y2="42" stroke={strokeColor} strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+          <line x1="50" y1="42" x2="50" y2="18" stroke={fillColor} strokeWidth="1" markerEnd="url(#arrowHL)" />
+          <text x="38" y="32" fill={fillColor} fontSize="8" fontFamily="system-ui" textAnchor="middle">Rise</text>
+          <defs><marker id="arrowHL" markerWidth="6" markerHeight="4" refX="3" refY="2" orient="auto"><path d={`M 0 0 L 6 2 L 0 4 Z`} fill={fillColor} /></marker></defs>
+          {[100, 130, 160].map(x => <line key={x} x1={x} y1="10" x2={x} y2="18" stroke={accentColor} strokeWidth="1" />)}
+        </svg>
+      );
+    }
+
+    if (configType === 'standard-to-vertical') {
+      return (
+        <svg viewBox="0 0 200 140" className="w-full h-20">
+          {shared}
+          <line x1="72" y1="50" x2="72" y2="8" stroke={accentColor} strokeWidth="2.5" />
+          <rect x="74" y="8" width="8" height="42" fill={doorColor} rx="1" opacity="0.3" />
+          <line x1="50" y1="50" x2="50" y2="8" stroke={fillColor} strokeWidth="1" markerEnd="url(#arrowVL)" />
+          <text x="40" y="30" fill={fillColor} fontSize="7" fontFamily="system-ui" textAnchor="middle" transform="rotate(-90 40 30)">Full Height</text>
+          <defs><marker id="arrowVL" markerWidth="6" markerHeight="4" refX="3" refY="2" orient="auto"><path d={`M 0 0 L 6 2 L 0 4 Z`} fill={fillColor} /></marker></defs>
+        </svg>
+      );
+    }
+
+    if (configType === 'standard-to-follow-roof') {
+      return (
+        <svg viewBox="0 0 200 140" className="w-full h-20">
+          {shared}
+          {/* Roof line — from above door opening, angling up to back of garage */}
+          <line x1="60" y1="45" x2="180" y2="12" stroke={strokeColor} strokeWidth="1.5" strokeDasharray="4 3" />
+          {/* Radius curve from vertical to angled track */}
+          <path d="M 72 50 Q 72 42 80 40" fill="none" stroke={accentColor} strokeWidth="2.5" />
+          {/* Angled track following the roof pitch — parallel to roof line */}
+          <line x1="80" y1="40" x2="170" y2="17" stroke={accentColor} strokeWidth="2.5" />
+          {/* Pitch angle indicator */}
+          <path d="M 90 38 L 108 38" fill="none" stroke={fillColor} strokeWidth="0.8" />
+          <path d="M 90 38 L 106 33.5" fill="none" stroke={fillColor} strokeWidth="0.8" />
+          <text x="112" y="40" fill={fillColor} fontSize="7" fontFamily="system-ui">pitch</text>
+          {/* Hangers from roof to track — decreasing length as track approaches roof */}
+          {[100, 130, 160].map((x) => {
+            const trackY = 40 - ((x - 80) / (170 - 80)) * 23;
+            const roofY = 45 - ((x - 60) / (180 - 60)) * 33;
+            return <line key={x} x1={x} y1={roofY + 1} x2={x} y2={trackY} stroke={accentColor} strokeWidth="1" />;
+          })}
+        </svg>
+      );
+    }
+
+    return (
+      <svg viewBox="0 0 200 140" className="w-full h-20">
+        {shared}
+        <line x1="20" y1="42" x2="180" y2="42" stroke={strokeColor} strokeWidth="1.5" />
+        <text x="170" y="38" fill={strokeColor} fontSize="6" fontFamily="system-ui" textAnchor="end">ceiling</text>
+        <path d="M 72 50 L 72 44 L 82 44" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinejoin="round" />
+        <line x1="82" y1="44" x2="170" y2="44" stroke={accentColor} strokeWidth="2.5" />
+        <line x1="78" y1="42" x2="78" y2="50" stroke={fillColor} strokeWidth="0.8" />
+        <text x="86" y="57" fill={fillColor} fontSize="6" fontFamily="system-ui">4.5″ min</text>
+      </svg>
+    );
+  }
+
   return (
     <section id="high-lift-reference" className="scroll-mt-24">
       <div className="text-center mb-8">
@@ -135,26 +216,27 @@ export default function HighLiftReference() {
         </div>
       </div>
 
-      {/* Conversion type selector */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-        {CONVERSION_TYPES.map(type => (
-          <button
-            key={type.id}
-            onClick={() => setActiveType(type.id)}
-            className={`text-left px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-              activeType === type.id
-                ? 'border-brand-blue bg-brand-blue/5'
-                : 'border-gray-200 hover:border-gray-300 bg-white'
-            }`}
-          >
-            <span className={`block text-sm font-display ${activeType === type.id ? 'text-brand-blue' : 'text-gray-700'}`}>
-              {type.name}
-            </span>
-            <span className="block text-xs text-gray-400 mt-0.5">
-              {type.proDifficulty.charAt(0).toUpperCase() + type.proDifficulty.slice(1)} complexity
-            </span>
-          </button>
-        ))}
+      {/* Track Configuration Visual */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        {CONVERSION_TYPES.map(type => {
+          const isActive = activeType === type.id;
+          return (
+            <button
+              key={type.id}
+              onClick={() => setActiveType(type.id)}
+              className={`relative rounded-xl border-2 transition-all duration-200 overflow-hidden ${
+                isActive ? 'border-brand-blue shadow-lg' : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className={`p-3 ${isActive ? 'bg-brand-blue/5' : 'bg-white'}`}>
+                {renderTrackDiagram(type.id, isActive)}
+                <p className={`text-xs font-display mt-2 text-center ${isActive ? 'text-brand-blue' : 'text-gray-600'}`}>
+                  {type.name}
+                </p>
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Active conversion detail */}
@@ -230,23 +312,35 @@ export default function HighLiftReference() {
       </div>
 
       {/* CTA */}
-      <div className="mt-8 bg-brand-blue/5 border border-brand-blue/20 rounded-xl p-6 text-center">
-        <Info className="w-8 h-8 text-brand-blue mx-auto mb-3" />
-        <p className="text-sm text-gray-700 mb-1 font-medium">
-          Considering a high-lift or track conversion?
-        </p>
-        <p className="text-xs text-gray-500 mb-4 max-w-md mx-auto">
-          Our technicians will perform a full on-site measurement, assess structural requirements,
-          and provide a detailed specification — all as part of your free estimate.
-        </p>
-        <Link
-          href="/book"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-red text-white text-sm font-display uppercase tracking-wider rounded-lg hover:bg-red-700 transition-colors"
-        >
-          <Calendar className="w-4 h-4" />
-          Request Conversion Assessment
-          <ChevronRight className="w-3 h-3" />
-        </Link>
+      <div className="mt-8 relative overflow-hidden rounded-2xl border-2 border-brand-blue/30 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue via-[#001a4d] to-brand-blue" />
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '30px 30px',
+        }} />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/10 rounded-full blur-[80px]" />
+        <div className="relative z-10 p-8 md:p-10 text-center">
+          <div className="inline-flex items-center gap-2 text-xs font-display uppercase tracking-[0.25em] text-brand-gold mb-3">
+            <span className="w-8 h-px bg-brand-gold/50" />
+            Free Assessment
+            <span className="w-8 h-px bg-brand-gold/50" />
+          </div>
+          <p className="font-display text-xl md:text-2xl text-white mb-2 uppercase">
+            Considering a High-Lift or Track Conversion?
+          </p>
+          <p className="text-sm text-gray-300 mb-6 max-w-lg mx-auto">
+            Our technicians will perform a full on-site measurement, assess structural requirements,
+            and provide a detailed specification — all as part of your free estimate.
+          </p>
+          <Link
+            href="/book"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-red text-white text-sm font-display uppercase tracking-wider rounded-xl hover:bg-red-700 transition-all shadow-lg hover:shadow-red-500/25 hover:scale-[1.02]"
+          >
+            <Calendar className="w-4 h-4" />
+            Request Conversion Assessment
+            <ChevronRight className="w-3 h-3" />
+          </Link>
+        </div>
       </div>
     </section>
   );

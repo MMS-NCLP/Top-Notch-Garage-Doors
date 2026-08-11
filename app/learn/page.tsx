@@ -564,6 +564,19 @@ export default function LearnPage() {
               );
             })}
           </div>
+
+          {/* Browse Everything CTA */}
+          <div className="mt-10 text-center">
+            <p className="text-foreground/40 text-sm mb-3">Want to browse everything?</p>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-display uppercase tracking-wider text-brand-blue border-2 border-brand-blue/20 rounded-xl hover:bg-brand-blue hover:text-white transition-all"
+            >
+              <BookOpen className="w-4 h-4" />
+              View All Articles
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -602,27 +615,6 @@ export default function LearnPage() {
         </div>
       </section>
 
-      <div className="divider-gleam" />
-
-      {/* ═══ BLOG LINK ═══ */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-xl text-brand-blue uppercase mb-3">
-            Want to Browse Everything?
-          </h2>
-          <p className="text-foreground/50 text-sm mb-5">
-            Our full blog has every article in chronological order.
-          </p>
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm font-display uppercase tracking-wider text-brand-blue hover:text-brand-red transition-colors"
-          >
-            <BookOpen className="w-4 h-4" />
-            View All Articles
-            <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

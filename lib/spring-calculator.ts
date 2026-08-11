@@ -102,7 +102,7 @@ export const WIRE_SIZES = [
 ];
 
 // Inside Diameters (inches)
-export const INSIDE_DIAMETERS = [1.75, 1.8125, 2.0, 2.25, 2.625, 3.375, 3.75, 4.0, 4.5, 5.25, 5.75, 6.0];
+export const INSIDE_DIAMETERS = [1.75, 1.8125, 2.0, 2.1875, 2.25, 2.625, 3.375, 3.75, 4.0, 4.5, 5.25, 5.75, 6.0];
 
 // ---------------------------------------------------------------------------
 // Wire Gauge Chart (Service Spring measurement reference)

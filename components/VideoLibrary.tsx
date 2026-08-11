@@ -77,7 +77,7 @@ export default function VideoLibrary() {
     <section id="video-library" className="scroll-mt-24">
       <div className="text-center mb-8">
         <h2 className="font-display text-3xl md:text-4xl text-brand-blue mb-3">
-          Curated Video Library
+          TNGD Video Hub
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Hand-picked videos from Clopay, LiftMaster, Chamberlain, Amarr, and industry experts.
