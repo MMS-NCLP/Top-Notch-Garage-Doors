@@ -27,89 +27,75 @@ interface HotspotDot {
 }
 
 const TORSION_HOTSPOTS: HotspotDot[] = [
-  // Spring system (top area)
-  { id: 'cable-drum', x: 22, y: 7 },
-  { id: 'winding-cone', x: 31, y: 7 },
-  { id: 'torsion-spring', x: 42, y: 7 },
-  { id: 'torsion-shaft', x: 50, y: 6 },
-  { id: 'stationary-cone', x: 52, y: 8 },
-  { id: 'center-bearing', x: 58, y: 11 },
-  { id: 'end-bearing', x: 83, y: 14 },
+  // Spring system — shaft at ~y:10-12, spring coil centered on shaft
+  { id: 'cable-drum', x: 7, y: 11 },
+  { id: 'torsion-shaft', x: 50, y: 10 },
+  { id: 'torsion-spring', x: 42, y: 12 },
+  { id: 'winding-cone', x: 52, y: 12 },
+  { id: 'stationary-cone', x: 35, y: 13 },
+  { id: 'center-bearing', x: 50, y: 14 },
+  { id: 'end-bearing', x: 90, y: 10 },
 
-  // Door body
-  { id: 'door-arm', x: 30, y: 20 },
-  { id: 'strut', x: 48, y: 18 },
-  { id: 'top-bracket', x: 32, y: 16 },
-  { id: 'glass-section', x: 50, y: 27 },
-  { id: 'panel-section', x: 50, y: 40 },
-  { id: 'slide-lock', x: 76, y: 48 },
-  { id: 'bottom-seal', x: 50, y: 72 },
-  { id: 'bottom-bracket', x: 58, y: 79 },
-  { id: 'lift-cable', x: 24, y: 50 },
+  // Door body — 5 panel sections, windows on top section
+  { id: 'strut', x: 50, y: 21 },
+  { id: 'top-bracket', x: 8, y: 22 },
+  { id: 'glass-section', x: 50, y: 30 },
+  { id: 'panel-section', x: 50, y: 55 },
+  { id: 'slide-lock', x: 55, y: 60 },
+  { id: 'bottom-seal', x: 50, y: 96 },
+  { id: 'bottom-bracket', x: 6, y: 92 },
+  { id: 'lift-cable', x: 5, y: 32 },
 
-  // Hinges
-  { id: 'hinge-3', x: 85, y: 38 },
-  { id: 'hinge-2', x: 86, y: 45 },
-  { id: 'hinge-1', x: 88, y: 60 },
+  // Hinges — diamond shapes between panel sections
+  { id: 'hinge-3', x: 50, y: 38 },
+  { id: 'hinge-2', x: 50, y: 53 },
+  { id: 'hinge-1', x: 50, y: 76 },
 
-  // Roller
-  { id: 'roller', x: 22, y: 38 },
+  // Roller — in the vertical track on left side
+  { id: 'roller', x: 4, y: 45 },
 
-  // Track system
-  { id: 'vertical-track', x: 55, y: 90 },
-  { id: 'horizontal-track', x: 38, y: 84 },
-  { id: 'radius-track', x: 82, y: 26 },
-  { id: 'flag-bracket', x: 84, y: 30 },
-  { id: 'jamb-bracket', x: 90, y: 48 },
-  { id: 'rear-hang', x: 15, y: 14 },
+  // Track system — left side vertical, curves to horizontal at ceiling
+  { id: 'vertical-track', x: 3, y: 62 },
+  { id: 'horizontal-track', x: 30, y: 6 },
+  { id: 'radius-track', x: 5, y: 16 },
+  { id: 'flag-bracket', x: 4, y: 19 },
+  { id: 'jamb-bracket', x: 3, y: 50 },
 
-  // Opener components visible in diagram
-  { id: 'opener-motor', x: 10, y: 88 },
-  { id: 'operator-support', x: 22, y: 47 },
-  { id: 'back-hang', x: 8, y: 77 },
+  // Support hardware — upper area bracket structure
+  { id: 'back-hang', x: 75, y: 6 },
+  { id: 'rear-hang', x: 85, y: 5 },
 ];
 
 const EXTENSION_HOTSPOTS: HotspotDot[] = [
-  // Extension spring system (right side of split diagram)
-  { id: 'extension-spring', x: 68, y: 24 },
-  { id: 'safety-cable', x: 72, y: 28 },
-  { id: 'ext-pulley', x: 48, y: 32 },
+  // Extension spring system (right half of comparison diagram)
+  { id: 'extension-spring', x: 70, y: 24 },
+  { id: 'safety-cable', x: 78, y: 20 },
+  { id: 'ext-pulley', x: 45, y: 34 },
   { id: 's-hook', x: 56, y: 22 },
-  { id: 'ext-rear-bracket', x: 82, y: 16 },
-  { id: 'ext-lift-cable', x: 18, y: 55 },
+  { id: 'ext-rear-bracket', x: 88, y: 18 },
+  { id: 'ext-lift-cable', x: 14, y: 48 },
 
-  // Door hardware (shared)
-  { id: 'panel-section', x: 32, y: 72 },
-  { id: 'glass-section', x: 32, y: 58 },
-  { id: 'hinge-3', x: 38, y: 55 },
-  { id: 'hinge-2', x: 40, y: 62 },
-  { id: 'hinge-1', x: 42, y: 76 },
-  { id: 'roller', x: 16, y: 68 },
-  { id: 'bottom-seal', x: 32, y: 88 },
-  { id: 'bottom-bracket', x: 18, y: 84 },
-  { id: 'top-bracket', x: 18, y: 48 },
-  { id: 'strut', x: 30, y: 48 },
-  { id: 'slide-lock', x: 44, y: 70 },
+  // Torsion spring for comparison (left half)
+  { id: 'torsion-spring', x: 20, y: 28 },
 
-  // Track system
-  { id: 'vertical-track', x: 14, y: 72 },
-  { id: 'horizontal-track', x: 55, y: 14 },
-  { id: 'radius-track', x: 20, y: 40 },
-  { id: 'flag-bracket', x: 18, y: 44 },
-  { id: 'jamb-bracket', x: 12, y: 60 },
-  { id: 'rear-hang', x: 60, y: 10 },
+  // Shared door hardware — essential context only
+  { id: 'panel-section', x: 30, y: 72 },
+  { id: 'roller', x: 12, y: 60 },
+  { id: 'bottom-bracket', x: 14, y: 86 },
+  { id: 'vertical-track', x: 10, y: 68 },
+  { id: 'horizontal-track', x: 50, y: 14 },
 ];
 
 const DIAGRAM_IMAGES: Record<DiagramView, { src: string; alt: string; width: number; height: number }> = {
   torsion: {
-    src: '/images/diagrams/torsion-parts-diagram.jpg',
-    alt: 'Residential garage door torsion spring system — 3/4 interior perspective showing all components',
-    width: 900,
-    height: 700,
+    src: '/images/diagrams/torsion-spring-system-diagram.jpg',
+    alt: 'Residential garage door torsion spring system — double-wide raised panel interior view showing springs, shaft, drums, hinges, tracks, and hardware',
+    width: 1000,
+    height: 1000,
   },
   extension: {
     src: '/images/diagrams/extension-spring-diagram.png',
-    alt: 'Garage door extension spring system — comparison diagram showing spring placement along horizontal track',
+    alt: 'Garage door extension spring system — comparison diagram showing spring placement along horizontal track with pulleys and safety cables',
     width: 1024,
     height: 605,
   },
@@ -287,7 +273,7 @@ export default function DoorAnatomy() {
   }, []);
 
   return (
-    <section id="door-anatomy" className="scroll-mt-24">
+    <section className="scroll-mt-24">
       {/* Section header */}
       <div className="grid lg:grid-cols-2 gap-8 items-center mb-10">
         <div>
@@ -363,7 +349,8 @@ export default function DoorAnatomy() {
                 alt={diagramImage.alt}
                 fill
                 className="object-contain"
-                sizes="(max-width: 1024px) 100vw, 65vw"
+                style={{ imageRendering: 'auto' }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 500px"
                 priority
               />
 

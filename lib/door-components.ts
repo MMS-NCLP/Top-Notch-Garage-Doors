@@ -193,7 +193,7 @@ const TORSION_COMPONENTS: DoorComponent[] = [
     urgency: 'danger',
     description: 'Heavy-gauge oil-tempered steel coil mounted on the torsion shaft above the door. Stores energy by twisting (torque). Counterbalances the full door weight. Rated by cycle life: standard (10,000), high-cycle (25,000–50,000+). Under extreme tension — professional replacement only.',
     friendlyTip: '⚠️ This coil above your door holds enough force to seriously hurt someone. If it breaks, call a pro — never try to fix it yourself.',
-    views: ['torsion'],
+    views: ['torsion', 'extension'],
     imageUrl: '/images/portfolio/springs/broken-torsion-spring-piedmont-triad.jpg',
   },
   {
