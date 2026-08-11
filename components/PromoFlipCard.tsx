@@ -36,7 +36,7 @@ export default function PromoFlipCard() {
                 style={{ backfaceVisibility: 'hidden' }}
               >
                 <Image
-                  src="/images/portfolio/installations/carriage-house-door-nc-1.jpg"
+                  src="/images/hero/coachman-carriage-house-door-nc.jpg"
                   alt="Professional garage door service"
                   fill
                   className="object-cover"
@@ -75,7 +75,7 @@ export default function PromoFlipCard() {
                     <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-mono font-bold text-white tracking-wider">
                       TNGD-TUNE79
                     </span>
-                    <span className="text-white/40 text-xs">Expires July 22, 2027</span>
+                    <span className="text-white/40 text-xs">Expires December 31, 2027</span>
                   </div>
 
                   <span className="text-xs text-brand-gold/60 font-display uppercase tracking-wider mt-4">
@@ -160,7 +160,7 @@ export default function PromoFlipCard() {
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
               <Image
-                src="/images/portfolio/installations/carriage-house-door-nc-1.jpg"
+                src="/images/hero/coachman-carriage-house-door-nc.jpg"
                 alt="Professional garage door service"
                 fill
                 className="object-cover"
@@ -226,7 +226,7 @@ export default function PromoFlipCard() {
 
                 <p className="text-white/30 text-xs max-w-md">
                   Present code at time of booking. One per household. Cannot be combined with other offers.
-                  Expires July 22, 2027.
+                  Expires December 31, 2027.
                 </p>
               </div>
             </motion.div>
