@@ -4,7 +4,7 @@ import CTAButton from '@/components/CTAButton';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { SERVICE_AREAS } from '@/lib/service-areas';
-import { Shield, Clock, MapPin, Award, Users, Wrench, Star, Handshake } from 'lucide-react';
+import { Shield, Clock, MapPin, Award, Users, Wrench, Star, Handshake, DollarSign, FileText } from 'lucide-react';
 
 function FacebookIcon({ className }: { className?: string }) {
   return <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>;
@@ -275,18 +275,38 @@ export default function AboutPage() {
       </section>
 
       {/* PARTNERSHIPS */}
-      <section className="py-16 surface-matte">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
-            <Handshake className="w-4 h-4" /> Professional Partnerships
-          </span>
-          <h2 className="font-display text-2xl text-brand-blue uppercase mb-3">
-            Contractors, Builders &amp; <span className="text-brand-red">Property Managers</span>
-          </h2>
-          <p className="text-foreground/60 max-w-2xl mx-auto mb-6">
-            Priority scheduling, volume pricing, and dedicated account management for trade professionals. We work alongside general contractors, builders, and property management companies across the Piedmont Triad.
-          </p>
-          <CTAButton text="Learn About Partnerships" variant="outline" showIcon={false} />
+      <section className="py-16 bg-gradient-to-br from-brand-blue via-brand-blue to-blue-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-brand-gold blur-3xl" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-2 items-center">
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
+                <Handshake className="w-4 h-4" /> Trade Professional Program
+              </span>
+              <h2 className="font-display text-3xl uppercase mb-3">
+                Built for <span className="text-brand-gold">Contractors</span>, Builders &amp; Property Managers
+              </h2>
+              <p className="text-white/70 mb-6 leading-relaxed">
+                Priority scheduling, volume pricing, and a dedicated account manager. We work alongside trade professionals across the Piedmont Triad — on time, on budget, zero callbacks.
+              </p>
+              <CTAButton text="Explore Partnership Program" variant="gold" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: <Clock className="w-5 h-5" />, text: 'Priority Scheduling' },
+                { icon: <DollarSign className="w-5 h-5" />, text: 'Volume Pricing' },
+                { icon: <Shield className="w-5 h-5" />, text: 'Code Compliance' },
+                { icon: <FileText className="w-5 h-5" />, text: 'Clean Documentation' },
+              ].map((item) => (
+                <div key={item.text} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3">
+                  <span className="text-brand-gold">{item.icon}</span>
+                  <span className="text-sm font-medium">{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

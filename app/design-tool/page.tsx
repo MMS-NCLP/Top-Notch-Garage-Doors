@@ -55,12 +55,13 @@ export default function DesignToolPage() {
         </div>
       </div>
 
-      {/* Iframe fills all remaining space */}
-      <div className="flex-1 relative min-h-0">
+      {/* Iframe fills all remaining space — Clopay nav clipped */}
+      <div className="flex-1 relative min-h-0 overflow-hidden">
         <iframe
           src="https://www.clopaydoor.com/ezdoor"
           title="Clopay Door Design Tool"
-          className="absolute inset-0 w-full h-full border-0"
+          className="absolute left-0 right-0 border-0"
+          style={{ top: '-121px', height: 'calc(100% + 121px)', width: '100%' }}
           loading="lazy"
         />
         {/* Floating CTA */}
