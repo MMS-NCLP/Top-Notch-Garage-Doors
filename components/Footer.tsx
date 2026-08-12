@@ -54,7 +54,7 @@ export default function Footer() {
             <h4 className="font-display text-sm uppercase tracking-wider mt-6 mb-3 text-brand-gold">Other Services</h4>
             <ul className="space-y-2.5 text-sm text-white/70">
               <li><Link href="/garage-screens" className="hover:text-white transition-colors">Screen Doors</Link></li>
-              <li><Link href="/partnership" className="hover:text-white transition-colors">Partnerships</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -63,7 +63,7 @@ export default function Footer() {
             <address className="not-italic text-sm text-white/70 space-y-3">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-gold" />
-                <span>Burlington, NC — Serving the Piedmont Triad</span>
+                <span>Whitsett, NC — Serving the Piedmont Triad</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0 text-brand-gold" />

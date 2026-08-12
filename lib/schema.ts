@@ -13,14 +13,15 @@ export const BUSINESS_SCHEMA = {
   logo: `${BUSINESS_ID}/images/logos/tngd-logo-small-1.png`,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Burlington',
+    addressLocality: 'Whitsett',
     addressRegion: 'NC',
+    postalCode: '27377',
     addressCountry: 'US',
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 36.0726,
-    longitude: -79.4378,
+    latitude: 36.0685,
+    longitude: -79.5689,
   },
   sameAs: [
     'https://www.facebook.com/topnotchdoorsnc',

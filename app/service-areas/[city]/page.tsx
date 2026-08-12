@@ -156,11 +156,27 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   const { city } = await params;
   const area = getAreaBySlug(city);
   if (!area) return {};
+  const title = `Garage Door Services in ${area.name}, NC — ${area.county} | Top-Notch Garage Doors`;
+  const description = `Professional garage door repair, installation, and maintenance in ${area.name}, NC. Serving ${area.neighborhoods.length}+ neighborhoods in ${area.county}. Factory-trained technicians, prompt emergency response, no service call fee.`;
+  const url = `https://www.trytopnotchdoors.com/service-areas/${city}`;
   return {
-    title: `Garage Door Services in ${area.name}, NC — ${area.county} | Top-Notch Garage Doors`,
-    description: `Professional garage door repair, installation, and maintenance in ${area.name}, NC. Serving ${area.neighborhoods.length}+ neighborhoods in ${area.county}. Factory-trained technicians, prompt emergency response, no service call fee.`,
-    alternates: { canonical: `https://www.trytopnotchdoors.com/service-areas/${city}` },
+    title,
+    description,
+    alternates: { canonical: url },
     keywords: area.keywords.join(', '),
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'Top-Notch Garage Doors',
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
+    },
   };
 }
 

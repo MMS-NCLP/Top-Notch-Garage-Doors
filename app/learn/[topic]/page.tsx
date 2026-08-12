@@ -45,8 +45,12 @@ const ICON_MAP_SM: Record<string, React.ReactNode> = {
   droplets: <Droplets className="w-4 h-4" />,
 };
 
+const HIDDEN_TOPICS = ['pressure-washing'];
+
 export function generateStaticParams() {
-  return KNOWLEDGE_TOPICS.map((t) => ({ topic: t.slug }));
+  return KNOWLEDGE_TOPICS
+    .filter((t) => !HIDDEN_TOPICS.includes(t.slug))
+    .map((t) => ({ topic: t.slug }));
 }
 
 export async function generateMetadata({

@@ -51,14 +51,14 @@ export default function TermsPage() {
           <h2 className="font-display text-xl text-brand-blue mt-8">12. Contact</h2>
           <address className="not-italic">
             <p>Top-Notch Garage Doors LLC</p>
-            <p>Burlington, NC</p>
+            <p>Whitsett, NC</p>
             <p>Phone: <a href="tel:+13366046494" className="text-brand-blue hover:text-brand-red transition-colors">(336) 604-6494</a></p>
             <p>Fax: (336) 604-0809</p>
           </address>
         </div>
 
         <div className="mt-8 text-sm text-foreground/50 text-center">
-          <p>Top Notch Garage Doors LLC &middot; Burlington, NC</p>
+          <p>Top Notch Garage Doors LLC &middot; Whitsett, NC</p>
           <p>Phone: <a href="tel:+13366046494" className="hover:text-brand-blue transition-colors">(336) 604-6494</a> &middot; www.trytopnotchdoors.com</p>
         </div>
       </div>

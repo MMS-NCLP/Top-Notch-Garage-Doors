@@ -119,7 +119,7 @@ export default function ContactPage() {
                 <h3 className="font-display text-sm uppercase tracking-wider text-brand-gold mb-1">Location</h3>
                 <p className="text-foreground/70 flex items-start gap-2">
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-gold" />
-                  <span>Burlington, NC — Serving the Piedmont Triad<br />Statesville to Durham</span>
+                  <span>Whitsett, NC — Serving the Piedmont Triad<br />Statesville to Durham</span>
                 </p>
               </div>
               <div>

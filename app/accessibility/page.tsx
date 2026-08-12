@@ -53,14 +53,14 @@ export default function AccessibilityPage() {
           <p>While we strive for full accessibility, some third-party embedded content (such as the Clopay design tool and Google Maps) may not meet all accessibility standards. We provide alternative methods to access the same information:</p>
           <ul className="list-disc list-inside space-y-1">
             <li>Design tool: Call us for a personalized door selection consultation</li>
-            <li>Maps: Our full address is provided in text format on the Contact page</li>
+            <li>Maps: Our service area information is provided in text format on the Contact page</li>
           </ul>
 
           <h2 className="font-display text-xl text-brand-blue mt-8">Feedback</h2>
           <p>If you encounter any accessibility barriers on our website, please contact us. We take all feedback seriously and will work to resolve issues promptly.</p>
           <address className="not-italic">
             <p>Top-Notch Garage Doors</p>
-            <p>Burlington, NC</p>
+            <p>Whitsett, NC</p>
             <p>Phone: (336) 604-6494</p>
           </address>
           <p>We aim to respond to accessibility-related inquiries within 2 business days.</p>

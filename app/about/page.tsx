@@ -25,7 +25,7 @@ export const metadata = genMeta({
 const VALUES = [
   { icon: <Shield className="w-6 h-6" />, title: 'Certified & Insured', desc: 'Fully licensed, bonded, and insured for your protection. We carry liability and workers\' comp on every job.' },
   { icon: <Clock className="w-6 h-6" />, title: 'Fast Response', desc: 'Broken spring at 7am? We prioritize urgent calls. Emergency repairs are our specialty — not an afterthought.' },
-  { icon: <MapPin className="w-6 h-6" />, title: 'Locally Owned', desc: 'Based in Burlington, NC. We live in the communities we serve — from Statesville to Durham and everywhere between.' },
+  { icon: <MapPin className="w-6 h-6" />, title: 'Locally Owned', desc: 'Based in Whitsett, NC. We live in the communities we serve — from Statesville to Durham and everywhere between.' },
   { icon: <Award className="w-6 h-6" />, title: 'Factory Authorized', desc: 'Certified dealer and installer for Clopay, LiftMaster, Chamberlain, Amarr, and other top brands.' },
   { icon: <Users className="w-6 h-6" />, title: 'Trusted by Neighbors', desc: 'Five-star reviews from real homeowners across the Piedmont Triad. Our reputation is built one door at a time.' },
   { icon: <Wrench className="w-6 h-6" />, title: 'No Service Call Fee', desc: 'We don\'t charge just to show up. You pay for the work, not the visit. Fair pricing, always.' },
@@ -85,7 +85,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-flex items-center gap-1.5 text-xs font-display uppercase tracking-widest text-brand-gold mb-3">
-                <MapPin className="w-4 h-4" /> Burlington, NC
+                <MapPin className="w-4 h-4" /> Whitsett, NC
               </span>
               <h2 className="font-display text-3xl text-brand-blue uppercase mb-6">Our <span className="text-brand-red">Story</span></h2>
               <div className="space-y-4 text-foreground/70 leading-relaxed">

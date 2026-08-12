@@ -11,7 +11,10 @@ export const metadata = genMeta({
   keywords: ['garage door stuck', 'garage door makes noise', 'garage door safety', 'broken spring symptoms', 'opener not responding'],
 });
 
+const HIDDEN_SLUGS = ['pressure-washing-guide-when-why-how'];
+
 const posts = Object.entries(articles)
+  .filter(([slug]) => !HIDDEN_SLUGS.includes(slug))
   .map(([slug, article]) => ({
     title: article.title,
     slug,

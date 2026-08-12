@@ -2,6 +2,7 @@ import Image from 'next/image';
 import ReviewForm from '@/components/ReviewForm';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import ReviewCard from '@/components/ReviewCard';
+import ThumbtackBadge from '@/components/ThumbtackBadge';
 import CTAButton from '@/components/CTAButton';
 import { generateMetadata as genMeta } from '@/lib/seo';
 import { Star, MessageSquare, Users } from 'lucide-react';
@@ -37,7 +38,7 @@ const PLACEHOLDER_REVIEWS: Review[] = [
   },
   {
     id: '5', name: 'David M.', city: 'McLeansville', rating: 5,
-    service_type: 'pressure_washing', review_text: 'Driveway looked brand new after they finished. Hadn\'t been cleaned in 5 years and they got every stain out. Will absolutely use again next spring.',
+    service_type: 'general', review_text: 'Driveway looked brand new after they finished. Hadn\'t been cleaned in 5 years and they got every stain out. Will absolutely use again next spring.',
     contractor_name: null, job_date: null, source: 'form', featured: false, created_at: '2026-02-18',
   },
   {
@@ -224,6 +225,13 @@ export default function ReviewsPage() {
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-4">
+          <ThumbtackBadge />
         </div>
       </section>
 
