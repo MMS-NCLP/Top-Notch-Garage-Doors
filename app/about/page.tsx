@@ -291,7 +291,7 @@ export default function AboutPage() {
               <p className="text-white/70 mb-6 leading-relaxed">
                 Priority scheduling, volume pricing, and a dedicated account manager. We work alongside trade professionals across the Piedmont Triad — on time, on budget, zero callbacks.
               </p>
-              <CTAButton text="Explore Partnership Program" variant="gold" />
+              <CTAButton text="Explore Partnership Program" variant="secondary" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[

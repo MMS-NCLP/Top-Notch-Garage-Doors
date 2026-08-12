@@ -4,7 +4,7 @@ import { generateMetadata as genMeta } from '@/lib/seo';
 import {
   Handshake, Building2, HardHat, ClipboardCheck, CheckCircle,
   Shield, Clock, DollarSign, Phone, Users, FileText, Wrench,
-  ArrowRight, Star,
+  Star,
 } from 'lucide-react';
 
 export const metadata = genMeta({
@@ -76,7 +76,7 @@ export default function PartnershipPage() {
                 Priority scheduling, volume pricing, and a dedicated account manager — built for contractors, builders, and property managers who need a reliable garage door subcontractor.
               </p>
               <div className="flex flex-wrap gap-3">
-                <CTAButton text="Start a Partnership" variant="gold" />
+                <CTAButton text="Start a Partnership" variant="secondary" />
                 <a href="tel:+13366046494" className="inline-flex items-center gap-2 px-5 py-3 rounded border border-white/30 text-white hover:bg-white/10 transition-colors font-display text-sm uppercase tracking-wider">
                   <Phone className="w-4 h-4" /> (336) 604-6494
                 </a>
@@ -214,7 +214,7 @@ export default function PartnershipPage() {
             One conversation is all it takes. Tell us about your projects and we&apos;ll build a program that fits.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <CTAButton text="Start a Partnership" variant="gold" />
+            <CTAButton text="Start a Partnership" variant="secondary" />
             <a href="tel:+13366046494" className="inline-flex items-center gap-2 px-5 py-3 rounded border border-white/30 text-white hover:bg-white/10 transition-colors font-display text-sm uppercase tracking-wider">
               <Phone className="w-4 h-4" /> Call Direct
             </a>
